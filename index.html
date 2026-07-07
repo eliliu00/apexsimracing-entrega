@@ -1,0 +1,701 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>APEX Sim Racing Academy</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=Space+Mono:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+
+  <!-- CURSOR -->
+  <div class="cursor" id="cursor"></div>
+  <div class="cursor-dot" id="cursorDot"></div>
+
+  <!-- NOISE OVERLAY -->
+  <canvas class="noise-canvas" id="noiseCanvas"></canvas>
+
+  <!-- ═══ NAVBAR ═══ -->
+  <header class="navbar" id="navbar">
+    <div class="nav-inner">
+      <a href="#" class="nav-logo">
+        <div class="disc-car-img">
+          <img src="assets/logotipo.png" alt="logoapex" />
+        </div>
+      </a>
+
+      <nav class="nav-links">
+        <a href="#sobre-apex" class="nav-link" data-text="Nosotros">Nosotros</a>
+        <a href="#cursos"     class="nav-link" data-text="Cursos">Cursos</a>
+        <a href="#simuladores" class="nav-link" data-text="Simuladores">Simuladores</a>
+        <a href="#academia"  class="nav-link" data-text="Academia">Academia</a>
+        <a href="#esports"   class="nav-link" data-text="Esports">Esports</a>
+        <a href="#empresas"  class="nav-link" data-text="Empresas">Empresas</a>
+      </nav>
+
+      <div class="nav-actions">
+        <a href="#academia" class="btn-pill btn-academy magnetic">Unirme a la Academia</a>
+        <button class="nav-burger" id="burgerBtn" aria-label="Menu">
+          <span></span><span></span>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <!-- MOBILE MENU -->
+  <div class="mobile-overlay" id="mobileOverlay">
+    <nav class="mobile-nav">
+      <a href="#sobre-apex">Nosotros</a>
+      <a href="#cursos">Cursos</a>
+      <a href="#simuladores">Simuladores</a>
+      <a href="#academia">Academia</a>
+      <a href="#esports">Esports</a>
+      <a href="#comunidad">Comunidad</a>
+      <a href="#empresas">Empresas</a>
+      <a href="#academia" class="btn-pill btn-academy">Unirme a la Academia</a>
+    </nav>
+  </div>
+
+  <!-- ═══════════════════════════════════════
+       1. HERO — Atención · hook inicial
+  ════════════════════════════════════════ -->
+  <section class="hero-section" id="hero">
+    <div class="hero-bg-container"></div>
+
+    <div class="hero-visual">
+      <video autoplay loop muted playsinline class="hero-video-bg">
+        <source src="assets/Video_intro.mp4" type="video/mp4">
+        Tu navegador no soporta el formato de video.
+      </video>
+      <div class="hero-img-overlay"></div>
+    </div>
+
+    <div class="hero-content">
+      <div class="hero-badge glitch-hover" data-text="APEX SIM RACING ACADEMY">APEX SIM RACING ACADEMY</div>
+
+      <h1 class="hero-title">
+        <span class="title-line" data-speed="0">ENTRENAMOS</span>
+        <span class="title-line" data-speed="0.3">PILOTOS.</span>
+        <span class="title-line accent" data-speed="0.6">NO JUGADORES.</span>
+      </h1>
+
+      <p class="hero-desc">Entrenamiento profesional con simuladores de alto nivel,<br>
+      telemetría y coaching experto. Aquí se viene a entrenar,<br>no a jugar.</p>
+
+      <div class="hero-cta-row">
+        <a href="#academia" class="btn-primary magnetic">
+          <span>Unirme a la Academia</span>
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+        </a>
+        <a href="#sobre-apex" class="btn-ghost magnetic">Ver Academia</a>
+      </div>
+    </div>
+
+    <!-- HUD -->
+    <div class="hero-hud" id="heroHud">
+      <div class="hud-panel">
+        <div class="hud-row">
+          <span class="hud-label">VUELTA ACTUAL</span>
+          <span class="hud-val" id="lapCurrent">1:32.847</span>
+        </div>
+        <div class="hud-row">
+          <span class="hud-label">MEJOR VUELTA</span>
+          <span class="hud-val purple" id="lapBest">1:31.824</span>
+        </div>
+      </div>
+      <div class="hud-panel hud-tele">
+        <span class="hud-label">TELEMETRÍA</span>
+        <canvas id="teleCanvas" width="180" height="50"></canvas>
+      </div>
+      <div class="hud-panel">
+        <span class="hud-label">DELTA</span>
+        <span class="hud-delta" id="deltaVal">−0.347</span>
+        <span class="hud-label" style="margin-top:8px">SECTOR 2</span>
+        <div class="hud-sectors">
+          <div class="sector green"></div>
+          <div class="sector green"></div>
+          <div class="sector purple"></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="scroll-hint">
+      <span>SCROLL</span>
+      <div class="scroll-line"></div>
+    </div>
+  </section>
+
+  <!-- ═══════════════════════════════════════
+       2. SOBRE APEX — Confianza · quién sos
+  ════════════════════════════════════════ -->
+  <section class="section sobre-apex-section" id="sobre-apex">
+    <div class="sa-full-wrap">
+
+      <!-- Bloque principal: imagen izquierda + panel texto derecha -->
+      <div class="sa-main-grid">
+
+        <!-- Imagen izquierda grande -->
+        <div class="sa-visual">
+          <img src="assets/Victoria_APEX.png" alt="Piloto en simulador profesional Apex" />
+          <div class="sa-img-overlay"></div>
+          <span class="sa-img-badge">SEDE · BUENOS AIRES</span>
+        </div>
+
+        <!-- Panel texto derecha -->
+        <div class="sa-panel">
+          <span class="section-tag">— SOBRE APEX</span>
+          <h2 class="sa-title">UN PROGRAMA.<br>UN MÉTODO.<br><em>RESULTADOS.</em></h2>
+          <p class="sa-desc">Desde 2021 formamos pilotos con metodología profesional, tecnología de punta y un equipo de instructores con experiencia real en el automovilismo competitivo.</p>
+          <a href="#academia" class="btn-primary magnetic sa-cta">
+            <span>Ver Programas</span>
+            <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </a>
+        </div>
+      </div>
+
+      <!-- Franja inferior: 3 pilares + 4 stats -->
+      <div class="sa-bottom-bar">
+        <div class="sa-pillar-item">
+          <div class="sa-pillar-dot" style="background:var(--cyan)"></div>
+          <div class="sa-pillar-body">
+            <span class="sa-pillar-name">RENDIMIENTO</span>
+            <span class="sa-pillar-desc">Técnica y telemetría para mejorar cada vuelta</span>
+          </div>
+        </div>
+        <div class="sa-pillar-item">
+          <div class="sa-pillar-dot" style="background:var(--purple)"></div>
+          <div class="sa-pillar-body">
+            <span class="sa-pillar-name">INNOVACIÓN</span>
+            <span class="sa-pillar-desc">Hardware y software de última generación</span>
+          </div>
+        </div>
+        <div class="sa-pillar-item">
+          <div class="sa-pillar-dot" style="background:var(--yellow)"></div>
+          <div class="sa-pillar-body">
+            <span class="sa-pillar-name">COMPETICIÓN</span>
+            <span class="sa-pillar-desc">Ligas activas, rankings y torneos oficiales</span>
+          </div>
+        </div>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ═══════════════════════════════════════
+       3. MARQUEE — Transición visual teaser
+  ════════════════════════════════════════ -->
+  <div class="marquee-bar">
+    <div class="marquee-track">
+      <span>F1 &nbsp;·&nbsp; GT3 &nbsp;·&nbsp; RALLY &nbsp;·&nbsp; ENDURANCE &nbsp;·&nbsp; TURISMO CARRETERA &nbsp;·&nbsp;</span>
+      <span>F1 &nbsp;·&nbsp; GT3 &nbsp;·&nbsp; RALLY &nbsp;·&nbsp; ENDURANCE &nbsp;·&nbsp; TURISMO CARRETERA &nbsp;·&nbsp;</span>
+      <span>F1 &nbsp;·&nbsp; GT3 &nbsp;·&nbsp; RALLY &nbsp;·&nbsp; ENDURANCE &nbsp;·&nbsp; TURISMO CARRETERA &nbsp;·&nbsp;</span>
+    </div>
+  </div>
+
+  <!-- ═══════════════════════════════════════
+       4. DISCIPLINAS — Interés · horizontal scroll
+  ════════════════════════════════════════ -->
+  <section class="section disc-section" id="cursos">
+    <div class="disc-sticky">
+      <div class="disc-left">
+        <span class="section-tag">— DISCIPLINAS</span>
+        <h2 class="disc-title">ENTRENÁS EN<br>TODAS LAS<br><em>DISCIPLINAS</em></h2>
+        <a href="#" class="link-arrow">EXPLORAR <span>→</span></a>
+      </div>
+      <div class="disc-scroll-area" id="discScroll">
+        <div class="disc-cards-row">
+          <div class="disc-card" style="--accent:#00A8FF">
+            <div class="disc-inner">
+              <span class="disc-num">01</span>
+              <h3>F1</h3>
+              <p>Fórmula 1 de simulación. El pináculo de la tecnología y la velocidad.</p>
+              <div class="disc-line"></div>
+              <div class="disc-car-img">
+                <img src="assets/auto1.png" alt="F1" />
+              </div>
+            </div>
+          </div>
+          <div class="disc-card" style="--accent:#00E5FF">
+            <div class="disc-inner">
+              <span class="disc-num">02</span>
+              <h3>GT3</h3>
+              <p>Gran turismo. Equilibrio perfecto entre potencia y manejabilidad.</p>
+              <div class="disc-line"></div>
+              <div class="disc-car-img">
+                <img src="assets/auto2.png" alt="GT3" />
+              </div>
+            </div>
+          </div>
+          <div class="disc-card" style="--accent:#FF3D00">
+            <div class="disc-inner">
+              <span class="disc-num">03</span>
+              <h3>RALLY</h3>
+              <p>Tierra, asfalto y nieve. Domina cada superficie.</p>
+              <div class="disc-line"></div>
+              <div class="disc-car-img">
+                <img src="assets/auto5.png" alt="Rally" />
+              </div>
+            </div>
+          </div>
+          <div class="disc-card" style="--accent:#69F0AE">
+            <div class="disc-inner">
+              <span class="disc-num">04</span>
+              <h3>ENDURANCE</h3>
+              <p>Resistencia y estrategia. Las 24 horas más exigentes del sim.</p>
+              <div class="disc-line"></div>
+              <div class="disc-car-img">
+                <img src="assets/auto3.png" alt="Endurance" />
+              </div>
+            </div>
+          </div>
+          <div class="disc-card" style="--accent:#FFD600">
+            <div class="disc-inner">
+              <span class="disc-num">05</span>
+              <h3>TURISMO<br>CARRETERA</h3>
+              <p>La escuela argentina del automovilismo, en simulación.</p>
+              <div class="disc-line"></div>
+              <div class="disc-car-img">
+                <img src="assets/auto4.png" alt="Turismo Carretera" />
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══════════════════════════════════════
+       5. HARDWARE — Prueba de calidad
+  ════════════════════════════════════════ -->
+  <section class="section hardware-section" id="simuladores">
+    <div class="section-inner hw-full-layout">
+
+      <!-- Header full-width en dos columnas -->
+      <div class="hw-top">
+        <div class="hw-top-left">
+          <span class="section-tag">— EQUIPAMIENTO</span>
+          <h2 class="section-title hw-title">HARDWARE<br><em>PROFESIONAL</em></h2>
+        </div>
+        <div class="hw-top-right">
+          <p class="hw-desc">Equipamiento idéntico al utilizado por pilotos profesionales en el circuito internacional.</p>
+          <a href="#" class="link-arrow">MÁS EQUIPAMIENTO <span>→</span></a>
+        </div>
+      </div>
+
+      <!-- Galeria: imagen principal grande + thumbnails al costado -->
+      <div class="hw-gallery" id="hwGallery">
+
+        <!-- Imagen principal -->
+        <div class="hw-main-img">
+          <img src="assets/simucube.png" alt="SIMUCUBE" id="hwMainImg" />
+          <div class="hw-main-overlay"></div>
+          <div class="hw-main-info" id="hwMainInfo">
+            <span class="hw-brand-tag">DIRECT DRIVE</span>
+            <span class="hw-brand-name">SIMUCUBE</span>
+          </div>
+          <!-- Barra de progreso del autoplay -->
+          <div class="hw-progress-bar"><div class="hw-progress-fill" id="hwProgressFill"></div></div>
+        </div>
+
+        <!-- Thumbnails laterales -->
+        <div class="hw-thumbs" id="hwThumbs">
+          <div class="hw-thumb active" data-index="0">
+            <img src="assets/simucube.png" alt="SIMUCUBE" />
+            <div class="hw-thumb-label">
+              <span class="hw-thumb-name">SIMUCUBE</span>
+              <span class="hw-thumb-tag">DIRECT DRIVE</span>
+            </div>
+          </div>
+          <div class="hw-thumb" data-index="1">
+            <img src="assets/heusinkveld.png" alt="HEUSINKVELD" />
+            <div class="hw-thumb-label">
+              <span class="hw-thumb-name">HEUSINKVELD</span>
+              <span class="hw-thumb-tag">PEDALES ULTIMATE+</span>
+            </div>
+          </div>
+          <div class="hw-thumb" data-index="2">
+            <img src="assets/fanatec.png" alt="FANATEC" />
+            <div class="hw-thumb-label">
+              <span class="hw-thumb-name">FANATEC</span>
+              <span class="hw-thumb-tag">COCKPITS DE ALUMINIO</span>
+            </div>
+          </div>
+          <div class="hw-thumb" data-index="3">
+            <img src="assets/moza.png" alt="MOZA" />
+            <div class="hw-thumb-label">
+              <span class="hw-thumb-name">MOZA</span>
+              <span class="hw-thumb-tag">ACTUADORES 3DOF</span>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══════════════════════════════════════
+       6. ACADEMIA / PRICING — La oferta
+  ════════════════════════════════════════ -->
+  <section class="section academia-section" id="academia">
+    <div class="section-inner">
+
+      <div class="section-header">
+        <span class="section-tag">— ACADEMIA</span>
+        <h2 class="section-title">NUESTROS<br><em>PROGRAMAS.</em></h2>
+      </div>
+
+      <div class="programs-track" id="programsTrack">
+        <a href="curso-nivel-inicial-detalle.html" class="program-card" data-index="01" style="--glow:#00E5FF">
+          <div class="card-num">01</div>
+          <div class="card-tag" style="color:#00E5FF">FUNDAMENTOS</div>
+          <h3>NIVEL INICIAL</h3>
+          <p class="card-desc">Arrancá desde cero y aprendé a manejar como piloto.</p>
+          <div class="card-price">
+            <span class="price-amount">$89.000</span>
+            <span class="price-period">ARS · pago único</span>
+          </div>
+          <span class="price-note">HASTA 3 CUOTAS SIN INTERÉS</span>
+          <span class="card-link">RESERVAR MI LUGAR <span>↗</span></span>
+          <div class="card-glow"></div>
+        </a>
+
+        <div class="program-card" data-index="02" style="--glow:#7C3AED">
+          <div class="card-num">02</div>
+          <div class="card-tag" style="color:#7C3AED">CONDUCCIÓN</div>
+          <h3>AVANZADA</h3>
+          <p class="card-desc">Ganá consistencia, ritmo y velocidad bajo presión real de carrera.</p>
+          <div class="card-price">
+            <span class="price-amount">$149.000</span>
+            <span class="price-period">ARS · pago único</span>
+          </div>
+          <span class="price-note">HASTA 6 CUOTAS SIN INTERÉS</span>
+          <a href="#" class="card-link">RESERVAR MI LUGAR <span>↗</span></a>
+          <div class="card-glow"></div>
+        </div>
+
+        <div class="program-card" data-index="03" style="--glow:#FF3D00">
+          <div class="card-num">03</div>
+          <div class="card-tag" style="color:#FF3D00">DATA &amp; TELEMETRÍA</div>
+          <h3>TELEMETRÍA<br>PRO</h3>
+          <p class="card-desc">Convertí cada vuelta en datos, y cada dato en mejora real de tiempo.</p>
+          <div class="card-price">
+            <span class="price-amount">$129.000</span>
+            <span class="price-period">ARS · pago único</span>
+          </div>
+          <span class="price-note">HASTA 6 CUOTAS SIN INTERÉS</span>
+          <a href="#" class="card-link">RESERVAR MI LUGAR <span>↗</span></a>
+          <div class="card-glow"></div>
+        </div>
+
+        <div class="program-card" data-index="04" style="--glow:#FFD600">
+          <div class="card-num">04</div>
+          <div class="card-tag" style="color:#FFD600">ELITE</div>
+          <h3>PREPARACIÓN<br>PROFESIONAL</h3>
+          <p class="card-desc">Coaching 1 a 1 para pilotos que apuntan al Road To 2027.</p>
+          <div class="card-price">
+            <span class="price-amount">Desde $320.000</span>
+            <span class="price-period">ARS · por temporada</span>
+          </div>
+          <span class="price-note">CUPOS LIMITADOS POR CAMADA</span>
+          <a href="#" class="card-link">RESERVAR MI LUGAR <span>↗</span></a>
+          <div class="card-glow"></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══════════════════════════════════════
+       7. SIM TO REAL — Prueba social inmediata
+  ════════════════════════════════════════ -->
+  <section class="section str-section">
+    <div class="str-inner">
+      <div class="str-text">
+        <span class="section-tag">— SIM TO REAL</span>
+        <h2 class="section-title">DE SIM RACER<br>A <em>PILOTO REAL.</em></h2>
+        <div class="driver-card">
+          <div class="driver-avatar">OL</div>
+          <div>
+            <div class="driver-name">OTIS LAWRENCE</div>
+            <div class="driver-era">XEMIRO APEX 2021–2023</div>
+            <ul class="driver-list">
+              <li>Campeón Apex Championship 2022</li>
+              <li>Programa Road To 2027</li>
+              <li>Pruebas en F3 – 2024</li>
+              <li>Contrato F3 – 2025</li>
+            </ul>
+            <a href="#" class="link-arrow">CONOCÉ SU HISTORIA <span>→</span></a>
+          </div>
+        </div>
+      </div>
+      <div class="str-road">
+        <div class="str-road-img">
+          <img src="assets/sim_futurista.png" alt="Piloto de automovilismo real" />
+          <div class="str-road-img-overlay"></div>
+        </div>
+        <div class="road-year">2027</div>
+        <h3>ROAD TO 2027</h3>
+        <p>El camino hacia el automovilismo profesional. Formación, oportunidades y conexiones para llegar más lejos.</p>
+        <a href="#" class="btn-primary magnetic" style="margin-top:24px">
+          <span>Conocé el Programa</span>
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══════════════════════════════════════
+       8. ESPORTS — Prueba de comunidad activa
+  ════════════════════════════════════════ -->
+  <section class="section competitions-section" id="esports">
+    <div class="section-inner">
+      <div class="comp-header">
+        <span class="section-tag">— COMPETENCIAS</span>
+        <h2 class="section-title">COMPETENCIAS<br><em>APEX</em></h2>
+      </div>
+
+      <div class="comp-grid">
+        <div class="comp-standings">
+          <div class="comp-label">APEX CHAMPIONSHIP · TEMPORADA 2026</div>
+          <table class="standings">
+            <tr class="s-row first"><td class="s-pos">01</td><td class="s-name">M. ALONSO</td><td class="s-pts">312</td></tr>
+            <tr class="s-row"><td class="s-pos">02</td><td class="s-name">F. BARRIOS</td><td class="s-pts">287</td></tr>
+            <tr class="s-row"><td class="s-pos">03</td><td class="s-name">L. SANCHEZ</td><td class="s-pts">265</td></tr>
+            <tr class="s-row"><td class="s-pos">04</td><td class="s-name">T. CORREA</td><td class="s-pts">241</td></tr>
+            <tr class="s-row"><td class="s-pos">05</td><td class="s-name">J. VILLALBA</td><td class="s-pts">210</td></tr>
+          </table>
+          <a href="#" class="link-arrow">RANKING COMPLETO <span>→</span></a>
+        </div>
+
+        <div class="comp-next" id="compNextBlock">
+          <div class="comp-label">PRÓXIMA FECHA</div>
+          <div class="next-race-name" id="compNextName">ROUND 4 · MONZA</div>
+          <div class="comp-track-img-wrap">
+            <img src="assets/pista1.png" alt="Monza" id="compNextImg" />
+          </div>
+          <div class="next-date" id="compNextDate">25 MAYO 2027</div>
+          <a href="#" class="btn-pill magnetic" style="margin-top:16px;display:inline-block">INSCRIBIRSE</a>
+          <div class="comp-dots" id="compNextDots">
+            <span class="comp-dot active" data-index="0"></span>
+            <span class="comp-dot" data-index="1"></span>
+            <span class="comp-dot" data-index="2"></span>
+          </div>
+        </div>
+
+        <div class="comp-leagues">
+          <div class="comp-label">LIGAS ACTIVAS</div>
+          <div class="league-item">
+            <div class="league-dot" style="background:#FFD600"></div>
+            <div>
+              <div class="league-name">APEX CHAMPIONSHIP</div>
+              <div class="league-class">MULTICLASE</div>
+            </div>
+          </div>
+          <div class="league-item">
+            <div class="league-dot" style="background:#00E5FF"></div>
+            <div>
+              <div class="league-name">APEX GT3 LEAGUE</div>
+              <div class="league-class">PRO / AM</div>
+            </div>
+          </div>
+          <div class="league-item">
+            <div class="league-dot" style="background:#7C3AED"></div>
+            <div>
+              <div class="league-name">APEX ROOKIE CUP</div>
+              <div class="league-class">NIVEL INICIAL</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══════════════════════════════════════
+       9. COMUNIDAD — Pertenencia
+  ════════════════════════════════════════ -->
+  <section class="section community-section" id="comunidad">
+    <div class="community-inner">
+      <span class="section-tag" style="color:rgba(255,255,255,0.7)">— COMUNIDAD</span>
+      <h2 class="community-title">
+        <span class="reveal-word">NO</span>
+        <span class="reveal-word">ENTRÁS</span>
+        <span class="reveal-word">SOLO.</span>
+        <br>
+        <span class="reveal-word">ENTRÁS CON</span>
+        <span class="reveal-word accent">OTROS.</span>
+      </h2>
+      <div class="community-sub">
+        <p>Entrená con pilotos de todo el país. Compartí telemetría, participá de lobbies diarios y sumate a las sesiones de coaching grupal.</p>
+        <a href="#" class="btn-pill magnetic discord-btn" style="border:none;">
+          <svg viewBox="0 0 24 24" width="18" height="18" fill="currentColor"><path d="M20.317 4.37a19.791 19.791 0 0 0-4.885-1.515.074.074 0 0 0-.079.037c-.21.375-.444.864-.608 1.25a18.27 18.27 0 0 0-5.487 0 12.64 12.64 0 0 0-.617-1.25.077.077 0 0 0-.079-.037A19.736 19.736 0 0 0 3.677 4.37a.07.07 0 0 0-.032.027C.533 9.046-.32 13.58.099 18.057.101 18.08.11 18.1.128 18.115a19.9 19.9 0 0 0 5.993 3.03.078.078 0 0 0 .084-.028 14.09 14.09 0 0 0 1.226-1.994.076.076 0 0 0-.041-.106 13.107 13.107 0 0 1-1.872-.892.077.077 0 0 1-.008-.128 10.2 10.2 0 0 0 .372-.292.074.074 0 0 1 .077-.01c3.928 1.793 8.18 1.793 12.062 0a.074.074 0 0 1 .078.01c.12.098.246.198.373.292a.077.077 0 0 1-.006.127 12.299 12.299 0 0 1-1.873.892.077.077 0 0 0-.041.107c.36.698.772 1.362 1.225 1.993a.076.076 0 0 0 .084.028 19.839 19.839 0 0 0 6.002-3.03.077.077 0 0 0 .032-.054c.5-5.177-.838-9.674-3.549-13.66a.061.061 0 0 0-.031-.03z"/></svg>
+          Unirse a Discord
+        </a>
+      </div>
+    </div>
+    <div class="community-grid" id="communityGrid">
+      <div class="cg-item cg-tall">
+        <img src="assets/Entrenamiento_APEX.png" alt="Piloto entrenando en simulador Apex" />
+        <div class="cg-overlay">
+          <span class="cg-label">ENTRENAMIENTO GUIADO</span>
+        </div>
+      </div>
+      <div class="cg-item">
+        <img src="assets/gallery5.jpg" alt="Pilotos de la academia en evento" />
+        <div class="cg-overlay">
+          <span class="cg-label">EVENTOS PRESENCIALES</span>
+        </div>
+      </div>
+      <div class="cg-item">
+        <img src="assets/Competencia_APEX_Cup.png" alt="Comunidad Apex compitiendo en liga" />
+        <div class="cg-overlay">
+          <span class="cg-label">APEX CUP LEAGUE</span>
+        </div>
+      </div>
+      <div class="cg-item">
+        <img src="assets/gallery4.jpg" alt="Sesión de coaching grupal" />
+        <div class="cg-overlay">
+          <span class="cg-label">COACHING GRUPAL</span>
+        </div>
+      </div>
+      <div class="cg-item">
+        <img src="assets/practicaensimulador_APEX.png" alt="Practica en simulador" />
+        <div class="cg-overlay">
+          <span class="cg-label">PRÁCTICAS LIBRES</span>
+        </div>
+      </div>
+      <div class="cg-item cg-wide">
+        <img src="assets/Equipo_Apex.png" alt="Encuentro de la comunidad Apex Sim Racing" />
+        <div class="cg-overlay">
+          <span class="cg-label">COMUNIDAD APEX</span>
+        </div>
+      </div>
+      <div class="cg-card">
+        <div class="cgc-tag">COMUNIDAD</div>
+        <div class="cgc-num">+800</div>
+        <div class="cgc-label">PILOTOS EN DISCORD</div>
+        <p class="cgc-desc">Salas de voz activas, setups compartidos y lobbies de práctica diarios libres.</p>
+        <a href="#" class="cgc-link">UNIRSE AL GRUPO <span>→</span></a>
+      </div>
+    </div>
+   </section>
+
+  <!-- ═══════════════════════════════════════
+       10. EMPRESAS — Oferta secundaria B2B
+  ════════════════════════════════════════ -->
+  <section class="section empresas-section" id="empresas">
+    <div class="section-inner">
+      <div class="emp-header">
+        <span class="section-tag">— B2B</span>
+        <h2 class="section-title">PARA<br><em>EMPRESAS</em></h2>
+        <a href="#" class="link-arrow">VER SOLUCIONES B2B <span>→</span></a>
+      </div>
+      <div class="emp-img-banner">
+        <img src="assets/empresas.jpg" alt="Activación corporativa con simuladores" />
+        <div class="emp-img-overlay"></div>
+        <div class="emp-img-text">
+          <span class="section-tag" style="margin:0;color:rgba(255,255,255,0.5)">EXPERIENCIAS · EVENTOS · MARCAS</span>
+        </div>
+      </div>
+      <div class="emp-grid">
+        <div class="emp-card magnetic">
+          <div class="emp-icon-wrap"><img src="assets/icon-activaciones-marca.png" alt="Activaciones de marca" /></div>
+          <h4>ACTIVACIONES<br>DE MARCA</h4>
+          <p>Experiencias memorables para clientes y equipos.</p>
+        </div>
+        <div class="emp-card magnetic">
+          <div class="emp-icon-wrap"><img src="assets/icon-team-building.png" alt="Team building" /></div>
+          <h4>TEAM<br>BUILDING</h4>
+          <p>Actividades únicas que consolidan equipos de alto rendimiento.</p>
+        </div>
+        <div class="emp-card magnetic">
+          <div class="emp-icon-wrap"><img src="assets/icon-lanzamiento-producto.png" alt="Lanzamientos de producto" /></div>
+          <h4>LANZAMIENTOS</h4>
+          <p>Presentaciones de producto con impacto y adrenalina.</p>
+        </div>
+        <div class="emp-card magnetic">
+          <div class="emp-icon-wrap"><img src="assets/icon-evento-corporativo.png" alt="Eventos corporativos" /></div>
+          <h4>EVENTOS<br>CORPORATIVOS</h4>
+          <p>Congresos, convenciones y eventos con simuladores profesionales.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══════════════════════════════════════
+       11. NEWSLETTER — Red de contención final
+  ════════════════════════════════════════ -->
+  <section class="newsletter-section">
+    <div class="nl-inner">
+      <h2>NO TE PIERDAS<br>NADA. <em>SÉ PARTE<br>DE LO QUE VIENE.</em></h2>
+      <div class="nl-form">
+        <input type="email" id="nlEmail" placeholder="tu@email.com" class="nl-input" />
+        <button class="btn-primary magnetic" id="nlBtn">
+          <span>QUIERO ESTAR AL DÍA</span>
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+        </button>
+      </div>
+      <p class="nl-fine">Sin spam. Cancelá cuando quieras.</p>
+    </div>
+  </section>
+
+  <!-- ═══ FOOTER ═══ -->
+  <footer class="footer">
+    <div class="footer-inner">
+      <div class="footer-top">
+        <div class="footer-brand">
+          <img src="assets/logotipofooter.png" alt="logoapexfinal" />
+          <p class="footer-tagline">Entrenamos pilotos.<br>No jugadores.</p>
+          <div class="footer-socials">
+            <a href="#" aria-label="Instagram">IG</a>
+            <a href="#" aria-label="Twitter">TW</a>
+            <a href="#" aria-label="YouTube">YT</a>
+            <a href="#" aria-label="TikTok">TK</a>
+            <a href="#" aria-label="Discord">DS</a>
+          </div>
+        </div>
+
+        <div class="footer-col">
+          <h5>ACADEMIA</h5>
+          <a href="#">Cursos</a>
+          <a href="#">Coaching</a>
+          <a href="#">Ligas &amp; Torneos</a>
+          <a href="#">Metodología</a>
+          <a href="#">Road To 2027</a>
+        </div>
+        <div class="footer-col">
+          <h5>EXPERIENCIAS</h5>
+          <a href="#">Simuladores</a>
+          <a href="#">Activaciones</a>
+          <a href="#">Eventos</a>
+          <a href="#">Calendario</a>
+        </div>
+        <div class="footer-col">
+          <h5>EMPRESAS</h5>
+          <a href="#">Soluciones B2B</a>
+          <a href="#">Team Building</a>
+          <a href="#">Alquiler de Sims</a>
+        </div>
+        <div class="footer-col">
+          <h5>CONTACTO</h5>
+          <a href="tel:+541123456789">+54 11 2234 5679</a>
+          <a href="mailto:hola@apexsimracing.com">hola@apexsimracing.com</a>
+          <a href="#" class="btn-pill" style="margin-top:12px;display:inline-block;font-size:12px">CONTACTANOS</a>
+        </div>
+      </div>
+
+      <div class="footer-bottom">
+        <span>© 2024 APEX SIM RACING. TODOS LOS DERECHOS RESERVADOS.</span>
+        <div class="footer-legal">
+          <a href="#">Términos</a>
+          <a href="#">Privacidad</a>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <script src="main.js"></script>
+</body>
+</html>
