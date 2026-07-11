@@ -1,0 +1,2291 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Apex Sim Racing — UI Library</title>
+  <meta name="description" content="Biblioteca de componentes y sistema de diseño de Apex Sim Racing. Tokens, tipografía, botones, cards, formularios y más." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet" />
+  <style>
+    /* ── DESIGN TOKENS (same as styles.css) ── */
+    :root {
+      --bg:       #080808;
+      --bg2:      #0f0f0f;
+      --bg3:      #161616;
+      --border:   rgba(255,255,255,0.08);
+      --border2:  rgba(255,255,255,0.14);
+      --white:    #ffffff;
+      --muted:    rgba(255,255,255,0.86);
+      --muted2:   rgba(255,255,255,0.25);
+
+      --cyan:     #00E5FF;
+      --purple:   #7C3AED;
+      --purple-deep: #4a0080;
+      --red:      #FF3D00;
+      --yellow:   #FFD600;
+      --green:    #69F0AE;
+      --pink:     #B5005A;
+
+      --font:     'Space Grotesk', sans-serif;
+      --mono:     'Space Mono', monospace;
+      --ease:     cubic-bezier(0.16, 1, 0.3, 1);
+
+      /* Library-specific */
+      --sidebar-w: 260px;
+      --lib-max: 1200px;
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; font-size: 16px; }
+    body {
+      font-family: var(--font);
+      background: var(--bg);
+      color: var(--white);
+      overflow-x: hidden;
+      display: flex;
+      min-height: 100vh;
+    }
+    a { text-decoration: none; color: inherit; }
+    ul { list-style: none; }
+    button { border: none; background: none; font-family: inherit; cursor: pointer; }
+    img { display: block; max-width: 100%; }
+    ::-webkit-scrollbar { width: 4px; height: 4px; }
+    ::-webkit-scrollbar-track { background: var(--bg); }
+    ::-webkit-scrollbar-thumb { background: var(--border2); border-radius: 4px; }
+
+    /* ════════════════════════════════════════
+       SIDEBAR NAV
+    ════════════════════════════════════════ */
+    .lib-sidebar {
+      position: fixed;
+      top: 0; left: 0;
+      width: var(--sidebar-w);
+      height: 100vh;
+      background: var(--bg2);
+      border-right: 1px solid var(--border);
+      display: flex;
+      flex-direction: column;
+      overflow-y: auto;
+      z-index: 100;
+    }
+
+    .sidebar-logo {
+      padding: 28px 24px 20px;
+      border-bottom: 1px solid var(--border);
+      flex-shrink: 0;
+    }
+    .sidebar-logo-mark {
+      font-family: var(--mono);
+      font-size: 13px;
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      color: var(--white);
+      display: flex;
+      flex-direction: column;
+      gap: 2px;
+    }
+    .sidebar-logo-mark span {
+      font-size: 9px;
+      letter-spacing: 0.28em;
+      color: var(--cyan);
+    }
+    .sidebar-lib-label {
+      font-family: var(--mono);
+      font-size: 9px;
+      letter-spacing: 0.22em;
+      color: var(--muted2);
+      text-transform: uppercase;
+      margin-top: 6px;
+    }
+
+    .sidebar-nav {
+      padding: 20px 0 40px;
+      flex: 1;
+    }
+    .sidebar-group-title {
+      font-family: var(--mono);
+      font-size: 9px;
+      font-weight: 700;
+      letter-spacing: 0.22em;
+      color: var(--muted2);
+      text-transform: uppercase;
+      padding: 16px 24px 8px;
+    }
+    .sidebar-link {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 9px 24px;
+      font-size: 13px;
+      font-weight: 500;
+      color: var(--muted);
+      transition: color 0.2s, background 0.2s;
+      position: relative;
+    }
+    .sidebar-link::before {
+      content: '';
+      position: absolute;
+      left: 0; top: 0; bottom: 0;
+      width: 2px;
+      background: var(--cyan);
+      opacity: 0;
+      transition: opacity 0.2s;
+    }
+    .sidebar-link:hover,
+    .sidebar-link.active {
+      color: var(--white);
+      background: rgba(255,255,255,0.03);
+    }
+    .sidebar-link.active::before { opacity: 1; }
+    .sidebar-link-dot {
+      width: 5px;
+      height: 5px;
+      border-radius: 50%;
+      background: var(--border2);
+      flex-shrink: 0;
+      transition: background 0.2s;
+    }
+    .sidebar-link:hover .sidebar-link-dot,
+    .sidebar-link.active .sidebar-link-dot { background: var(--cyan); }
+
+    /* ════════════════════════════════════════
+       TOP BAR
+    ════════════════════════════════════════ */
+    .lib-topbar {
+      position: fixed;
+      top: 0; left: var(--sidebar-w); right: 0;
+      height: 56px;
+      background: rgba(8,8,8,0.92);
+      border-bottom: 1px solid var(--border);
+      backdrop-filter: blur(16px);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 48px;
+      z-index: 50;
+    }
+    .topbar-breadcrumb {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-family: var(--mono);
+      font-size: 11px;
+      color: var(--muted2);
+    }
+    .topbar-breadcrumb span { color: var(--white); }
+    .topbar-version {
+      font-family: var(--mono);
+      font-size: 10px;
+      letter-spacing: 0.12em;
+      color: var(--purple);
+      border: 1px solid rgba(124,58,237,0.35);
+      padding: 4px 10px;
+      border-radius: 2px;
+    }
+
+    /* ════════════════════════════════════════
+       MAIN CONTENT
+    ════════════════════════════════════════ */
+    .lib-main {
+      margin-left: var(--sidebar-w);
+      padding-top: 56px;
+      flex: 1;
+      min-width: 0;
+    }
+
+    .lib-content {
+      max-width: var(--lib-max);
+      padding: 60px 48px 120px;
+    }
+
+    /* Section headers */
+    .lib-section {
+      margin-bottom: 100px;
+    }
+    .lib-section-header {
+      margin-bottom: 40px;
+      padding-bottom: 24px;
+      border-bottom: 1px solid var(--border);
+    }
+    .lib-section-tag {
+      font-family: var(--mono);
+      font-size: 10px;
+      letter-spacing: 0.22em;
+      color: var(--cyan);
+      text-transform: uppercase;
+      margin-bottom: 10px;
+      display: block;
+    }
+    .lib-section-title {
+      font-family: var(--font);
+      font-size: clamp(28px, 3vw, 40px);
+      font-weight: 700;
+      letter-spacing: -0.02em;
+      text-transform: uppercase;
+      color: var(--white);
+      margin-bottom: 8px;
+    }
+    .lib-section-desc {
+      font-size: 14px;
+      color: var(--muted);
+      line-height: 1.6;
+      max-width: 600px;
+    }
+
+    /* Component preview box */
+    .preview-box {
+      background: var(--bg3);
+      border: 1px solid var(--border);
+      border-radius: 4px;
+      padding: 48px 40px;
+      margin-bottom: 16px;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 20px;
+      align-items: center;
+      position: relative;
+      overflow: hidden;
+    }
+    .preview-box::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background-image: radial-gradient(rgba(255,255,255,0.03) 1px, transparent 1px);
+      background-size: 24px 24px;
+      pointer-events: none;
+    }
+    .preview-box.dark-bg {
+      background: var(--bg);
+    }
+    .preview-box.col {
+      flex-direction: column;
+      align-items: flex-start;
+    }
+
+    /* Code block */
+    .code-block {
+      background: #0a0a0a;
+      border: 1px solid var(--border);
+      border-radius: 4px;
+      padding: 20px 24px;
+      font-family: var(--mono);
+      font-size: 12px;
+      color: var(--muted);
+      line-height: 1.7;
+      overflow-x: auto;
+      margin-bottom: 28px;
+      white-space: pre;
+    }
+    .code-block .token-prop { color: var(--cyan); }
+    .code-block .token-val  { color: var(--purple); }
+    .code-block .token-cls  { color: var(--yellow); }
+    .code-block .token-comment { color: var(--muted2); }
+
+    /* Component label */
+    .comp-label {
+      font-family: var(--mono);
+      font-size: 10px;
+      letter-spacing: 0.18em;
+      color: var(--muted2);
+      text-transform: uppercase;
+      margin-bottom: 16px;
+      margin-top: 32px;
+    }
+    .comp-label:first-child { margin-top: 0; }
+
+    /* ════════════════════════════════════════
+       ── 1. TOKEN SWATCHES
+    ════════════════════════════════════════ */
+    .token-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+      gap: 12px;
+      margin-bottom: 28px;
+    }
+    .token-swatch {
+      border-radius: 4px;
+      overflow: hidden;
+      border: 1px solid var(--border);
+    }
+    .swatch-color {
+      height: 64px;
+      width: 100%;
+    }
+    .swatch-info {
+      padding: 10px 12px;
+      background: var(--bg2);
+    }
+    .swatch-name {
+      font-family: var(--mono);
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      color: var(--white);
+      margin-bottom: 2px;
+    }
+    .swatch-value {
+      font-family: var(--mono);
+      font-size: 9px;
+      letter-spacing: 0.06em;
+      color: var(--muted2);
+    }
+
+    /* BG token swatches */
+    .bg-token-row {
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+      margin-bottom: 28px;
+    }
+    .bg-token {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 10px 14px;
+      border: 1px solid var(--border);
+      border-radius: 4px;
+    }
+    .bg-token-dot {
+      width: 24px;
+      height: 24px;
+      border-radius: 3px;
+      border: 1px solid var(--border2);
+    }
+    .bg-token-info { display: flex; flex-direction: column; gap: 2px; }
+    .bg-token-name { font-family: var(--mono); font-size: 10px; font-weight: 700; color: var(--white); }
+    .bg-token-hex  { font-family: var(--mono); font-size: 9px; color: var(--muted2); }
+
+    /* ════════════════════════════════════════
+       ── 2. TYPOGRAPHY
+    ════════════════════════════════════════ */
+    .type-sample {
+      padding: 20px 0;
+      border-bottom: 1px solid var(--border);
+    }
+    .type-sample:last-child { border-bottom: none; }
+    .type-meta {
+      font-family: var(--mono);
+      font-size: 10px;
+      letter-spacing: 0.16em;
+      color: var(--muted2);
+      margin-bottom: 10px;
+      text-transform: uppercase;
+    }
+
+    /* ════════════════════════════════════════
+       ── 3. BUTTONS (from styles.css)
+    ════════════════════════════════════════ */
+    /* btn-pill */
+    .btn-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      font-family: var(--font);
+      font-size: 13px;
+      font-weight: 600;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      padding: 10px 22px;
+      border-radius: 100px;
+      border: 1px solid var(--border2);
+      color: var(--white);
+      transition: background 0.25s, border-color 0.25s, transform 0.2s;
+      background: transparent;
+      cursor: pointer;
+    }
+    .btn-pill:hover {
+      background: rgba(255,255,255,0.08);
+      border-color: rgba(255,255,255,0.3);
+    }
+    .btn-pill.discord-btn { background: #5865F2; border-color: #5865F2; }
+    .btn-pill.discord-btn:hover { background: #4752c4; border-color: #4752c4; }
+    .btn-pill.btn-academy {
+      background: rgba(124,58,237,0.15);
+      border-color: rgba(124,58,237,0.5);
+      box-shadow: 0 0 12px rgba(124,58,237,0.15);
+    }
+    .btn-pill.btn-academy:hover {
+      background: var(--purple);
+      border-color: var(--purple);
+      box-shadow: 0 0 22px rgba(124,58,237,0.45);
+    }
+
+    /* btn-primary */
+    .btn-primary {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      font-family: var(--font);
+      font-size: 14px;
+      font-weight: 600;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+      padding: 14px 28px;
+      border-radius: 4px;
+      background: var(--white);
+      color: var(--bg);
+      transition: background 0.25s, transform 0.2s;
+      cursor: pointer;
+      border: none;
+    }
+    .btn-primary svg { width: 16px; height: 16px; transition: transform 0.25s; }
+    .btn-primary:hover { background: #ece2fb; }
+    .btn-primary:hover svg { transform: translateX(4px); }
+
+    /* btn-ghost */
+    .btn-ghost {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      font-family: var(--font);
+      font-size: 14px;
+      font-weight: 600;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+      padding: 14px 28px;
+      border-radius: 4px;
+      border: 1px solid var(--border2);
+      color: var(--white);
+      background: transparent;
+      transition: border-color 0.25s, background 0.25s;
+      cursor: pointer;
+    }
+    .btn-ghost:hover {
+      border-color: rgba(255,255,255,0.4);
+      background: rgba(255,255,255,0.04);
+    }
+
+    /* ════════════════════════════════════════
+       ── 4. BADGES & TAGS
+    ════════════════════════════════════════ */
+    .hero-badge {
+      display: inline-block;
+      font-family: var(--mono);
+      font-size: 10px;
+      letter-spacing: 0.25em;
+      text-transform: uppercase;
+      color: var(--purple);
+      border: 1px solid rgba(124,58,237,0.4);
+      padding: 6px 14px;
+      border-radius: 2px;
+    }
+    .section-tag {
+      font-family: var(--mono);
+      font-size: 11px;
+      font-weight: 400;
+      letter-spacing: 0.2em;
+      color: var(--muted);
+      text-transform: uppercase;
+      display: inline-block;
+    }
+    .card-badge {
+      font-family: var(--mono);
+      font-size: 9px;
+      font-weight: 700;
+      letter-spacing: 0.15em;
+      color: var(--bg);
+      background: var(--purple);
+      padding: 6px 14px;
+      border-radius: 2px;
+      text-transform: uppercase;
+      display: inline-block;
+    }
+    .cgc-tag-demo {
+      font-family: var(--mono);
+      font-size: 9px;
+      letter-spacing: 0.16em;
+      color: #5865F2;
+      font-weight: 700;
+      text-transform: uppercase;
+      display: inline-block;
+    }
+
+    /* ════════════════════════════════════════
+       ── 5. PROGRAM CARDS
+    ════════════════════════════════════════ */
+    .program-card {
+      background: var(--bg2);
+      padding: 0;
+      display: flex;
+      flex-direction: column;
+      position: relative;
+      overflow: hidden;
+      border-top: 3px solid var(--glow, transparent);
+      transition: background 0.3s;
+      cursor: pointer;
+      flex: 1;
+      min-width: 220px;
+    }
+    .program-card:hover { background: var(--bg3); }
+
+    /* imagen superior de la card */
+    .card-image-wrap {
+      width: 100%;
+      height: 215px;
+      overflow: hidden;
+      position: relative;
+      flex-shrink: 0;
+    }
+    .card-image-wrap img {
+      width: 100%; height: 100%;
+      object-fit: cover;
+      display: block;
+      transition: transform 0.6s cubic-bezier(0.4,0.15,0.15,1);
+    }
+    .program-card:hover .card-image-wrap img { transform: scale(1.08); }
+    .card-image-overlay {
+      position: absolute;
+      left: 0; right: 0; bottom: 0;
+      padding: 18px 20px 14px;
+      background: linear-gradient(180deg, rgba(11,15,25,0) 0%, rgba(11,15,25,0.55) 45%, rgba(11,15,25,0.96) 100%);
+    }
+    .card-image-overlay .card-tag { margin-bottom: 3px; color: rgba(255,255,255,0.75); }
+    .card-image-overlay h3 { margin-bottom: 0; }
+
+    /* cuerpo inferior de la card */
+    .card-info {
+      padding: 16px 20px 20px;
+      display: flex;
+      flex-direction: column;
+      gap: 3px;
+      flex: 1;
+    }
+
+    /* specs row */
+    .card-specs {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      margin-top: 8px;
+      padding-top: 10px;
+      border-top: 1px solid var(--border);
+    }
+    .card-spec { display: flex; flex-direction: column; gap: 2px; }
+    .card-spec-num {
+      font-family: var(--mono);
+      font-size: 16px;
+      font-weight: 700;
+      color: var(--white);
+      line-height: 1;
+    }
+    .card-spec-label {
+      font-family: var(--mono);
+      font-size: 8.5px;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      color: var(--muted2);
+    }
+    .card-spec-divider { width: 1px; height: 22px; background: var(--border); flex-shrink: 0; }
+
+    .card-num {
+      font-family: var(--mono);
+      font-size: 28px;
+      font-weight: 700;
+      color: var(--border);
+      line-height: 1;
+      margin-bottom: 4px;
+      transition: color 0.3s;
+    }
+    .program-card:hover .card-num { color: var(--white); }
+    .card-tag {
+      font-family: var(--mono);
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      margin-bottom: 3px;
+      color: var(--muted2);
+    }
+    .program-card h3 {
+      font-family: var(--font);
+      font-size: 18px;
+      font-weight: 700;
+      letter-spacing: -0.02em;
+      text-transform: uppercase;
+      color: var(--white);
+      line-height: 1.1;
+      margin-bottom: 2px;
+    }
+    .card-desc {
+      font-size: 11.5px;
+      line-height: 1.45;
+      color: var(--muted);
+      margin-bottom: 4px;
+    }
+    .card-price {
+      display: flex;
+      align-items: baseline;
+      flex-wrap: wrap;
+      gap: 6px;
+      padding-top: 8px;
+      margin-top: auto;
+      border-top: 1px solid var(--border);
+    }
+    .price-amount {
+      font-family: var(--mono);
+      font-size: 18px;
+      font-weight: 700;
+      color: var(--white);
+      letter-spacing: -0.01em;
+    }
+    .price-period {
+      font-size: 10px;
+      color: var(--muted2);
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+    .card-link {
+      font-family: var(--mono);
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--white);
+      border: 1px solid rgba(255,255,255,0.15);
+      background: rgba(255,255,255,0.02);
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      padding: 10px 18px;
+      border-radius: 4px;
+      transition: all 0.3s var(--ease);
+      cursor: pointer;
+      text-align: center;
+      width: 100%;
+      margin-top: auto;
+    }
+    .card-link:hover,
+    .program-card:hover .card-link {
+      background: var(--white);
+      border-color: var(--white);
+      color: var(--bg);
+      box-shadow: 0 0 15px rgba(255,255,255,0.25);
+    }
+
+
+    /* ════════════════════════════════════════
+       ── 6. HUD PANELS
+    ════════════════════════════════════════ */
+    .hud-panel {
+      background: rgba(8,8,8,0.92);
+      border: 1px solid var(--border2);
+      padding: 14px 18px;
+      backdrop-filter: blur(16px);
+      min-width: 200px;
+    }
+    .hud-label {
+      font-family: var(--mono);
+      font-size: 9px;
+      letter-spacing: 0.2em;
+      color: var(--muted2);
+      text-transform: uppercase;
+      display: block;
+      margin-bottom: 4px;
+    }
+    .hud-val {
+      font-family: var(--mono);
+      font-size: 22px;
+      font-weight: 700;
+      color: var(--white);
+      letter-spacing: 0.02em;
+    }
+    .hud-val.purple { color: var(--purple); }
+    .hud-val.cyan { color: var(--cyan); }
+    .hud-delta {
+      font-family: var(--mono);
+      font-size: 40px;
+      font-weight: 700;
+      color: var(--cyan);
+      line-height: 1;
+      display: block;
+      margin-bottom: 4px;
+    }
+    .hud-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+      margin-bottom: 8px;
+    }
+    .hud-row:last-child { margin-bottom: 0; }
+    .hud-sectors { display: flex; gap: 4px; margin-top: 6px; }
+    .sector { height: 5px; flex: 1; border-radius: 1px; }
+    .sector.green { background: var(--cyan); }
+    .sector.purple { background: var(--purple); }
+    .sector.muted { background: var(--border2); }
+
+    /* ════════════════════════════════════════
+       ── 7. STAT ITEMS
+    ════════════════════════════════════════ */
+    .stat-item {
+      display: flex;
+      flex-direction: column;
+      gap: 2px;
+    }
+    .stat-num {
+      font-family: var(--mono);
+      font-size: 28px;
+      font-weight: 700;
+      color: var(--white);
+      line-height: 1;
+    }
+    .stat-plus { font-family: var(--mono); font-size: 18px; color: var(--purple); }
+    .stat-label {
+      font-size: 11px;
+      font-weight: 500;
+      letter-spacing: 0.08em;
+      color: var(--muted);
+      text-transform: uppercase;
+    }
+    .stat-divider { width: 1px; height: 40px; background: var(--border); }
+
+    /* Academy stats */
+    .ac-stat {
+      background: var(--bg2);
+      padding: 28px 24px;
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+      border: 1px solid var(--border);
+      flex: 1;
+      min-width: 120px;
+    }
+    .ac-stat-num {
+      font-family: var(--mono);
+      font-size: clamp(28px, 3vw, 40px);
+      font-weight: 700;
+      color: var(--cyan);
+      letter-spacing: -0.02em;
+      line-height: 1;
+    }
+    .ac-stat-label {
+      font-size: 12px;
+      color: var(--muted2);
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+    }
+
+    /* ════════════════════════════════════════
+       ── 8. TESTIMONIAL CARDS
+    ════════════════════════════════════════ */
+    .testi-card {
+      background: var(--bg3);
+      padding: 32px 28px;
+      display: flex;
+      flex-direction: column;
+      gap: 24px;
+      justify-content: space-between;
+      transition: background 0.3s;
+      position: relative;
+      border: 1px solid var(--border);
+      flex: 1;
+      min-width: 220px;
+    }
+    .testi-card::before {
+      content: '"';
+      position: absolute;
+      top: 8px; left: 20px;
+      font-family: var(--font);
+      font-size: 64px;
+      font-weight: 700;
+      color: rgba(0,229,255,0.07);
+      line-height: 1;
+    }
+    .testi-card:hover { background: #1a1a1a; }
+    .testi-quote {
+      font-size: 14px;
+      line-height: 1.65;
+      color: var(--white);
+      position: relative;
+      z-index: 1;
+    }
+    .testi-author {
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+      padding-top: 16px;
+      border-top: 1px solid var(--border);
+    }
+    .testi-name {
+      font-family: var(--mono);
+      font-size: 12px;
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      color: var(--cyan);
+    }
+    .testi-level {
+      font-family: var(--mono);
+      font-size: 10px;
+      letter-spacing: 0.08em;
+      color: var(--muted2);
+      text-transform: uppercase;
+    }
+
+    /* ════════════════════════════════════════
+       ── 9. FAQ ACCORDION
+    ════════════════════════════════════════ */
+    .faq-list { display: flex; flex-direction: column; width: 100%; }
+    .faq-item { border-bottom: 1px solid var(--border); }
+    .faq-item:first-child { border-top: 1px solid var(--border); }
+    .faq-q {
+      width: 100%;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 16px;
+      padding: 24px 0;
+      font-size: 15px;
+      font-weight: 600;
+      color: var(--white);
+      text-transform: uppercase;
+      letter-spacing: 0.02em;
+      background: none;
+      border: none;
+      font-family: var(--font);
+      cursor: pointer;
+      text-align: left;
+    }
+    .faq-icon {
+      width: 20px; height: 20px;
+      border: 1px solid var(--border2);
+      border-radius: 50%;
+      flex-shrink: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--muted2);
+      font-size: 16px;
+      transition: transform .3s var(--ease);
+      font-family: var(--mono);
+    }
+    .faq-item.open .faq-icon { transform: rotate(45deg); color: var(--cyan); border-color: var(--cyan); }
+    .faq-a {
+      font-size: 14px;
+      color: var(--muted);
+      line-height: 1.7;
+      max-height: 0;
+      overflow: hidden;
+      transition: max-height .4s var(--ease), padding .4s var(--ease);
+    }
+    .faq-item.open .faq-a { max-height: 300px; padding-bottom: 24px; }
+
+    /* ════════════════════════════════════════
+       ── 10. MARQUEE
+    ════════════════════════════════════════ */
+    .marquee-bar {
+      background: var(--white);
+      overflow: hidden;
+      padding: 14px 0;
+      position: relative;
+      width: 100%;
+    }
+    .marquee-track {
+      display: flex;
+      white-space: nowrap;
+      animation: marquee 18s linear infinite;
+    }
+    .marquee-track span {
+      font-family: var(--mono);
+      font-size: 12px;
+      font-weight: 700;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--bg);
+      padding-right: 0;
+    }
+    @keyframes marquee {
+      from { transform: translateX(0); }
+      to { transform: translateX(-33.333%); }
+    }
+
+    /* ════════════════════════════════════════
+       ── 11. LINK ARROW
+    ════════════════════════════════════════ */
+    .link-arrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      font-family: var(--mono);
+      font-size: 12px;
+      font-weight: 700;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--muted);
+      transition: color 0.25s, gap 0.25s;
+      cursor: pointer;
+    }
+    .link-arrow span { transition: transform 0.25s; }
+    .link-arrow:hover { color: var(--white); gap: 10px; }
+    .link-arrow:hover span { transform: translateX(4px); }
+
+    /* ════════════════════════════════════════
+       ── 12. FORM ELEMENTS
+    ════════════════════════════════════════ */
+    .nl-form {
+      display: flex;
+      gap: 0;
+      max-width: 480px;
+    }
+    .nl-input {
+      flex: 1;
+      padding: 16px 20px;
+      background: var(--bg3);
+      border: 1px solid var(--border2);
+      border-right: none;
+      border-radius: 4px 0 0 4px;
+      font-family: var(--font);
+      font-size: 14px;
+      color: var(--white);
+      outline: none;
+      transition: border-color 0.25s;
+    }
+    .nl-input::placeholder { color: var(--muted2); }
+    .nl-input:focus { border-color: rgba(255,255,255,0.3); }
+    .nl-form .btn-primary { border-radius: 0 4px 4px 0; white-space: nowrap; }
+
+    /* ════════════════════════════════════════
+       ── 13. DRIVER CARD
+    ════════════════════════════════════════ */
+    .driver-card {
+      display: flex;
+      gap: 20px;
+      align-items: flex-start;
+      background: var(--bg2);
+      border: 1px solid var(--border);
+      padding: 24px;
+    }
+    .driver-avatar {
+      width: 56px; height: 56px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, var(--purple), #4a0080);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: var(--mono);
+      font-size: 16px;
+      font-weight: 700;
+      color: var(--white);
+      flex-shrink: 0;
+    }
+    .driver-name {
+      font-family: var(--mono);
+      font-size: 14px;
+      font-weight: 700;
+      letter-spacing: 0.06em;
+      color: var(--white);
+      text-transform: uppercase;
+      margin-bottom: 2px;
+    }
+    .driver-era {
+      font-family: var(--mono);
+      font-size: 10px;
+      letter-spacing: 0.15em;
+      color: var(--purple);
+      text-transform: uppercase;
+      margin-bottom: 14px;
+    }
+
+    /* ════════════════════════════════════════
+       ── 14. CHECKLIST
+    ════════════════════════════════════════ */
+    .card-checklist {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+    .check-item {
+      display: flex;
+      align-items: flex-start;
+      gap: 10px;
+      font-size: 13px;
+      line-height: 1.4;
+      color: var(--muted);
+    }
+    .check-item .check-icon {
+      flex-shrink: 0;
+      width: 16px; height: 16px;
+      border-radius: 3px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: var(--mono);
+      font-size: 10px;
+      font-weight: 700;
+      margin-top: 1px;
+    }
+    .check-item.yes .check-icon { background: rgba(105,240,174,0.12); color: var(--green); }
+    .check-item.no { color: var(--muted2); }
+    .check-item.no .check-icon { background: rgba(255,255,255,0.04); color: var(--muted2); }
+    .check-item.no span:last-child {
+      text-decoration: line-through;
+      text-decoration-color: rgba(255,255,255,0.15);
+    }
+
+    /* ════════════════════════════════════════
+       ── 15. LEAGUE ITEMS
+    ════════════════════════════════════════ */
+    .league-item {
+      display: flex;
+      align-items: flex-start;
+      gap: 14px;
+      padding: 16px 0;
+      border-bottom: 1px solid var(--border);
+    }
+    .league-item:last-child { border-bottom: none; }
+    .league-dot {
+      width: 8px; height: 8px;
+      border-radius: 50%;
+      flex-shrink: 0;
+      margin-top: 5px;
+    }
+    .league-name {
+      font-family: var(--mono);
+      font-size: 13px;
+      font-weight: 700;
+      letter-spacing: 0.05em;
+      color: var(--white);
+      text-transform: uppercase;
+      margin-bottom: 3px;
+    }
+    .league-class {
+      font-family: var(--mono);
+      font-size: 10px;
+      letter-spacing: 0.15em;
+      color: var(--muted2);
+      text-transform: uppercase;
+    }
+
+    /* ════════════════════════════════════════
+       ── 16. DISC CARD
+    ════════════════════════════════════════ */
+    .disc-card {
+      width: 220px;
+      background: var(--bg2);
+      border-top: 2px solid var(--accent, var(--cyan));
+      padding: 32px 22px 22px;
+      position: relative;
+      flex-shrink: 0;
+      cursor: pointer;
+      transition: background 0.3s;
+      border: 1px solid var(--border);
+      border-top: 2px solid var(--accent, var(--cyan));
+    }
+    .disc-card:hover { background: var(--bg3); }
+    .disc-num {
+      font-family: var(--mono);
+      font-size: 11px;
+      letter-spacing: 0.2em;
+      color: var(--muted2);
+      margin-bottom: 32px;
+      display: block;
+    }
+    .disc-card h3 {
+      font-family: var(--font);
+      font-size: 26px;
+      font-weight: 700;
+      letter-spacing: -0.03em;
+      text-transform: uppercase;
+      color: var(--white);
+      line-height: 1.0;
+      margin-bottom: 12px;
+    }
+    .disc-card p { font-size: 13px; line-height: 1.65; color: var(--muted); }
+    .disc-line {
+      width: 24px; height: 1px;
+      background: var(--cyan);
+      margin-top: 24px;
+      transition: width 0.3s var(--ease);
+    }
+    .disc-card:hover .disc-line { width: 48px; }
+
+    /* ════════════════════════════════════════
+       ── 17. FILMSTRIP ITEM
+    ════════════════════════════════════════ */
+    .filmstrip-item {
+      flex-shrink: 0;
+      width: 280px;
+      aspect-ratio: 4/3;
+      position: relative;
+      border-radius: 4px;
+      overflow: hidden;
+      border: 1px solid var(--border);
+      background: var(--bg2);
+    }
+    .filmstrip-cap {
+      position: absolute;
+      bottom: 12px; left: 14px;
+      font-family: var(--mono);
+      font-size: 9px; font-weight: 700;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.55);
+      background: rgba(8,8,8,0.6);
+      padding: 4px 10px;
+      border-radius: 2px;
+      backdrop-filter: blur(4px);
+    }
+    .filmstrip-placeholder {
+      width: 100%; height: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: var(--mono);
+      font-size: 11px;
+      color: var(--muted2);
+      letter-spacing: 0.12em;
+      background: linear-gradient(135deg, var(--bg2), var(--bg3));
+    }
+
+    /* ════════════════════════════════════════
+       ── 18. GLITCH
+    ════════════════════════════════════════ */
+    .glitch-hover {
+      position: relative;
+      font-family: var(--font);
+      font-size: clamp(32px, 4vw, 52px);
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: -0.02em;
+      cursor: pointer;
+    }
+    .glitch-hover::before,
+    .glitch-hover::after {
+      content: attr(data-text);
+      position: absolute;
+      inset: 0;
+      opacity: 0;
+      transition: opacity 0.1s;
+    }
+    .glitch-hover:hover::before {
+      opacity: 0.7;
+      color: var(--cyan);
+      transform: translateX(-2px);
+      animation: glitch1 0.3s steps(2) forwards;
+    }
+    .glitch-hover:hover::after {
+      opacity: 0.7;
+      color: var(--red);
+      transform: translateX(2px);
+      animation: glitch2 0.3s steps(2) 0.05s forwards;
+    }
+    @keyframes glitch1 {
+      0%   { clip-path: inset(20% 0 60% 0); }
+      33%  { clip-path: inset(70% 0 10% 0); }
+      66%  { clip-path: inset(40% 0 30% 0); }
+      100% { clip-path: inset(0% 0 0% 0); opacity: 0; }
+    }
+    @keyframes glitch2 {
+      0%   { clip-path: inset(60% 0 20% 0); }
+      33%  { clip-path: inset(10% 0 70% 0); }
+      66%  { clip-path: inset(30% 0 40% 0); }
+      100% { clip-path: inset(0% 0 0% 0); opacity: 0; }
+    }
+
+    /* ════════════════════════════════════════
+       ── HERO BANNER (top of content)
+    ════════════════════════════════════════ */
+    .lib-hero {
+      background: var(--bg);
+      border-bottom: 1px solid var(--border);
+      padding: 80px 48px 60px;
+      position: relative;
+      overflow: hidden;
+    }
+    .lib-hero::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background:
+        radial-gradient(ellipse 60% 50% at 80% 50%, rgba(124,58,237,0.12), transparent 65%),
+        radial-gradient(ellipse 40% 60% at 10% 80%, rgba(0,229,255,0.06), transparent 60%);
+      pointer-events: none;
+    }
+    .lib-hero-tag {
+      font-family: var(--mono);
+      font-size: 10px;
+      letter-spacing: 0.3em;
+      color: var(--cyan);
+      text-transform: uppercase;
+      margin-bottom: 16px;
+      display: block;
+    }
+    .lib-hero-title {
+      font-family: var(--font);
+      font-size: clamp(44px, 6vw, 80px);
+      font-weight: 700;
+      letter-spacing: -0.03em;
+      text-transform: uppercase;
+      line-height: 0.95;
+      margin-bottom: 20px;
+      position: relative;
+      z-index: 1;
+    }
+    .lib-hero-title em {
+      font-style: normal;
+      color: transparent;
+      -webkit-text-stroke: 1.5px rgba(255,255,255,0.35);
+    }
+    .lib-hero-desc {
+      font-size: 15px;
+      line-height: 1.65;
+      color: var(--muted);
+      max-width: 540px;
+      position: relative;
+      z-index: 1;
+      margin-bottom: 32px;
+    }
+    .lib-hero-meta {
+      display: flex;
+      gap: 32px;
+      flex-wrap: wrap;
+    }
+    .lib-hero-meta-item {
+      display: flex;
+      flex-direction: column;
+      gap: 2px;
+    }
+    .lib-hero-meta-num {
+      font-family: var(--mono);
+      font-size: 22px;
+      font-weight: 700;
+      color: var(--white);
+    }
+    .lib-hero-meta-label {
+      font-family: var(--mono);
+      font-size: 9px;
+      letter-spacing: 0.18em;
+      color: var(--muted2);
+      text-transform: uppercase;
+    }
+
+    /* ════════════════════════════════════════
+       SCROLLBAR TRACKER
+    ════════════════════════════════════════ */
+    .scroll-progress {
+      position: fixed;
+      top: 0; left: var(--sidebar-w); right: 0;
+      height: 2px;
+      background: var(--border);
+      z-index: 200;
+    }
+    .scroll-progress-fill {
+      height: 100%;
+      background: linear-gradient(90deg, var(--purple), var(--cyan));
+      width: 0%;
+      transition: width 0.1s linear;
+    }
+
+    /* ════════════════════════════════════════
+       RESPONSIVE
+    ════════════════════════════════════════ */
+    @media (max-width: 900px) {
+      :root { --sidebar-w: 0px; }
+      .lib-sidebar { display: none; }
+      .lib-topbar { left: 0; }
+      .scroll-progress { left: 0; }
+      .lib-content { padding: 40px 24px 80px; }
+      .lib-hero { padding: 60px 24px 40px; }
+    }
+    @media (max-width: 600px) {
+      .preview-box { padding: 32px 20px; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- SCROLL PROGRESS -->
+  <div class="scroll-progress" aria-hidden="true">
+    <div class="scroll-progress-fill" id="progressFill"></div>
+  </div>
+
+  <!-- ════════════════════════════════════════
+       SIDEBAR
+  ════════════════════════════════════════ -->
+  <aside class="lib-sidebar" role="navigation" aria-label="UI Library Navigation">
+    <div class="sidebar-logo">
+      <div class="sidebar-logo-mark">
+        APEX SIM RACING
+        <span>UI LIBRARY</span>
+      </div>
+      <div class="sidebar-lib-label">v1.0 · styles.css</div>
+    </div>
+
+    <nav class="sidebar-nav">
+      <div class="sidebar-group-title">Fundamentos</div>
+      <a href="#tokens" class="sidebar-link active" id="nav-tokens">
+        <span class="sidebar-link-dot"></span>Tokens de Color
+      </a>
+      <a href="#typography" class="sidebar-link" id="nav-typography">
+        <span class="sidebar-link-dot"></span>Tipografía
+      </a>
+
+      <div class="sidebar-group-title">Componentes</div>
+      <a href="#buttons" class="sidebar-link" id="nav-buttons">
+        <span class="sidebar-link-dot"></span>Botones
+      </a>
+      <a href="#badges" class="sidebar-link" id="nav-badges">
+        <span class="sidebar-link-dot"></span>Badges & Tags
+      </a>
+      <a href="#cards" class="sidebar-link" id="nav-cards">
+        <span class="sidebar-link-dot"></span>Cards de Programa
+      </a>
+      <a href="#hud" class="sidebar-link" id="nav-hud">
+        <span class="sidebar-link-dot"></span>HUD Panels
+      </a>
+      <a href="#stats" class="sidebar-link" id="nav-stats">
+        <span class="sidebar-link-dot"></span>Stats & Números
+      </a>
+      <a href="#testimonials" class="sidebar-link" id="nav-testimonials">
+        <span class="sidebar-link-dot"></span>Testimonials
+      </a>
+      <a href="#faq" class="sidebar-link" id="nav-faq">
+        <span class="sidebar-link-dot"></span>FAQ Accordion
+      </a>
+      <a href="#disciplines" class="sidebar-link" id="nav-disciplines">
+        <span class="sidebar-link-dot"></span>Discipline Cards
+      </a>
+      <a href="#checklist" class="sidebar-link" id="nav-checklist">
+        <span class="sidebar-link-dot"></span>Checklist
+      </a>
+      <a href="#leagues" class="sidebar-link" id="nav-leagues">
+        <span class="sidebar-link-dot"></span>Leagues
+      </a>
+      <a href="#driver" class="sidebar-link" id="nav-driver">
+        <span class="sidebar-link-dot"></span>Driver Card
+      </a>
+
+      <div class="sidebar-group-title">Patrones</div>
+      <a href="#marquee" class="sidebar-link" id="nav-marquee">
+        <span class="sidebar-link-dot"></span>Marquee
+      </a>
+      <a href="#filmstrip" class="sidebar-link" id="nav-filmstrip">
+        <span class="sidebar-link-dot"></span>Filmstrip Item
+      </a>
+      <a href="#forms" class="sidebar-link" id="nav-forms">
+        <span class="sidebar-link-dot"></span>Formularios
+      </a>
+      <a href="#linkarrow" class="sidebar-link" id="nav-linkarrow">
+        <span class="sidebar-link-dot"></span>Link Arrow
+      </a>
+
+    </nav>
+  </aside>
+
+  <!-- ════════════════════════════════════════
+       TOP BAR
+  ════════════════════════════════════════ -->
+  <div class="lib-topbar">
+    <div class="topbar-breadcrumb">
+      Apex Sim Racing &nbsp;/&nbsp; <span>UI Library</span>
+    </div>
+    <div class="topbar-version">v1.0.0</div>
+  </div>
+
+  <!-- ════════════════════════════════════════
+       MAIN
+  ════════════════════════════════════════ -->
+  <main class="lib-main">
+
+    <!-- HERO -->
+    <div class="lib-hero">
+      <span class="lib-hero-tag">Design System · Apex Sim Racing</span>
+      <h1 class="lib-hero-title">UI<br><em>Library</em></h1>
+      <p class="lib-hero-desc">
+        Todos los componentes, tokens de color, tipografías y patrones del sistema de diseño
+        Dark Brutalist de Apex Sim Racing — extraídos directamente de <code style="font-family:var(--mono);color:var(--cyan);font-size:13px">styles.css</code>.
+      </p>
+      <div class="lib-hero-meta">
+        <div class="lib-hero-meta-item">
+          <span class="lib-hero-meta-num">19</span>
+          <span class="lib-hero-meta-label">Componentes</span>
+        </div>
+        <div class="lib-hero-meta-item">
+          <span class="lib-hero-meta-num">12</span>
+          <span class="lib-hero-meta-label">Tokens</span>
+        </div>
+        <div class="lib-hero-meta-item">
+          <span class="lib-hero-meta-num">2</span>
+          <span class="lib-hero-meta-label">Fuentes</span>
+        </div>
+        <div class="lib-hero-meta-item">
+          <span class="lib-hero-meta-num">2.7k</span>
+          <span class="lib-hero-meta-label">Líneas CSS</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="lib-content">
+
+      <!-- ══════════════════════════════════════
+           1. COLOR TOKENS
+      ══════════════════════════════════════ -->
+      <section class="lib-section" id="tokens">
+        <div class="lib-section-header">
+          <span class="lib-section-tag">01 — Fundamentos</span>
+          <h2 class="lib-section-title">Tokens de Color</h2>
+          <p class="lib-section-desc">Variables CSS globales definidas en <code style="font-family:var(--mono);color:var(--cyan);font-size:13px">:root</code>. Todas las propiedades de color del sistema derivan de estos tokens.</p>
+        </div>
+
+        <div class="comp-label">Colores de acento</div>
+        <div class="token-grid">
+          <div class="token-swatch">
+            <div class="swatch-color" style="background:#00E5FF"></div>
+            <div class="swatch-info">
+              <div class="swatch-name">--cyan</div>
+              <div class="swatch-value">#00E5FF</div>
+            </div>
+          </div>
+          <div class="token-swatch">
+            <div class="swatch-color" style="background:#7C3AED"></div>
+            <div class="swatch-info">
+              <div class="swatch-name">--purple</div>
+              <div class="swatch-value">#7C3AED</div>
+            </div>
+          </div>
+          <div class="token-swatch">
+            <div class="swatch-color" style="background:#4a0080"></div>
+            <div class="swatch-info">
+              <div class="swatch-name">--purple-deep</div>
+              <div class="swatch-value">#4a0080</div>
+            </div>
+          </div>
+          <div class="token-swatch">
+            <div class="swatch-color" style="background:#FF3D00"></div>
+            <div class="swatch-info">
+              <div class="swatch-name">--red</div>
+              <div class="swatch-value">#FF3D00</div>
+            </div>
+          </div>
+          <div class="token-swatch">
+            <div class="swatch-color" style="background:#FFD600"></div>
+            <div class="swatch-info">
+              <div class="swatch-name">--yellow</div>
+              <div class="swatch-value">#FFD600</div>
+            </div>
+          </div>
+          <div class="token-swatch">
+            <div class="swatch-color" style="background:#69F0AE"></div>
+            <div class="swatch-info">
+              <div class="swatch-name">--green</div>
+              <div class="swatch-value">#69F0AE</div>
+            </div>
+          </div>
+          <div class="token-swatch">
+            <div class="swatch-color" style="background:#B5005A"></div>
+            <div class="swatch-info">
+              <div class="swatch-name">--pink</div>
+              <div class="swatch-value">#B5005A</div>
+            </div>
+          </div>
+          <div class="token-swatch">
+            <div class="swatch-color" style="background:#5865F2"></div>
+            <div class="swatch-info">
+              <div class="swatch-name">Discord</div>
+              <div class="swatch-value">#5865F2</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="comp-label">Fondos & superficie</div>
+        <div class="bg-token-row">
+          <div class="bg-token">
+            <div class="bg-token-dot" style="background:#080808;"></div>
+            <div class="bg-token-info">
+              <div class="bg-token-name">--bg</div>
+              <div class="bg-token-hex">#080808</div>
+            </div>
+          </div>
+          <div class="bg-token">
+            <div class="bg-token-dot" style="background:#0f0f0f;"></div>
+            <div class="bg-token-info">
+              <div class="bg-token-name">--bg2</div>
+              <div class="bg-token-hex">#0f0f0f</div>
+            </div>
+          </div>
+          <div class="bg-token">
+            <div class="bg-token-dot" style="background:#161616;"></div>
+            <div class="bg-token-info">
+              <div class="bg-token-name">--bg3</div>
+              <div class="bg-token-hex">#161616</div>
+            </div>
+          </div>
+          <div class="bg-token">
+            <div class="bg-token-dot" style="background:rgba(255,255,255,0.08);border:1px solid rgba(255,255,255,0.2)"></div>
+            <div class="bg-token-info">
+              <div class="bg-token-name">--border</div>
+              <div class="bg-token-hex">rgba(255,255,255,0.08)</div>
+            </div>
+          </div>
+          <div class="bg-token">
+            <div class="bg-token-dot" style="background:rgba(255,255,255,0.14);border:1px solid rgba(255,255,255,0.2)"></div>
+            <div class="bg-token-info">
+              <div class="bg-token-name">--border2</div>
+              <div class="bg-token-hex">rgba(255,255,255,0.14)</div>
+            </div>
+          </div>
+          <div class="bg-token">
+            <div class="bg-token-dot" style="background:rgba(255,255,255,0.86);"></div>
+            <div class="bg-token-info">
+              <div class="bg-token-name">--muted</div>
+              <div class="bg-token-hex">rgba(255,255,255,0.86)</div>
+            </div>
+          </div>
+          <div class="bg-token">
+            <div class="bg-token-dot" style="background:rgba(255,255,255,0.25);"></div>
+            <div class="bg-token-info">
+              <div class="bg-token-name">--muted2</div>
+              <div class="bg-token-hex">rgba(255,255,255,0.25)</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="code-block"><span class="token-comment">/* Tokens de color — :root */</span>
+<span class="token-prop">--cyan</span>:       <span class="token-val">#00E5FF</span>;
+<span class="token-prop">--purple</span>:     <span class="token-val">#7C3AED</span>;
+<span class="token-prop">--purple-deep</span>:<span class="token-val">#4a0080</span>;
+<span class="token-prop">--red</span>:        <span class="token-val">#FF3D00</span>;
+<span class="token-prop">--yellow</span>:     <span class="token-val">#FFD600</span>;
+<span class="token-prop">--green</span>:      <span class="token-val">#69F0AE</span>;
+<span class="token-prop">--bg</span>:         <span class="token-val">#080808</span>;
+<span class="token-prop">--bg2</span>:        <span class="token-val">#0f0f0f</span>;
+<span class="token-prop">--bg3</span>:        <span class="token-val">#161616</span>;</div>
+      </section>
+
+      <!-- ══════════════════════════════════════
+           2. TYPOGRAPHY
+      ══════════════════════════════════════ -->
+      <section class="lib-section" id="typography">
+        <div class="lib-section-header">
+          <span class="lib-section-tag">02 — Fundamentos</span>
+          <h2 class="lib-section-title">Tipografía</h2>
+          <p class="lib-section-desc">El sistema usa dos familias: <strong>Space Grotesk</strong> para texto de display y UI, y <strong>Space Mono</strong> para datos técnicos, etiquetas y HUD.</p>
+        </div>
+
+        <div class="preview-box col dark-bg">
+          <div class="type-sample">
+            <div class="type-meta">--font · Space Grotesk 700 · section-title</div>
+            <div style="font-family:var(--font);font-size:clamp(40px,6vw,72px);font-weight:700;line-height:0.95;letter-spacing:-0.03em;text-transform:uppercase;color:var(--white)">
+              APEX SIM<br><em style="font-style:normal;color:transparent;-webkit-text-stroke:1px rgba(255,255,255,0.4)">RACING</em>
+            </div>
+          </div>
+          <div class="type-sample">
+            <div class="type-meta">--font · Space Grotesk 700 · program-card h3 / 24px</div>
+            <div style="font-family:var(--font);font-size:24px;font-weight:700;letter-spacing:-0.02em;text-transform:uppercase;color:var(--white)">Nivel Inicial · Básico</div>
+          </div>
+          <div class="type-sample">
+            <div class="type-meta">--font · Space Grotesk 600 · body / 15px</div>
+            <div style="font-family:var(--font);font-size:15px;font-weight:400;line-height:1.7;color:var(--muted);max-width:500px">
+              Comunidad exclusiva de sim racing con más de 1500 pilotos activos. Entrenamiento técnico, competencias oficiales y hardware premium.
+            </div>
+          </div>
+          <div class="type-sample">
+            <div class="type-meta">--mono · Space Mono 700 · hud-val / 40px</div>
+            <div style="font-family:var(--mono);font-size:40px;font-weight:700;color:var(--cyan);letter-spacing:0.02em">−0.342</div>
+          </div>
+          <div class="type-sample">
+            <div class="type-meta">--mono · Space Mono 400 · section-tag / 11px</div>
+            <div style="font-family:var(--mono);font-size:11px;letter-spacing:0.2em;color:var(--muted);text-transform:uppercase">Academia · Cursos · 2024</div>
+          </div>
+          <div class="type-sample">
+            <div class="type-meta">--mono · Space Mono 700 · nav-link / 13px</div>
+            <div style="font-family:var(--mono);font-size:13px;font-weight:700;letter-spacing:0.06em;text-transform:uppercase;color:var(--white)">ACADEMIA &nbsp; COMPETENCIAS &nbsp; HARDWARE &nbsp; COMUNIDAD</div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ══════════════════════════════════════
+           3. BUTTONS
+      ══════════════════════════════════════ -->
+      <section class="lib-section" id="buttons">
+        <div class="lib-section-header">
+          <span class="lib-section-tag">03 — Componentes</span>
+          <h2 class="lib-section-title">Botones</h2>
+          <p class="lib-section-desc">Tres variantes de botón cubren todos los casos: primary (acción principal), ghost (secundario) y pill (navegación / mini-acciones).</p>
+        </div>
+
+        <div class="comp-label">.btn-primary — Acción principal</div>
+        <div class="preview-box">
+          <button class="btn-primary">
+            Inscribirse
+            <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 8h10M9 4l4 4-4 4"/></svg>
+          </button>
+          <button class="btn-primary">
+            Ver cursos
+            <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 8h10M9 4l4 4-4 4"/></svg>
+          </button>
+        </div>
+
+        <div class="comp-label">.btn-ghost — Acción secundaria</div>
+        <div class="preview-box">
+          <button class="btn-ghost">Más información</button>
+          <button class="btn-ghost">Ver todos los cursos</button>
+        </div>
+
+        <div class="comp-label">.btn-pill — Navegación y acciones rápidas</div>
+        <div class="preview-box">
+          <button class="btn-pill">Default</button>
+          <button class="btn-pill discord-btn">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M20.317 4.37a19.791 19.791 0 0 0-4.885-1.515.074.074 0 0 0-.079.037c-.21.375-.444.864-.608 1.25a18.27 18.27 0 0 0-5.487 0 12.64 12.64 0 0 0-.617-1.25.077.077 0 0 0-.079-.037A19.736 19.736 0 0 0 3.677 4.37a.07.07 0 0 0-.032.027C.533 9.046-.32 13.58.099 18.057a.082.082 0 0 0 .031.057 19.9 19.9 0 0 0 5.993 3.03.078.078 0 0 0 .084-.028 14.09 14.09 0 0 0 1.226-1.994.076.076 0 0 0-.041-.106 13.107 13.107 0 0 1-1.872-.892.077.077 0 0 1-.008-.128 10.2 10.2 0 0 0 .372-.292.074.074 0 0 1 .077-.01c3.928 1.793 8.18 1.793 12.062 0a.074.074 0 0 1 .078.01c.12.098.246.198.373.292a.077.077 0 0 1-.006.127 12.299 12.299 0 0 1-1.873.892.077.077 0 0 0-.041.107c.36.698.772 1.362 1.225 1.993a.076.076 0 0 0 .084.028 19.839 19.839 0 0 0 6.002-3.03.077.077 0 0 0 .032-.054c.5-5.177-.838-9.674-3.549-13.66a.061.061 0 0 0-.031-.03z"/></svg>
+            Discord
+          </button>
+          <button class="btn-pill btn-academy">
+            ✦ Academia
+          </button>
+        </div>
+
+        <div class="code-block"><span class="token-comment">/* Botón principal */</span>
+<span class="token-cls">.btn-primary</span> {
+  <span class="token-prop">background</span>: <span class="token-val">var(--white)</span>;
+  <span class="token-prop">color</span>: <span class="token-val">var(--bg)</span>;
+  <span class="token-prop">padding</span>: <span class="token-val">14px 28px</span>;
+  <span class="token-prop">border-radius</span>: <span class="token-val">4px</span>;
+  <span class="token-prop">font-weight</span>: <span class="token-val">600</span>;
+  <span class="token-prop">text-transform</span>: <span class="token-val">uppercase</span>;
+}
+
+<span class="token-comment">/* Botón ghost */</span>
+<span class="token-cls">.btn-ghost</span> {
+  <span class="token-prop">border</span>: <span class="token-val">1px solid var(--border2)</span>;
+  <span class="token-prop">background</span>: <span class="token-val">transparent</span>;
+  <span class="token-prop">color</span>: <span class="token-val">var(--white)</span>;
+}
+
+<span class="token-comment">/* Botón pill */</span>
+<span class="token-cls">.btn-pill</span> {
+  <span class="token-prop">border-radius</span>: <span class="token-val">100px</span>;
+  <span class="token-prop">border</span>: <span class="token-val">1px solid var(--border2)</span>;
+}</div>
+      </section>
+
+      <!-- ══════════════════════════════════════
+           4. BADGES
+      ══════════════════════════════════════ -->
+      <section class="lib-section" id="badges">
+        <div class="lib-section-header">
+          <span class="lib-section-tag">04 — Componentes</span>
+          <h2 class="lib-section-title">Badges & Tags</h2>
+          <p class="lib-section-desc">Etiquetas de contexto para identificar secciones, categorías y estados.</p>
+        </div>
+
+        <div class="preview-box" style="flex-direction:column;align-items:flex-start;gap:16px">
+          <div>
+            <div class="comp-label" style="margin-top:0;margin-bottom:8px">.hero-badge — Badge principal del hero</div>
+            <span class="hero-badge">◈ Sim Racing · Argentina</span>
+          </div>
+          <div>
+            <div class="comp-label" style="margin-top:0;margin-bottom:8px">.section-tag — Etiqueta de sección</div>
+            <span class="section-tag">01 — ACADEMIA</span>
+          </div>
+          <div>
+            <div class="comp-label" style="margin-top:0;margin-bottom:8px">.cgc-tag — Tag Discord</div>
+            <span class="cgc-tag-demo">● DISCORD SERVER</span>
+          </div>
+        </div>
+      </section>
+
+      <!-- ══════════════════════════════════════
+           5. PROGRAM CARDS
+      ══════════════════════════════════════ -->
+      <section class="lib-section" id="cards">
+        <div class="lib-section-header">
+          <span class="lib-section-tag">05 — Componentes</span>
+          <h2 class="lib-section-title">Cards de Programa</h2>
+          <p class="lib-section-desc">Nuevo layout con imagen superior, overlay de gradiente, .card-info con specs y precio. Hover: scale en imagen + .card-link blanco.</p>
+        </div>
+
+        <div class="preview-box" style="align-items:stretch;gap:2px;padding:0;background:var(--border);overflow:hidden">
+
+          <!-- Card 1 -->
+          <div class="program-card" style="--glow:var(--cyan)">
+            <div class="card-image-wrap">
+              <img src="assets/curso_1.png" alt="Nivel Inicial" />
+              <div class="card-image-overlay">
+                <span class="card-tag" style="color:var(--cyan)">Iniciación</span>
+                <h3>Nivel Inicial</h3>
+              </div>
+            </div>
+            <div class="card-info">
+              <span class="card-num">01</span>
+              <p class="card-desc">Fundamentos de sim racing, técnica básica y adaptación al volante.</p>
+              <div class="card-specs">
+                <div class="card-spec">
+                  <span class="card-spec-num">8</span>
+                  <span class="card-spec-label">Módulos</span>
+                </div>
+                <div class="card-spec-divider"></div>
+                <div class="card-spec">
+                  <span class="card-spec-num">24h</span>
+                  <span class="card-spec-label">Contenido</span>
+                </div>
+              </div>
+              <div class="card-price" style="margin-top:12px">
+                <span class="price-amount">$19.990</span>
+                <span class="price-period">/ mes</span>
+              </div>
+              <a class="card-link" href="#">Empezar <span>↗</span></a>
+            </div>
+          </div>
+
+          <!-- Card 2 -->
+          <div class="program-card" style="--glow:var(--purple)">
+
+            <div class="card-image-wrap">
+              <img src="assets/curso_2.png" alt="Nivel Avanzado" />
+              <div class="card-image-overlay">
+                <span class="card-tag" style="color:var(--purple)">Intermedio</span>
+                <h3>Nivel Avanzado</h3>
+              </div>
+            </div>
+            <div class="card-info">
+              <span class="card-num">02</span>
+              <p class="card-desc">Telemetría, setup de auto y racecraft con instructores pro.</p>
+              <div class="card-specs">
+                <div class="card-spec">
+                  <span class="card-spec-num">14</span>
+                  <span class="card-spec-label">Módulos</span>
+                </div>
+                <div class="card-spec-divider"></div>
+                <div class="card-spec">
+                  <span class="card-spec-num">40h</span>
+                  <span class="card-spec-label">Contenido</span>
+                </div>
+              </div>
+              <div class="card-price" style="margin-top:12px">
+                <span class="price-amount">$34.990</span>
+                <span class="price-period">/ mes</span>
+              </div>
+              <a class="card-link" href="#">Inscribirse <span>↗</span></a>
+            </div>
+          </div>
+
+          <!-- Card 3 -->
+          <div class="program-card" style="--glow:var(--yellow)">
+            <div class="card-image-wrap">
+              <img src="assets/curso_3.png" alt="Pro Driver" />
+              <div class="card-image-overlay">
+                <span class="card-tag" style="color:var(--yellow)">Elite</span>
+                <h3>Pro Driver</h3>
+              </div>
+            </div>
+            <div class="card-info">
+              <span class="card-num">03</span>
+              <p class="card-desc">Preparación intensiva para competencias oficiales y automovilismo real.</p>
+              <div class="card-specs">
+                <div class="card-spec">
+                  <span class="card-spec-num">20</span>
+                  <span class="card-spec-label">Módulos</span>
+                </div>
+                <div class="card-spec-divider"></div>
+                <div class="card-spec">
+                  <span class="card-spec-num">60h</span>
+                  <span class="card-spec-label">Contenido</span>
+                </div>
+              </div>
+              <div class="card-price" style="margin-top:12px">
+                <span class="price-amount">$59.990</span>
+                <span class="price-period">/ mes</span>
+              </div>
+              <a class="card-link" href="#">Contactar <span>↗</span></a>
+            </div>
+          </div>
+
+        </div>
+
+        <div class="comp-label" style="margin-top:16px">
+          .card-image-wrap &nbsp;·&nbsp; .card-image-overlay &nbsp;·&nbsp; .card-info &nbsp;·&nbsp; .card-specs &nbsp;·&nbsp; .card-spec-num / .card-spec-label
+        </div>
+      </section>
+
+      <!-- ══════════════════════════════════════
+           6. HUD PANELS
+      ══════════════════════════════════════ -->
+      <section class="lib-section" id="hud">
+        <div class="lib-section-header">
+          <span class="lib-section-tag">06 — Componentes</span>
+          <h2 class="lib-section-title">HUD Panels</h2>
+          <p class="lib-section-desc">Paneles flotantes de telemetría en el hero. Simulan datos de vuelta rápida y sectores en tiempo real.</p>
+        </div>
+
+        <div class="preview-box" style="gap:4px;flex-wrap:wrap">
+          <div class="hud-panel">
+            <span class="hud-label">Vuelta Actual</span>
+            <div class="hud-row">
+              <span class="hud-val">1:42.381</span>
+            </div>
+            <span class="hud-label">Sector 2</span>
+            <div class="hud-row">
+              <span class="hud-val purple">27.019</span>
+            </div>
+          </div>
+          <div class="hud-panel">
+            <span class="hud-delta">−0.342</span>
+            <span class="hud-label">Delta vs. mejor vuelta</span>
+            <div class="hud-sectors">
+              <div class="sector green"></div>
+              <div class="sector purple"></div>
+              <div class="sector muted"></div>
+            </div>
+          </div>
+          <div class="hud-panel">
+            <span class="hud-label">RPM</span>
+            <div class="hud-row">
+              <span class="hud-val">12.400</span>
+            </div>
+            <span class="hud-label">Velocidad</span>
+            <div class="hud-row">
+              <span class="hud-val cyan">287 km/h</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="code-block"><span class="token-cls">.hud-panel</span> {
+  <span class="token-prop">background</span>: <span class="token-val">rgba(8,8,8,0.92)</span>;
+  <span class="token-prop">border</span>: <span class="token-val">1px solid var(--border2)</span>;
+  <span class="token-prop">padding</span>: <span class="token-val">14px 18px</span>;
+  <span class="token-prop">backdrop-filter</span>: <span class="token-val">blur(16px)</span>;
+}
+<span class="token-cls">.hud-val</span>  { <span class="token-prop">font-family</span>: <span class="token-val">var(--mono)</span>; <span class="token-prop">font-size</span>: <span class="token-val">22px</span>; }
+<span class="token-cls">.hud-delta</span>{ <span class="token-prop">font-size</span>: <span class="token-val">40px</span>; <span class="token-prop">color</span>: <span class="token-val">var(--cyan)</span>; }</div>
+      </section>
+
+      <!-- ══════════════════════════════════════
+           7. STATS
+      ══════════════════════════════════════ -->
+      <section class="lib-section" id="stats">
+        <div class="lib-section-header">
+          <span class="lib-section-tag">07 — Componentes</span>
+          <h2 class="lib-section-title">Stats & Números</h2>
+          <p class="lib-section-desc">Dos estilos de estadísticas: hero stats (row) y academia stats (grid cards con bordes).</p>
+        </div>
+
+        <div class="comp-label">.hero-stats — Fila de estadísticas</div>
+        <div class="preview-box">
+          <div class="stat-item">
+            <div class="stat-num">1500<span class="stat-plus">+</span></div>
+            <div class="stat-label">Pilotos activos</div>
+          </div>
+          <div class="stat-divider"></div>
+          <div class="stat-item">
+            <div class="stat-num">3<span class="stat-plus">+</span></div>
+            <div class="stat-label">Años de experiencia</div>
+          </div>
+          <div class="stat-divider"></div>
+          <div class="stat-item">
+            <div class="stat-num">48<span class="stat-plus">+</span></div>
+            <div class="stat-label">Competencias</div>
+          </div>
+        </div>
+
+        <div class="comp-label">.academia-stats — Grid de stats (cyan)</div>
+        <div class="preview-box" style="flex-wrap:wrap;gap:1px;padding:0;background:var(--border)">
+          <div class="ac-stat">
+            <div class="ac-stat-num">1500<span style="color:var(--purple);font-size:20px">+</span></div>
+            <div class="ac-stat-label">Pilotos</div>
+          </div>
+          <div class="ac-stat">
+            <div class="ac-stat-num">48</div>
+            <div class="ac-stat-label">Carreras</div>
+          </div>
+          <div class="ac-stat">
+            <div class="ac-stat-num">12</div>
+            <div class="ac-stat-label">Instructores</div>
+          </div>
+          <div class="ac-stat">
+            <div class="ac-stat-num">3</div>
+            <div class="ac-stat-label">Años</div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ══════════════════════════════════════
+           8. TESTIMONIALS
+      ══════════════════════════════════════ -->
+      <section class="lib-section" id="testimonials">
+        <div class="lib-section-header">
+          <span class="lib-section-tag">08 — Componentes</span>
+          <h2 class="lib-section-title">Testimonial Cards</h2>
+          <p class="lib-section-desc">Cards de testimonios con comilla decorativa en cian y datos del autor. Hover cambia el fondo.</p>
+        </div>
+
+        <div class="preview-box" style="align-items:stretch;gap:1px;padding:0;background:var(--border)">
+          <div class="testi-card">
+            <p class="testi-quote">La academia cambió completamente mi manera de manejar. Pasé de ser consistente a pelear por podios en la liga GT3 en solo tres meses.</p>
+            <div class="testi-author">
+              <div class="testi-name">M. VILLANUEVA</div>
+              <div class="testi-level">Nivel Avanzado · GT3 Division</div>
+            </div>
+          </div>
+          <div class="testi-card">
+            <p class="testi-quote">El análisis de telemetría con los instructores es brutal. Jamás había entendido tan bien cada curva de un circuito hasta que lo vi en los datos.</p>
+            <div class="testi-author">
+              <div class="testi-name">L. FERREYRA</div>
+              <div class="testi-level">Nivel Pro · F3 Regional</div>
+            </div>
+          </div>
+          <div class="testi-card">
+            <p class="testi-quote">Empecé sin experiencia en sim racing y en 6 meses ya competía en ligas nacionales. El progreso fue increíble gracias a la metodología de Apex.</p>
+            <div class="testi-author">
+              <div class="testi-name">R. CASTILLO</div>
+              <div class="testi-level">Nivel Inicial → Intermedio</div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ══════════════════════════════════════
+           9. FAQ ACCORDION
+      ══════════════════════════════════════ -->
+      <section class="lib-section" id="faq">
+        <div class="lib-section-header">
+          <span class="lib-section-tag">09 — Componentes</span>
+          <h2 class="lib-section-title">FAQ Accordion</h2>
+          <p class="lib-section-desc">Acordeón con animación smooth. El ícono rota 45° cuando el ítem está abierto. Clickeá para probar.</p>
+        </div>
+
+        <div class="preview-box col" style="padding:0;background:var(--bg3)">
+          <div class="faq-list" id="faqList" style="padding:0 40px">
+            <div class="faq-item open">
+              <button class="faq-q" data-faq="0">
+                ¿Necesito experiencia previa en sim racing?
+                <span class="faq-icon">+</span>
+              </button>
+              <div class="faq-a">
+                No. Tenemos programas diseñados para todos los niveles, desde quienes nunca tocaron un volante hasta pilotos que quieren dar el salto a competencias profesionales.
+              </div>
+            </div>
+            <div class="faq-item">
+              <button class="faq-q" data-faq="1">
+                ¿Qué hardware necesito para comenzar?
+                <span class="faq-icon">+</span>
+              </button>
+              <div class="faq-a">
+                Con un volante de entrada y un par de pedales es suficiente para empezar. También podes usar nuestros simuladores en la sede física. Te guiamos en la elección del equipo ideal para tu presupuesto.
+              </div>
+            </div>
+            <div class="faq-item">
+              <button class="faq-q" data-faq="2">
+                ¿Cómo son las clases? ¿Online o presencial?
+                <span class="faq-icon">+</span>
+              </button>
+              <div class="faq-a">
+                Ofrecemos ambas modalidades. Las clases online se hacen por Discord con análisis de telemetría en tiempo real. Las presenciales son en nuestra sede en Argentina.
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ══════════════════════════════════════
+           10. DISCIPLINE CARDS
+      ══════════════════════════════════════ -->
+      <section class="lib-section" id="disciplines">
+        <div class="lib-section-header">
+          <span class="lib-section-tag">10 — Componentes</span>
+          <h2 class="lib-section-title">Discipline Cards</h2>
+          <p class="lib-section-desc">Cards de disciplinas de sim racing con borde superior de acento y línea expandible en hover.</p>
+        </div>
+
+        <div class="preview-box" style="gap:2px;flex-wrap:wrap;align-items:stretch;padding:0;background:var(--border)">
+          <div class="disc-card" style="--accent:var(--cyan)">
+            <span class="disc-num">01</span>
+            <h3>GT3</h3>
+            <p>Gran Turismo clase 3. Alta potencia, mayor grip y velocidades extremas en circuitos de pista.</p>
+            <div class="disc-line"></div>
+          </div>
+          <div class="disc-card" style="--accent:var(--purple)">
+            <span class="disc-num">02</span>
+            <h3>Formula</h3>
+            <p>Monoplazas de fórmula abierta. Aerodinámica avanzada y setup técnico de alto nivel.</p>
+            <div class="disc-line" style="background:var(--purple)"></div>
+          </div>
+          <div class="disc-card" style="--accent:var(--yellow)">
+            <span class="disc-num">03</span>
+            <h3>Rally</h3>
+            <p>Tracción en grava, asfalto y nieve. Control del sobreviraje y lectura rápida de notas.</p>
+            <div class="disc-line" style="background:var(--yellow)"></div>
+          </div>
+          <div class="disc-card" style="--accent:var(--red)">
+            <span class="disc-num">04</span>
+            <h3>Oval</h3>
+            <p>Estrategia de draft, gestión de neumáticos y carreras cuerpo a cuerpo a alta velocidad.</p>
+            <div class="disc-line" style="background:var(--red)"></div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ══════════════════════════════════════
+           11. CHECKLIST
+      ══════════════════════════════════════ -->
+      <section class="lib-section" id="checklist">
+        <div class="lib-section-header">
+          <span class="lib-section-tag">11 — Componentes</span>
+          <h2 class="lib-section-title">Checklist</h2>
+          <p class="lib-section-desc">Lista comparativa de features para las cards de programa. Dos variantes: <code style="font-family:var(--mono);color:var(--cyan);font-size:12px">.yes</code> (verde) y <code style="font-family:var(--mono);color:var(--muted2);font-size:12px">.no</code> (tachado).</p>
+        </div>
+
+        <div class="preview-box col">
+          <div class="card-checklist">
+            <div class="check-item yes">
+              <span class="check-icon">✓</span>
+              <span>Acceso a todos los circuitos</span>
+            </div>
+            <div class="check-item yes">
+              <span class="check-icon">✓</span>
+              <span>Análisis de telemetría básico</span>
+            </div>
+            <div class="check-item yes">
+              <span class="check-icon">✓</span>
+              <span>Comunidad Discord exclusiva</span>
+            </div>
+            <div class="check-item no">
+              <span class="check-icon">✗</span>
+              <span>Sesiones con instructores 1:1</span>
+            </div>
+            <div class="check-item no">
+              <span class="check-icon">✗</span>
+              <span>Acceso a ligas oficiales Apex</span>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ══════════════════════════════════════
+           12. LEAGUES
+      ══════════════════════════════════════ -->
+      <section class="lib-section" id="leagues">
+        <div class="lib-section-header">
+          <span class="lib-section-tag">12 — Componentes</span>
+          <h2 class="lib-section-title">League Items</h2>
+          <p class="lib-section-desc">Lista de ligas activas con punto de color indicador de clase y metadatos en mono.</p>
+        </div>
+
+        <div class="preview-box col" style="padding:0 40px">
+          <div class="league-item" style="margin-top:20px">
+            <div class="league-dot" style="background:var(--cyan)"></div>
+            <div>
+              <div class="league-name">Apex Cup GT3 2024</div>
+              <div class="league-class">GT3 · 18 pilotos · Activa</div>
+            </div>
+          </div>
+          <div class="league-item">
+            <div class="league-dot" style="background:var(--purple)"></div>
+            <div>
+              <div class="league-name">Formula Apex Series</div>
+              <div class="league-class">F3 · 12 pilotos · Temporada 3</div>
+            </div>
+          </div>
+          <div class="league-item" style="margin-bottom:20px">
+            <div class="league-dot" style="background:var(--yellow)"></div>
+            <div>
+              <div class="league-name">Open Rally Championship</div>
+              <div class="league-class">Rally · 24 pilotos · Clasificación</div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ══════════════════════════════════════
+           13. DRIVER CARD
+      ══════════════════════════════════════ -->
+      <section class="lib-section" id="driver">
+        <div class="lib-section-header">
+          <span class="lib-section-tag">13 — Componentes</span>
+          <h2 class="lib-section-title">Driver Card</h2>
+          <p class="lib-section-desc">Tarjeta de piloto con avatar generativo (gradiente), nombre, era y logros destacados.</p>
+        </div>
+
+        <div class="preview-box" style="gap:16px;flex-wrap:wrap">
+          <div class="driver-card" style="flex:1;min-width:260px">
+            <div class="driver-avatar">MV</div>
+            <div>
+              <div class="driver-name">Martín Villanueva</div>
+              <div class="driver-era">Apex Academy · 2022–Presente</div>
+              <ul style="display:flex;flex-direction:column;gap:6px;padding:0">
+                <li style="font-size:13px;color:var(--muted);padding-left:14px;position:relative">
+                  <span style="position:absolute;left:0;font-size:8px;color:var(--purple);top:3px">✦</span>
+                  Campeón GT3 Apex Cup 2023
+                </li>
+                <li style="font-size:13px;color:var(--muted);padding-left:14px;position:relative">
+                  <span style="position:absolute;left:0;font-size:8px;color:var(--purple);top:3px">✦</span>
+                  Top 3 Formula Apex Series
+                </li>
+              </ul>
+            </div>
+          </div>
+          <div class="driver-card" style="flex:1;min-width:260px">
+            <div class="driver-avatar" style="background:linear-gradient(135deg,var(--cyan),var(--purple-deep))">LF</div>
+            <div>
+              <div class="driver-name">Lucas Ferreyra</div>
+              <div class="driver-era">Apex Academy · 2023–Presente</div>
+              <ul style="display:flex;flex-direction:column;gap:6px;padding:0">
+                <li style="font-size:13px;color:var(--muted);padding-left:14px;position:relative">
+                  <span style="position:absolute;left:0;font-size:8px;color:var(--purple);top:3px">✦</span>
+                  Vuelta rápida Spa 2024
+                </li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ══════════════════════════════════════
+           14. MARQUEE
+      ══════════════════════════════════════ -->
+      <section class="lib-section" id="marquee">
+        <div class="lib-section-header">
+          <span class="lib-section-tag">14 — Patrones</span>
+          <h2 class="lib-section-title">Marquee</h2>
+          <p class="lib-section-desc">Franja blanca con texto en bucle. Separa secciones y refuerza los valores de la marca.</p>
+        </div>
+
+        <div class="marquee-bar">
+          <div class="marquee-track">
+            <span>APEX SIM RACING &nbsp;·&nbsp; GT3 &nbsp;·&nbsp; FORMULA &nbsp;·&nbsp; RALLY &nbsp;·&nbsp; OVAL &nbsp;·&nbsp; ACADEMIA &nbsp;·&nbsp; COMUNIDAD &nbsp;·&nbsp; HARDWARE &nbsp;·&nbsp; COMPETENCIAS &nbsp;·&nbsp; APEX SIM RACING &nbsp;·&nbsp; GT3 &nbsp;·&nbsp; FORMULA &nbsp;·&nbsp; RALLY &nbsp;·&nbsp; OVAL &nbsp;·&nbsp; ACADEMIA &nbsp;·&nbsp; COMUNIDAD &nbsp;·&nbsp; HARDWARE &nbsp;·&nbsp; COMPETENCIAS &nbsp;·&nbsp; APEX SIM RACING &nbsp;·&nbsp; GT3 &nbsp;·&nbsp; FORMULA &nbsp;·&nbsp; RALLY &nbsp;·&nbsp; OVAL &nbsp;·&nbsp; ACADEMIA &nbsp;·&nbsp; COMUNIDAD &nbsp;·&nbsp; </span>
+          </div>
+        </div>
+
+        <div class="code-block" style="margin-top:16px"><span class="token-cls">.marquee-bar</span> { <span class="token-prop">background</span>: <span class="token-val">var(--white)</span>; <span class="token-prop">overflow</span>: <span class="token-val">hidden</span>; }
+<span class="token-cls">.marquee-track</span> { <span class="token-prop">animation</span>: <span class="token-val">marquee 18s linear infinite</span>; }
+@keyframes marquee {
+  from { <span class="token-prop">transform</span>: <span class="token-val">translateX(0)</span>; }
+  to   { <span class="token-prop">transform</span>: <span class="token-val">translateX(-33.333%)</span>; }
+}</div>
+      </section>
+
+      <!-- ══════════════════════════════════════
+           15. FILMSTRIP
+      ══════════════════════════════════════ -->
+      <section class="lib-section" id="filmstrip">
+        <div class="lib-section-header">
+          <span class="lib-section-tag">15 — Patrones</span>
+          <h2 class="lib-section-title">Filmstrip Item</h2>
+          <p class="lib-section-desc">Items de la galería horizontal animada por scroll. Cada item tiene ratio 4/3, bordes suaves y caption en mono.</p>
+        </div>
+
+        <div class="preview-box" style="gap:12px;overflow-x:auto;flex-wrap:nowrap;padding:32px 32px 24px">
+          <div class="filmstrip-item">
+            <div class="filmstrip-placeholder">GALLERY 01</div>
+            <div class="filmstrip-cap">Apex Cup · 2024</div>
+          </div>
+          <div class="filmstrip-item">
+            <div class="filmstrip-placeholder">GALLERY 02</div>
+            <div class="filmstrip-cap">Entrenamiento</div>
+          </div>
+          <div class="filmstrip-item">
+            <div class="filmstrip-placeholder">GALLERY 03</div>
+            <div class="filmstrip-cap">Simulador Pro</div>
+          </div>
+          <div class="filmstrip-item">
+            <div class="filmstrip-placeholder">GALLERY 04</div>
+            <div class="filmstrip-cap">Equipo Apex</div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ══════════════════════════════════════
+           16. FORMS
+      ══════════════════════════════════════ -->
+      <section class="lib-section" id="forms">
+        <div class="lib-section-header">
+          <span class="lib-section-tag">16 — Patrones</span>
+          <h2 class="lib-section-title">Formularios</h2>
+          <p class="lib-section-desc">Input de email + botón primary fusionados. Borde derecho del input eliminado para unión visual perfecta.</p>
+        </div>
+
+        <div class="preview-box col">
+          <div class="nl-form">
+            <input class="nl-input" type="email" placeholder="tu@email.com" id="emailInput" />
+            <button class="btn-primary">
+              Suscribirse
+              <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2" width="16" height="16"><path d="M3 8h10M9 4l4 4-4 4"/></svg>
+            </button>
+          </div>
+          <p style="font-size:12px;color:var(--muted2);margin-top:8px;letter-spacing:0.04em">Sin spam. Podés darte de baja cuando quieras.</p>
+        </div>
+
+        <div class="code-block"><span class="token-cls">.nl-input</span> {
+  <span class="token-prop">background</span>:   <span class="token-val">var(--bg3)</span>;
+  <span class="token-prop">border</span>:       <span class="token-val">1px solid var(--border2)</span>;
+  <span class="token-prop">border-right</span>: <span class="token-val">none</span>; <span class="token-comment">/* fusión con botón */</span>
+  <span class="token-prop">border-radius</span>:<span class="token-val">4px 0 0 4px</span>;
+}
+<span class="token-cls">.nl-form .btn-primary</span> { <span class="token-prop">border-radius</span>: <span class="token-val">0 4px 4px 0</span>; }</div>
+      </section>
+
+      <!-- ══════════════════════════════════════
+           17. LINK ARROW
+      ══════════════════════════════════════ -->
+      <section class="lib-section" id="linkarrow">
+        <div class="lib-section-header">
+          <span class="lib-section-tag">17 — Patrones</span>
+          <h2 class="lib-section-title">Link Arrow</h2>
+          <p class="lib-section-desc">Link secundario en monospace. En hover el gap aumenta y la flecha se desplaza 4px. Cursor pointer.</p>
+        </div>
+
+        <div class="preview-box" style="gap:28px;flex-wrap:wrap">
+          <a class="link-arrow" href="#">Ver todos los cursos <span>→</span></a>
+          <a class="link-arrow" href="#">Explorar hardware <span>→</span></a>
+          <a class="link-arrow" href="#">Unirse a Discord <span>→</span></a>
+        </div>
+      </section>
+
+
+
+    </div><!-- /lib-content -->
+  </main>
+
+  <script>
+    // ── Scroll progress bar ──
+    const fill = document.getElementById('progressFill');
+    window.addEventListener('scroll', () => {
+      const scrolled = window.scrollY;
+      const total = document.documentElement.scrollHeight - window.innerHeight;
+      fill.style.width = (scrolled / total * 100) + '%';
+    }, { passive: true });
+
+    // ── Active sidebar link on scroll ──
+    const sections = document.querySelectorAll('.lib-section');
+    const navLinks = document.querySelectorAll('.sidebar-link');
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          navLinks.forEach(l => l.classList.remove('active'));
+          const id = 'nav-' + entry.target.id;
+          const active = document.getElementById(id);
+          if (active) active.classList.add('active');
+        }
+      });
+    }, { rootMargin: '-30% 0px -60% 0px', threshold: 0 });
+    sections.forEach(s => observer.observe(s));
+
+    // ── FAQ accordion ──
+    document.querySelectorAll('.faq-q').forEach(btn => {
+      btn.addEventListener('click', () => {
+        const item = btn.closest('.faq-item');
+        const isOpen = item.classList.contains('open');
+        document.querySelectorAll('.faq-item').forEach(i => i.classList.remove('open'));
+        if (!isOpen) item.classList.add('open');
+      });
+    });
+
+    // ── Smooth highlight on sidebar click ──
+    navLinks.forEach(link => {
+      link.addEventListener('click', (e) => {
+        const href = link.getAttribute('href');
+        if (href && href.startsWith('#')) {
+          e.preventDefault();
+          const target = document.querySelector(href);
+          if (target) {
+            const offset = 56 + 20;
+            const top = target.getBoundingClientRect().top + window.scrollY - offset;
+            window.scrollTo({ top, behavior: 'smooth' });
+          }
+        }
+      });
+    });
+  </script>
+
+</body>
+</html>

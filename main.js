@@ -978,4 +978,3 @@ function initCompetitionsTracks() {
 
   startAutoplay();
 }
-
