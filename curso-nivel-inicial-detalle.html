@@ -162,7 +162,7 @@
       display: block; margin-bottom: 20px;
     }
     .section-title {
-      font-size: clamp(40px, 6vw, 80px); font-weight: 700;
+      font-size: clamp(36px, 5vw, 64px); font-weight: 700;
       line-height: 0.95; letter-spacing: -0.03em;
       text-transform: uppercase; color: var(--white); margin-bottom: 32px;
     }
@@ -1081,205 +1081,170 @@
       .pq-grid { grid-template-columns: repeat(2, 1fr); }
     }
     @media (max-width: 768px) {
-      :root { --nav-h: 64px; }
-
-      /* ── Cursor & body ── */
+      /* ── Base ── */
+      :root { --nav-h: 60px; }
       body { cursor: auto; }
       .cursor, .cursor-dot { display: none; }
 
       /* ── Navbar ── */
-      .nav-logo .disc-car-img { height: 30px; }
-      .nav-links { display: none; }
       .nav-inner { padding: 0 20px; gap: 12px; }
-      /* Prevent INSCRIBIRSE + BIBLIOTECA UI from breaking nav */
+      .nav-logo .disc-car-img { height: 28px; }
+      .nav-links { display: none; }
       .nav-actions { gap: 8px; }
-      .nav-actions .nav-link { display: none; } /* ocultar «BIBLIOTECA UI» en mobile */
+      .nav-actions .nav-link { display: none; }
       .btn-pill { padding: 8px 16px; font-size: 11px; }
 
-      /* ── Sections ── */
-      .section { padding: 64px 0; }
-      .section-inner { padding: 0 24px; }
-      .section-title { font-size: clamp(32px, 9vw, 52px); margin-bottom: 24px; }
+      /* ── Globals ── */
+      .section { padding: 60px 0; }
+      .section-inner { padding: 0 20px; }
+      .section-tag { font-size: 9px; margin-bottom: 10px; }
+      .section-title { font-size: clamp(28px, 8vw, 44px); line-height: 0.95; margin-bottom: 20px; }
 
       /* ── Hero ── */
-      .course-hero-inner { padding: 0 24px; padding-top: calc(var(--nav-h) + 48px); }
-      /* Hero grid: 1 columna, precio-card debajo */
-      .course-hero-grid {
-        grid-template-columns: 1fr;
-        gap: 32px;
-      }
-      /* Quitar sticky de la precio-card en mobile */
-      .course-hero-precio {
-        position: static !important;
-        top: auto !important;
-        margin-top: 0;
-        margin-bottom: 0;
-      }
-      .precio-card {
-        position: static !important;
-        width: 100%;
-        margin-bottom: 0;
-      }
-      .course-title { font-size: clamp(38px, 10vw, 60px); }
-      .course-breadcrumb { font-size: 9px; }
+      .course-hero { min-height: 100svh; justify-content: flex-end; }
+      .course-hero-inner { padding: 0 20px 0; padding-top: calc(var(--nav-h) + 32px); }
+      .course-hero-grid { grid-template-columns: 1fr; gap: 24px; }
+      .course-hero-precio { position: static !important; top: auto !important; margin: 0; }
+      .precio-card { position: static !important; width: 100%; padding: 20px; margin-bottom: 0; }
+      .course-breadcrumb { font-size: 9px; margin-bottom: 14px; }
+      .course-tag-row { margin-bottom: 10px; }
+      .course-title { font-size: clamp(36px, 10vw, 56px); margin-bottom: 12px; }
+      .course-hero-desc { font-size: 13px; margin-bottom: 16px; }
 
-      /* ── Stats row: columna horizontal scrollable ── */
+      /* Stats: scroll horizontal */
       .course-stats-row {
         flex-direction: row;
         overflow-x: auto;
         -webkit-overflow-scrolling: touch;
         flex-wrap: nowrap;
         gap: 0;
-        border-radius: 4px;
+        margin-top: 20px;
       }
-      .cstat {
-        flex: 0 0 auto;
-        min-width: 110px;
-        border-right: 1px solid var(--border);
-        border-bottom: none;
-      }
+      .cstat { flex: 0 0 auto; min-width: 100px; padding: 12px 16px; border-right: 1px solid var(--border); border-bottom: none; }
       .cstat:last-child { border-right: none; }
+      .cstat-val { font-size: clamp(14px, 4vw, 20px); }
+      .cstat-sub { font-size: 10px; }
 
-      /* ── Grids: 1 columna ── */
+      /* ── Precio card interna ── */
+      .precio-main { font-size: clamp(24px, 7vw, 32px); }
+      .precio-checklist { margin-bottom: 16px; }
+      .precio-cta { gap: 8px; }
+
+      /* ── Módulos ── */
       .modulos-grid { grid-template-columns: 1fr; }
-      .pq-grid { grid-template-columns: 1fr; }
-      .otros-grid { grid-template-columns: 1fr; }
-      .modulos-header { grid-template-columns: 1fr; gap: 24px; }
+      .modulos-header { grid-template-columns: 1fr; gap: 16px; margin-bottom: 40px; }
+      .modulo-card { padding: 28px 24px; }
 
-      /* ── Programa accordion ── */
+      /* ── ¿Para quién? ── */
+      .pq-grid { grid-template-columns: 1fr 1fr; }
+      .pq-flip { height: 260px; }
+      .pq-header { margin-bottom: 40px; }
+
+      /* ── Programa ── */
+      .programa-header { grid-template-columns: 1fr; gap: 16px; margin-bottom: 40px; }
       .programa-grid { grid-template-columns: 1fr; }
       .programa-card { grid-template-columns: 44px 1fr; }
       .programa-card-dur { display: none; }
-      .programa-cta-bar {
-        flex-direction: column;
-        align-items: flex-start;
-        gap: 16px;
-        padding: 20px 20px;
-      }
-      .programa-cta-btns { width: 100%; }
+      .prog-group-header { padding: 18px 20px; }
+      .prog-group-title { font-size: 15px; }
+      .programa-cta-bar { flex-direction: column; align-items: stretch; gap: 14px; padding: 20px; }
+      .programa-cta-btns { display: flex; flex-direction: column; gap: 8px; }
       .programa-cta-btns .btn-primary,
       .programa-cta-btns .btn-ghost { width: 100%; justify-content: center; }
 
-      /* ── Metodología: 1 columna ── */
-      .metodo-layout {
-        grid-template-columns: 1fr;
-        gap: 40px;
-      }
-      .metodo-visual { position: static; }
-
-      /* ── Certificación: 1 columna ── */
-      .cert-inner {
-        grid-template-columns: 1fr;
-        gap: 40px;
-      }
-
-      /* ── FAQ: 1 columna ── */
-      .faq-layout { grid-template-columns: 1fr; gap: 40px; }
-
-      /* ── ¿Para quién? flip cards ── */
-      .pq-flip { height: 280px; }
-
-      /* ── Video section: no overflow ── */
-      .video-layout {
-        grid-template-columns: 1fr;
-        gap: 40px;
-        padding: 0 24px;
-      }
+      /* ── Video ── */
+      .video-layout { grid-template-columns: 1fr; gap: 32px; padding: 0 20px; }
       .video-embed-wrap { width: 100%; max-width: 100%; }
 
-      /* ── CTA final ── */
-      .cta-final-btns { flex-direction: column; align-items: center; }
-      .cta-final { padding: 100px 0; }
-      .cta-final h2 { font-size: clamp(36px, 10vw, 72px); }
-      .cta-final p { font-size: 15px; }
-
-      /* ── Footer: 2 cols → 1 col ── */
-      .footer-top {
-        grid-template-columns: 1fr 1fr;
-        gap: 32px;
-        padding: 0 24px 48px;
-      }
-      .footer-brand { grid-column: 1 / -1; } /* marca ocupa ancho completo */
-      .footer-inner { padding: 0; }
-      .footer-bottom { flex-direction: column; gap: 12px; text-align: center; padding: 24px; }
-      .footer-legal { flex-wrap: wrap; justify-content: center; gap: 16px; }
+      /* ── Metodología ── */
+      .metodo-layout { grid-template-columns: 1fr; gap: 36px; }
+      .metodo-visual { position: static; }
+      .metodo-step { padding: 20px 0; }
 
       /* ── Testimonios ── */
-      .tcard { width: 280px; }
-      .testimonios-header { flex-direction: column; align-items: flex-start; padding: 0 24px; }
-      .testimonios-header p { text-align: left; max-width: 100%; }
+      .tcard { width: 272px; }
+      .testimonios-header { flex-direction: column; align-items: flex-start; gap: 12px; padding: 0 20px; margin-bottom: 36px; }
+      .testimonios-header p { text-align: left; font-size: 13px; }
 
-      /* ── Modulos header ── */
-      .modulos-header { margin-bottom: 48px; }
+      /* ── Certificación ── */
+      .cert-inner { grid-template-columns: 1fr; gap: 36px; }
+      .cert-visual { aspect-ratio: 16/9; }
+
+      /* ── Otros cursos ── */
+      .otros-grid { grid-template-columns: 1fr; }
+
+      /* ── FAQ ── */
+      .faq-layout { grid-template-columns: 1fr; gap: 32px; }
+      .faq-q { font-size: 14px; padding: 18px 0; }
+
+      /* ── Footer ── */
+      .footer-inner { padding: 0; }
+      .footer-top { grid-template-columns: 1fr 1fr; gap: 28px; padding: 40px 20px; }
+      .footer-brand { grid-column: 1 / -1; }
+      .footer-bottom { flex-direction: column; gap: 10px; text-align: center; padding: 20px; }
+      .footer-legal { flex-wrap: wrap; justify-content: center; gap: 12px; }
     }
-    /* ── BREAKPOINT MUY PEQUEÑO ── */
+
+    /* ── Mobile pequeño (480px) ── */
     @media (max-width: 480px) {
-      /* Títulos más compactos */
-      .section-title { font-size: clamp(28px, 9vw, 44px); }
-      .course-title { font-size: clamp(34px, 11vw, 50px); }
-      .cta-final h2 { font-size: clamp(30px, 10vw, 52px); }
-
-      /* Padding lateral más ajustado */
+      .section { padding: 48px 0; }
       .section-inner { padding: 0 16px; }
-      .course-hero-inner { padding: 0 16px; padding-top: calc(var(--nav-h) + 40px); }
-      .video-layout { padding: 0 16px; }
-      .footer-top { padding: 0 16px 40px; }
-      .footer-bottom { padding: 16px; }
-      .testimonios-header { padding: 0 16px; }
+      .section-title { font-size: clamp(26px, 9vw, 38px); }
 
-      /* Secciones menos padding vertical */
-      .section { padding: 52px 0; }
-      .cta-final { padding: 80px 0; }
+      .nav-inner { padding: 0 16px; }
+      .btn-pill { padding: 7px 12px; font-size: 10px; }
 
-      /* Nav */
-      .nav-inner { padding: 0 16px; gap: 8px; }
-      .btn-pill { padding: 7px 12px; font-size: 10px; letter-spacing: 0.04em; }
+      /* Hero */
+      .course-hero-inner { padding: 0 16px; padding-top: calc(var(--nav-h) + 24px); }
+      .course-title { font-size: clamp(32px, 11vw, 48px); }
+      .course-hero-desc { font-size: 13px; }
 
-      /* Hero stats: en 480px ponerlos en 2x2 grid */
-      .course-stats-row {
-        display: grid;
-        grid-template-columns: 1fr 1fr;
-        overflow-x: unset;
-      }
-      .cstat {
-        min-width: unset;
-        border-right: 1px solid var(--border);
-        border-bottom: 1px solid var(--border);
-        padding: 12px 14px;
-      }
+      /* Stats: grid 2x2 */
+      .course-stats-row { display: grid; grid-template-columns: 1fr 1fr; overflow-x: unset; }
+      .cstat { min-width: unset; padding: 12px 14px; border-right: 1px solid var(--border); border-bottom: 1px solid var(--border); }
       .cstat:nth-child(2) { border-right: none; }
       .cstat:nth-child(3) { border-bottom: none; }
       .cstat:nth-child(4) { border-right: none; border-bottom: none; }
+      .cstat-val { font-size: 16px; }
+      .cstat-label { font-size: 9.5px; }
 
-      /* Precio card: padding reducido */
-      .precio-card { padding: 18px; }
+      /* Precio card */
+      .precio-card { padding: 16px; }
       .precio-main { font-size: clamp(22px, 7vw, 28px); }
+      .precio-cuotas { font-size: 9px; }
 
-      /* FAQ preguntas más compactas */
-      .faq-q { font-size: 13px; padding: 18px 0; }
+      /* Para quién */
+      .pq-grid { grid-template-columns: 1fr; }
+      .pq-flip { height: 240px; }
 
-      /* Programa accordion header más compacto */
-      .prog-group-header { padding: 16px; }
+      /* Programa */
+      .prog-group-header { padding: 14px 16px; }
       .prog-group-title { font-size: 14px; }
+      .programa-cta-bar { padding: 16px; }
 
-      /* Módulo card padding */
-      .modulo-card { padding: 24px 20px; }
+      /* Video */
+      .video-layout { padding: 0 16px; }
 
       /* Testimonios */
-      .tcard { width: 260px; }
+      .testimonios-header { padding: 0 16px; }
+      .tcard { width: 252px; }
 
-      /* Footer: 1 sola columna */
-      .footer-top { grid-template-columns: 1fr; }
+      /* Cert */
+      .cert-mock { width: 220px; padding: 22px; }
+      .cert-mock-name { font-size: 15px; }
 
-      /* CTA final buttons: full-width */
-      .cta-final-btns .btn-primary,
-      .cta-final-btns .btn-ghost { width: 100%; justify-content: center; }
+      /* FAQ */
+      .faq-q { font-size: 13px; padding: 16px 0; }
+      .faq-a { font-size: 13px; }
 
-      /* Cert mock más pequeño */
-      .cert-mock { width: 220px; padding: 24px; }
+      /* Módulo */
+      .modulo-card { padding: 22px 18px; }
+      .metodo-step { gap: 14px; padding: 18px 0; }
 
-      /* Metodo step: gap reducido */
-      .metodo-step { gap: 16px; padding: 24px 0; }
+      /* Footer */
+      .footer-top { grid-template-columns: 1fr; padding: 32px 16px; gap: 24px; }
+      .footer-brand { grid-column: 1; }
+      .footer-bottom { padding: 16px; }
     }
 
     @media (prefers-reduced-motion: reduce) {
@@ -1290,7 +1255,19 @@
     .video-section { background: var(--bg2); border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); padding: 80px 0; }
     .video-layout { max-width: 1280px; margin: 0 auto; padding: 0 60px; display: grid; grid-template-columns: 1fr 520px; gap: 72px; align-items: center; }
     .video-text .section-tag { color: var(--cyan); }
-    .video-text p { font-size: 16px; line-height: 1.75; color: var(--muted); max-width: 440px; margin-bottom: 32px; }
+    
+    /* Regla unificada para párrafos de sección y descripciones */
+    .video-text p,
+    .cert-text p,
+    .metodo-visual p,
+    .faq-layout p,
+    .course-hero-desc {
+      font-size: clamp(14px, 1.4vw, 15px);
+      line-height: 1.65;
+      color: var(--muted);
+    }
+    
+    .video-text p { max-width: 440px; margin-bottom: 32px; }
     .video-highlights { display: flex; flex-direction: column; gap: 0; margin-top: 40px; }
     .vh-item { display: flex; align-items: center; gap: 16px; padding: 16px 0; border-bottom: 1px solid var(--border); }
     .vh-item:first-child { border-top: 1px solid var(--border); }
@@ -1624,8 +1601,8 @@
   <section class="video-section">
     <div class="video-layout">
       <div class="video-text">
-        <span class="section-tag" style="color:var(--cyan)">— ASÍ ES EL ENTRENAMIENTO</span>
-        <h2 class="section-title" style="font-size:clamp(70px,4vw,30px)">MIRÁ LO QUE<br><em>TE ESPERA.</em></h2>
+        <span class="section-tag">— ASÍ ES EL ENTRENAMIENTO</span>
+        <h2 class="section-title">MIRÁ LO QUE<br><em>TE ESPERA.</em></h2>
         <p>Cada sesión personalizado en hardware profesional. Es entrenamiento real con metodología de piloto.</p>
         <div class="video-highlights">
           <div class="vh-item">
@@ -1760,8 +1737,8 @@
         <!-- VISUAL: título + texto + panel de telemetría -->
         <div class="metodo-visual">
           <span class="section-tag">— CÓMO ENTRENAMOS</span>
-          <h2 class="section-title" style="font-size: clamp(28px,3.5vw,52px); margin-bottom: 20px;">MÉTODO APEX</h2>
-          <p style="font-size:14px; color: var(--muted); line-height:1.7; margin-bottom: 32px;">
+          <h2 class="section-title">MÉTODO APEX</h2>
+          <p style="margin-bottom: 32px;">
             Aplicamos metodología de entrenamiento real: cada sesión tiene objetivos, cada dato tiene análisis y cada vuelta tiene feedback.
           </p>
 
@@ -1902,8 +1879,8 @@
 
         <div class="cert-text">
           <span class="section-tag">— CERTIFICACIÓN OFICIAL</span>
-          <h2 class="section-title" style="font-size: clamp(32px,4vw,60px);">ACREDITÁ<br>TU NIVEL.</h2>
-          <p style="font-size:15px; color:var(--muted); line-height:1.7; margin-bottom:32px;">
+          <h2 class="section-title">ACREDITÁ<br>TU NIVEL.</h2>
+          <p style="margin-bottom:32px;">
             Al completar el curso y aprobar el simulacro final, recibís la Certificación Apex Nivel Inicial. No es un diploma de participación: es la validación técnica de tu desempeño real sobre la pista.
           </p>
 
@@ -1939,7 +1916,7 @@
   <section class="otros-section">
     <div class="section-inner">
       <span class="section-tag">— SEGUÍ CRECIENDO</span>
-      <h2 class="section-title" style="font-size: clamp(28px,3.5vw,48px);">OTROS<br><em>CURSOS</em></h2>
+      <h2 class="section-title">OTROS<br><em>CURSOS</em></h2>
 
       <div class="otros-grid">
         <a href="#" class="program-card" style="--glow:#7C3AED">
@@ -2044,8 +2021,8 @@
       <div class="faq-layout">
         <div>
           <span class="section-tag">— PREGUNTAS</span>
-          <h2 class="section-title" style="font-size: clamp(32px,4vw,56px);">PREGUNTAS<br><em>FRECUENTES</em></h2>
-          <p style="font-size:14px; color:var(--muted); line-height:1.7; margin-top:20px;">
+          <h2 class="section-title">PREGUNTAS<br><em>FRECUENTES</em></h2>
+          <p style="margin-top:20px;">
             Si no encontrás lo que buscás, escribinos por WhatsApp o Discord y te respondemos al toque.
           </p>
         </div>

@@ -362,7 +362,7 @@ img { display: block; max-width: 100%; }
 
 .section-title {
   font-family: var(--font);
-  font-size: clamp(40px, 6vw, 80px);
+  font-size: clamp(36px, 5vw, 64px);
   font-weight: 700;
   line-height: 0.95;
   letter-spacing: -0.03em;
@@ -472,7 +472,7 @@ img { display: block; max-width: 100%; }
 
 .hero-title {
   font-family: var(--font);
-  font-size: clamp(38px, 6vw, 78px);
+  font-size: clamp(40px, 6vw, 76px);
   font-weight: 700;
   line-height: 0.94;
   letter-spacing: -0.03em;
@@ -1078,7 +1078,7 @@ img { display: block; max-width: 100%; }
 /* Dedicated title class at smaller font so it fits the 220px column cleanly */
 .disc-title {
   font-family: var(--font);
-  font-size: clamp(28px, 3.2vw, 44px);   /* was going up to 80px via section-title */
+  font-size: clamp(36px, 5vw, 64px);   /* was going up to 80px via section-title */
   font-weight: 700;
   line-height: 0.95;
   letter-spacing: -0.03em;
@@ -1230,7 +1230,7 @@ img { display: block; max-width: 100%; }
 
 .hw-title {
   /* Overrides the global section-title clamp inside the narrow hw-top-left */
-  font-size: clamp(32px, 4.5vw, 60px) !important;
+  font-size: clamp(36px, 5vw, 64px) !important;
 }
 
 .hw-top-right {
@@ -1450,7 +1450,7 @@ img { display: block; max-width: 100%; }
 
 .community-title {
   font-family: var(--font);
-  font-size: clamp(34px, 4.5vw, 60px);
+  font-size: clamp(36px, 5vw, 64px);
   font-weight: 700;
   line-height: 0.95;
   letter-spacing: -0.03em;
@@ -2013,7 +2013,7 @@ img { display: block; max-width: 100%; }
 
 .nl-inner h2 {
   font-family: var(--font);
-  font-size: clamp(32px, 5vw, 60px);
+  font-size: clamp(36px, 5vw, 64px);
   font-weight: 700;
   line-height: 0.95;
   letter-spacing: -0.03em;
@@ -2200,7 +2200,7 @@ img { display: block; max-width: 100%; }
 }
 
 @media (max-width: 768px) {
-  /* ── Variables & base ── */
+  /* ── Base ── */
   :root { --nav-h: 60px; }
   body { cursor: auto; overflow-x: hidden; }
   .cursor, .cursor-dot { display: none; }
@@ -2208,56 +2208,46 @@ img { display: block; max-width: 100%; }
   /* ── Navbar ── */
   .nav-links { display: none; }
   .nav-burger { display: flex; }
-  .nav-inner { padding: 0 20px; gap: 16px; }
-  .nav-actions .btn-pill.btn-academy { font-size: 11px; padding: 8px 14px; }
-
-  /* ── Mobile overlay ── */
-  .mobile-overlay { z-index: 450; }
+  .nav-inner { padding: 0 20px; gap: 14px; }
+  .nav-actions .btn-pill { font-size: 11px; padding: 8px 14px; }
+  .nav-actions .nav-link { display: none; }
 
   /* ── Globals ── */
-  .section { padding: 64px 0; }
+  .section { padding: 60px 0; }
   .section-inner { padding: 0 20px; }
-  .section-title { font-size: clamp(28px, 8vw, 44px); margin-bottom: 24px; }
+  .section-tag { font-size: 9px; }
+  .section-title { font-size: clamp(26px, 8vw, 40px); line-height: 0.95; margin-bottom: 20px; }
 
   /* ── Hero ── */
   .hero-section { min-height: 100svh; }
   .hero-video-bg { display: none; }
   .hero-content {
     padding: 0 20px;
-    padding-top: calc(var(--nav-h) + 20px);
+    padding-top: calc(var(--nav-h) + 24px);
     padding-bottom: 48px;
     max-width: 100%;
   }
-  .hero-title { font-size: clamp(32px, 10vw, 52px); margin-bottom: 20px; }
-  .hero-desc { font-size: 14px; max-width: 100%; margin-bottom: 28px; }
-  .hero-badge { margin-bottom: 20px; }
-  .hero-cta-row {
-    flex-direction: column;
-    align-items: stretch;
-    gap: 10px;
-    margin-bottom: 24px;
-  }
+  .hero-title { font-size: clamp(30px, 9vw, 48px); margin-bottom: 16px; line-height: 0.95; }
+  .hero-desc { font-size: 14px; max-width: 100%; margin-bottom: 24px; }
+  .hero-badge { font-size: 9px; margin-bottom: 16px; padding: 5px 12px; }
+  .hero-cta-row { flex-direction: column; align-items: stretch; gap: 8px; margin-bottom: 20px; }
   .hero-cta-row .btn-primary,
-  .hero-cta-row .btn-ghost {
-    width: 100%;
-    justify-content: center;
-  }
-  .hero-stats { flex-wrap: wrap; gap: 16px 24px; }
+  .hero-cta-row .btn-ghost { width: 100%; justify-content: center; }
+  .hero-stats { flex-wrap: wrap; gap: 12px 20px; }
   .stat-divider { display: none; }
-  .stat-num { font-size: 22px; }
+  .stat-num { font-size: 20px; }
+  .stat-label { font-size: 10px; }
   .hero-hud { display: none; }
   .scroll-hint { display: none; }
 
   /* ── Sobre Apex ── */
-  .sobre-apex-section { margin-bottom: 40px; }
   .sa-main-grid { grid-template-columns: 1fr; }
-  .sa-visual { min-height: 240px; }
-  .sa-panel { padding: 32px 20px; border-left: none; border-top: 1px solid var(--border); }
-  .sa-title { font-size: clamp(26px, 7vw, 38px); }
+  .sa-visual { min-height: 220px; }
+  .sa-panel { padding: 28px 20px; border-left: none; border-top: 1px solid var(--border); }
+  .sa-title { font-size: clamp(24px, 7vw, 36px); }
   .sa-bottom-bar { grid-template-columns: 1fr; }
-  .sa-pillar-item { padding: 24px 20px; }
-  /* legacy selectors */
-  .sa-layout { grid-template-columns: 1fr; gap: 32px; }
+  .sa-pillar-item { padding: 20px; }
+  .sa-layout { grid-template-columns: 1fr; gap: 28px; }
   .sa-img-wrap { aspect-ratio: 16/9; }
   .sa-stats-strip { flex-wrap: wrap; }
   .sa-stat { flex: 1 1 45%; border-bottom: 1px solid var(--border); }
@@ -2265,115 +2255,79 @@ img { display: block; max-width: 100%; }
 
   /* ── Disciplinas ── */
   .disc-section { padding: 60px 0; }
-  .disc-sticky {
-    flex-direction: column;
-    padding: 0 20px;
-    gap: 28px;
-  }
+  .disc-sticky { flex-direction: column; padding: 0 20px; gap: 24px; }
   .disc-left { width: 100%; position: static; top: auto; }
-  .disc-title { font-size: clamp(28px, 8vw, 44px); margin-bottom: 20px; }
+  .disc-title { font-size: clamp(24px, 7vw, 36px); margin-bottom: 16px; }
   .disc-scroll-area {
-    overflow-x: auto;
-    overflow-y: hidden;
+    overflow-x: auto; overflow-y: hidden;
     -webkit-overflow-scrolling: touch;
     scroll-snap-type: x mandatory;
-    margin: 0 -20px;
-    padding: 0 20px;
+    margin: 0 -20px; padding: 0 20px;
   }
-  .disc-card { scroll-snap-align: start; width: 76vw; }
+  .disc-card { scroll-snap-align: start; width: 80vw; }
 
   /* ── Hardware ── */
   .hw-top { grid-template-columns: 1fr; gap: 20px; }
-  .hw-brands { grid-template-columns: 1fr; }
+  .hw-brands { grid-template-columns: 1fr 1fr; }
 
   /* ── Academia / Programs ── */
-  .programs-track { grid-template-columns: 1fr; }
+  .programs-track { grid-template-columns: 1fr; gap: 0; background: none; }
+  .program-card { border-bottom: 1px solid var(--border); border-top: none; }
+  .program-card:first-child { border-top: 1px solid var(--border); }
   .academia-stats { grid-template-columns: repeat(2, 1fr); }
-  .academia-header-wrap { grid-template-columns: 1fr; gap: 24px; }
+  .academia-header-wrap { grid-template-columns: 1fr; gap: 20px; }
 
   /* ── Sim to Real ── */
-  .str-inner {
-    padding: 0 20px;
-    grid-template-columns: 1fr;
-    gap: 40px;
-  }
-  .str-road { padding: 32px 20px; }
-  .road-year { font-size: 80px; bottom: -10px; right: -5px; }
-  .str-road h3 { font-size: 26px; }
+  .str-inner { padding: 0 20px; grid-template-columns: 1fr; gap: 36px; }
+  .str-road { padding: 28px 20px; }
+  .road-year { font-size: 72px; }
+  .str-road h3 { font-size: 24px; }
 
   /* ── Competitions ── */
   .comp-grid { grid-template-columns: 1fr; }
   .comp-leagues { grid-column: 1; }
-  .comp-header { margin-bottom: 40px; }
+  .comp-header { margin-bottom: 36px; }
 
   /* ── Community ── */
-  .community-section {
-    grid-template-columns: 1fr;
-    padding: 0;
-  }
-  .community-inner { padding: 48px 20px 32px; }
-  .community-title { font-size: clamp(28px, 9vw, 44px); }
+  .community-section { grid-template-columns: 1fr; padding: 0; }
+  .community-inner { padding: 40px 20px 28px; }
+  .community-title { font-size: clamp(24px, 8vw, 36px); }
   .community-sub p { max-width: 100%; }
-  .community-grid {
-    grid-template-columns: 1fr 1fr;
-    grid-template-rows: auto;
-    border-top: 1px solid var(--border);
-  }
-  .cg-tall {
-    grid-row: span 2;
-    grid-column: auto;
-  }
-  .cg-wide {
-    grid-column: span 2;
-    grid-row: auto;
-  }
-  .cg-item { min-height: 140px; }
+  .community-grid { grid-template-columns: 1fr 1fr; border-top: 1px solid var(--border); }
+  .cg-tall { grid-row: span 2; }
+  .cg-wide { grid-column: span 2; grid-row: auto; }
+  .cg-item { min-height: 130px; }
   .cg-overlay { opacity: 1; background: linear-gradient(to top, rgba(8,8,8,0.75) 0%, transparent 60%); }
-  .cg-card {
-    border-left: none;
-    border-top: 1px solid var(--border);
-    padding: 28px 20px;
-  }
+  .cg-card { border-left: none; border-top: 1px solid var(--border); padding: 24px 20px; }
 
   /* ── Empresas ── */
-  .emp-grid { grid-template-columns: repeat(2, 1fr); }
-  .emp-card { padding: 28px 20px; }
-  .emp-header { margin-bottom: 36px; }
-  .emp-img-banner { aspect-ratio: 16/6; min-height: 130px; margin-bottom: 28px; }
+  .emp-grid { grid-template-columns: 1fr; }
+  .emp-card { padding: 24px 20px; }
+  .emp-header { margin-bottom: 32px; }
+  .emp-img-banner { aspect-ratio: 16/6; min-height: 120px; margin-bottom: 24px; }
 
   /* ── Newsletter ── */
-  .newsletter-section { padding: 72px 0; }
+  .newsletter-section { padding: 60px 0; }
   .nl-inner { padding: 0 20px; }
   .nl-form { flex-direction: column; gap: 8px; }
-  .nl-input {
-    border-right: 1px solid var(--border2);
-    border-radius: 4px;
-    width: 100%;
-  }
+  .nl-input { border-right: 1px solid var(--border2); border-radius: 4px; width: 100%; }
   .nl-form .btn-primary { border-radius: 4px; justify-content: center; width: 100%; }
 
-  /* ── Footer ── */
-  .footer { padding: 56px 0 0; }
-  .footer-inner { padding: 0; }
-  .footer-top {
-    grid-template-columns: 1fr 1fr;
-    gap: 32px;
-    padding: 0 20px 40px;
-  }
-  .footer-brand { grid-column: span 2; }
-  .footer-bottom {
-    flex-direction: column;
-    gap: 10px;
-    text-align: center;
-    padding: 20px;
-  }
-  .footer-bottom span { font-size: 9px; }
-
   /* ── Testimonials ── */
-  .testi-grid { grid-template-columns: 1fr; }
+  .testi-grid { grid-template-columns: 1fr; background: none; gap: 1px; }
+  .testi-card { padding: 28px 20px; }
 
   /* ── FAQ ── */
-  .faq-layout { grid-template-columns: 1fr; gap: 32px; }
+  .faq-layout { grid-template-columns: 1fr; gap: 28px; }
+
+  /* ── Footer ── */
+  .footer { padding: 52px 0 0; }
+  .footer-inner { padding: 0; }
+  .footer-top { grid-template-columns: 1fr 1fr; gap: 28px; padding: 0 20px 40px; }
+  .footer-brand { grid-column: span 2; }
+  .footer-bottom { flex-direction: column; gap: 8px; text-align: center; padding: 18px 20px; }
+  .footer-bottom span { font-size: 9px; }
+  .footer-legal { flex-wrap: wrap; justify-content: center; gap: 12px; }
 }
 
 @media (prefers-reduced-motion: reduce) {
@@ -2792,7 +2746,7 @@ img { display: block; max-width: 100%; }
 
 .sa-title {
   font-family: var(--font);
-  font-size: clamp(26px, 3.2vw, 46px);
+  font-size: clamp(36px, 5vw, 64px);
   font-weight: 700;
   line-height: 0.95;
   letter-spacing: -0.03em;
