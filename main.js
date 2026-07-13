@@ -591,8 +591,9 @@ function initScrollReveal() {
 }
 
 /* ═══════════════════════════════════════════════════════
-   DISC SCROLL — cursor-driven auto-scroll (desktop)
-                 native touch swipe (mobile)
+   DISC SCROLL — drag-to-scroll (mouse, touch y pen)
+                 clic/touch + arrastrar mueve las cards,
+                 con un poco de inercia al soltar
 ═══════════════════════════════════════════════════════ */
 function initDragScroll() {
   const section  = document.querySelector('.disc-section');
@@ -600,119 +601,89 @@ function initDragScroll() {
   const row      = el ? el.querySelector('.disc-cards-row') : null;
   if (!section || !el || !row) return;
 
-  /* ── Skip on touch devices — CSS handles native scroll ── */
-  const isTouch = window.matchMedia('(pointer: coarse)').matches;
-  if (isTouch) {
-    // Let CSS handle native horizontal scroll
-    return;
-  }
+  let isDown      = false;
+  let dragged     = false;
+  let startX      = 0;
+  let startScroll = 0;
+  let lastX       = 0;
+  let lastT       = 0;
+  let velX        = 0;
+  let momentumId  = null;
 
-  /* ── Desktop: cursor position → scrollLeft ── */
-
-  // Target and current scroll, smoothly interpolated each frame
-  let targetScroll  = 0;
-  let currentScroll = 0;
-  let isInSection   = false;   // only animate while cursor is over the section
-  let rafId         = null;
-
-  // Max scrollable distance
   function maxScroll() {
     return row.scrollWidth - el.clientWidth;
   }
 
-  // Map cursor X (relative to section) to a scroll target
-  function cursorToScroll(clientX) {
-    const rect     = section.getBoundingClientRect();
-    // Normalise to [0, 1] with a small dead-zone at the edges
-    const MARGIN   = 0.08;   // 8% dead-zone on each side — title area stays calm
-    const rawT     = (clientX - rect.left) / rect.width;
-    const t        = clamp((rawT - MARGIN) / (1 - MARGIN * 2), 0, 1);
-    return t * maxScroll();
+  function stopMomentum() {
+    if (momentumId) cancelAnimationFrame(momentumId);
+    momentumId = null;
   }
 
-  // Animate loop — runs only while cursor is inside the section
-  function tick() {
-    currentScroll = lerp(currentScroll, targetScroll, 0.055);  // silky ease
-    el.scrollLeft = currentScroll;
+  function coast() {
+    if (Math.abs(velX) < 0.02) { momentumId = null; return; }
+    el.scrollLeft = clamp(el.scrollLeft + velX * 16, 0, maxScroll());
+    velX *= 0.94;
+    momentumId = requestAnimationFrame(coast);
+  }
 
-    // Keep looping while drifting or still inside
-    if (isInSection || Math.abs(currentScroll - targetScroll) > 0.5) {
-      rafId = requestAnimationFrame(tick);
-    } else {
-      rafId = null;
+  function startMomentum() {
+    stopMomentum();
+    momentumId = requestAnimationFrame(coast);
+  }
+
+  el.addEventListener('pointerdown', (e) => {
+    isDown      = true;
+    dragged     = false;
+    startX      = e.clientX;
+    lastX       = e.clientX;
+    lastT       = performance.now();
+    velX        = 0;
+    startScroll = el.scrollLeft;
+    stopMomentum();
+    el.setPointerCapture(e.pointerId);
+  });
+
+  el.addEventListener('pointermove', (e) => {
+    if (!isDown) return;
+    const dx = e.clientX - startX;
+    if (Math.abs(dx) > 3) dragged = true;
+    el.scrollLeft = clamp(startScroll - dx, 0, maxScroll());
+
+    const now = performance.now();
+    const dt  = now - lastT || 1;
+    velX      = (lastX - e.clientX) / dt * 16; // ~px per frame
+    lastX     = e.clientX;
+    lastT     = now;
+  });
+
+  function endDrag() {
+    if (!isDown) return;
+    isDown = false;
+    if (dragged) {
+      // Evita que el click posterior al arrastre dispare links dentro de la card
+      el.addEventListener('click', (ce) => {
+        ce.preventDefault();
+        ce.stopPropagation();
+      }, { capture: true, once: true });
+      startMomentum();
     }
   }
 
-  function startTick() {
-    if (!rafId) rafId = requestAnimationFrame(tick);
-  }
-
-  // Track cursor across the whole section (left panel + scroll area)
-  section.addEventListener('mousemove', e => {
-    targetScroll = cursorToScroll(e.clientX);
-    startTick();
-  }, { passive: true });
-
-  section.addEventListener('mouseenter', () => {
-    isInSection = true;
-    startTick();
-  });
-
-  section.addEventListener('mouseleave', () => {
-    isInSection = false;
-    // Let the lerp coast to rest — tick will stop itself
-  });
+  el.addEventListener('pointerup', endDrag);
+  el.addEventListener('pointercancel', endDrag);
+  el.addEventListener('pointerleave', endDrag);
 
   // Sync on resize
   window.addEventListener('resize', () => {
-    currentScroll = clamp(currentScroll, 0, maxScroll());
-    targetScroll  = clamp(targetScroll,  0, maxScroll());
-    el.scrollLeft = currentScroll;
+    el.scrollLeft = clamp(el.scrollLeft, 0, maxScroll());
   }, { passive: true });
 
   /* ── Subtle intro hint: drift right then back ── */
   setTimeout(() => {
     const max = maxScroll();
-    targetScroll = max * 0.18;
-    startTick();
-    setTimeout(() => { targetScroll = 0; startTick(); }, 900);
+    el.scrollTo({ left: max * 0.18, behavior: 'smooth' });
+    setTimeout(() => el.scrollTo({ left: 0, behavior: 'smooth' }), 900);
   }, 1800);
-}
-
-/* ── Touch swipe for mobile ── */
-function initTouchSwipe(el) {
-  let startX = 0, startLeft = 0, velX = 0, lastX = 0, lastT = 0;
-  let rafId  = null;
-
-  el.addEventListener('touchstart', e => {
-    startX    = e.touches[0].clientX;
-    startLeft = el.scrollLeft;
-    velX      = 0;
-    lastX     = startX;
-    lastT     = Date.now();
-    cancelAnimationFrame(rafId);
-  }, { passive: true });
-
-  el.addEventListener('touchmove', e => {
-    const now  = Date.now();
-    const x    = e.touches[0].clientX;
-    const dt   = now - lastT || 1;
-    velX       = (lastX - x) / dt;   // px/ms
-    el.scrollLeft = startLeft + (startX - x);
-  }, { passive: true });
-
-  el.addEventListener('touchend', () => {
-    // Momentum flick
-    let momentum = velX * 120;   // project forward
-
-    function coast() {
-      if (Math.abs(momentum) < 0.5) return;
-      el.scrollLeft += momentum;
-      momentum *= 0.92;           // friction
-      rafId = requestAnimationFrame(coast);
-    }
-    coast();
-  }, { passive: true });
 }
 
 /* ═══════════════════════════════════════════════════════
@@ -979,6 +950,39 @@ function initCompetitionsTracks() {
     });
   });
 
+  // Swipe horizontal (touch) sobre la imagen de la pista
+  const swipeEl = document.querySelector('.comp-track-img-wrap');
+  if (swipeEl) {
+    let startX = 0;
+    let startY = 0;
+    let tracking = false;
+
+    swipeEl.addEventListener('touchstart', (e) => {
+      const t = e.touches[0];
+      startX = t.clientX;
+      startY = t.clientY;
+      tracking = true;
+    }, { passive: true });
+
+    swipeEl.addEventListener('touchend', (e) => {
+      if (!tracking) return;
+      tracking = false;
+      const t = e.changedTouches[0];
+      const dx = t.clientX - startX;
+      const dy = t.clientY - startY;
+      const SWIPE_THRESHOLD = 40;
+
+      // Solo reacciona si el gesto fue predominantemente horizontal,
+      // para no interferir con el scroll vertical de la página.
+      if (Math.abs(dx) > SWIPE_THRESHOLD && Math.abs(dx) > Math.abs(dy)) {
+        clearInterval(timer);
+        if (dx < 0) goTo(current + 1); // deslizó a la izquierda → siguiente
+        else goTo(current - 1);        // deslizó a la derecha → anterior
+        startAutoplay();
+      }
+    }, { passive: true });
+  }
+
   startAutoplay();
 }
 
@@ -996,6 +1000,12 @@ function initFooterAccordion() {
 
       // Remove previous listener if any
       heading.removeEventListener('click', heading._toggle);
+
+      // "Contacto" queda siempre desplegado, sin acordeón
+      if (col.classList.contains('footer-col-contact')) {
+        col.classList.remove('open');
+        return;
+      }
 
       if (mq.matches) {
         // Mobile: enable accordion

@@ -100,7 +100,7 @@
       height: 100%; padding: 0 40px; gap: 40px;
     }
     .nav-logo { display: flex; align-items: center; gap: 10px; flex-shrink: 0; }
-    .nav-logo .disc-car-img { display: flex; align-items: center; height: 90px; }
+    .nav-logo .disc-car-img { display: flex; align-items: center; height: 112px; }
     .nav-logo .disc-car-img img { height: 100%; width: auto; max-width: none; display: block; }
     .nav-logo-text {
       font-family: var(--mono); font-size: 14px; font-weight: 700;
@@ -155,7 +155,7 @@
 
     /* ── SECTION GLOBALS ── */
     .section { position: relative; padding: 72px 0; overflow: hidden; }
-    .section-inner { max-width: 1280px; margin: 0 auto; padding: 0 60px; }
+    .section-inner { max-width: 1280px; margin: 0 auto; padding: 0 72px; }
     .section-tag {
       font-family: var(--mono); font-size: 11px; font-weight: 400;
       letter-spacing: 0.2em; color: var(--muted); text-transform: uppercase;
@@ -221,7 +221,7 @@
 
     .course-hero-inner {
       max-width: 1280px; margin: 0 auto;
-      padding: 0 60px; padding-top: calc(var(--nav-h) + 32px);
+      padding: 0 72px; padding-top: calc(var(--nav-h) + 32px);
       position: relative; z-index: 2;
     }
     .course-hero-grid {
@@ -502,7 +502,7 @@
       margin-bottom: 56px;
     }
     .programa-header .section-title { margin-bottom: 0; }
-    .programa-intro { font-size: 15px; line-height: 1.75; color: var(--muted); }
+    .programa-intro { font-size: 15px; line-height: 1.6; color: var(--muted); }
     .programa-meta {
       display: flex; gap: 28px; margin-top: 20px;
       font-family: var(--mono); font-size: 11px; letter-spacing: 0.08em;
@@ -731,7 +731,7 @@
     .metodo-steps { display: flex; flex-direction: column; gap: 0; }
     .metodo-step {
       display: flex; gap: 24px;
-      padding: 32px 0; border-bottom: 1px solid var(--border);
+      padding: 26px 0; border-bottom: 1px solid var(--border);
       position: relative;
     }
     .metodo-step:first-child { border-top: 1px solid var(--border); }
@@ -743,7 +743,7 @@
       font-size: 16px; font-weight: 700; text-transform: uppercase;
       color: var(--white); margin-bottom: 6px; letter-spacing: -0.01em;
     }
-    .metodo-step-desc { font-size: 13px; line-height: 1.65; color: var(--muted); }
+    .metodo-step-desc { font-size: 13px; line-height: 1.55; color: var(--muted); }
 
     /* Telemetría decorativa */
     .metodo-visual {
@@ -814,29 +814,29 @@
       z-index: 1;
     }
     .cert-mock {
-      width: 280px; padding: 32px;
+      width: 340px; padding: 44px;
       border: 1px solid rgba(0,229,255,0.2);
       border-radius: 4px; background: rgba(0,229,255,0.02);
       position: relative; z-index: 1; text-align: center;
     }
     .cert-mock-badge {
-      width: 56px; height: 56px; border-radius: 50%;
-      border: 2px solid var(--cyan); margin: 0 auto 16px;
+      width: 68px; height: 68px; border-radius: 50%;
+      border: 2px solid var(--cyan); margin: 0 auto 20px;
       display: flex; align-items: center; justify-content: center;
       color: var(--cyan);
     }
-    .cert-mock-badge svg { width: 24px; height: 24px; }
+    .cert-mock-badge svg { width: 30px; height: 30px; }
     .cert-mock-title {
-      font-family: var(--mono); font-size: 9px; font-weight: 700;
-      letter-spacing: 0.25em; color: var(--cyan); text-transform: uppercase; margin-bottom: 8px;
+      font-family: var(--mono); font-size: 11px; font-weight: 700;
+      letter-spacing: 0.25em; color: var(--cyan); text-transform: uppercase; margin-bottom: 10px;
     }
     .cert-mock-name {
-      font-size: 18px; font-weight: 700; text-transform: uppercase;
-      color: var(--white); line-height: 1.1; margin-bottom: 16px;
+      font-size: 23px; font-weight: 700; text-transform: uppercase;
+      color: var(--white); line-height: 1.15; margin-bottom: 20px;
     }
-    .cert-mock-line { height: 1px; background: rgba(0,229,255,0.15); margin: 16px 0; }
+    .cert-mock-line { height: 1px; background: rgba(0,229,255,0.15); margin: 20px 0; }
     .cert-mock-footer {
-      font-family: var(--mono); font-size: 8px; letter-spacing: 0.2em;
+      font-family: var(--mono); font-size: 9px; letter-spacing: 0.2em;
       color: var(--muted2); text-transform: uppercase;
     }
     .cert-text { }
@@ -932,6 +932,7 @@
     .otros-grid .program-card {
       background: var(--bg3);
       border: 1px solid var(--border);
+      border-top: 3px solid var(--glow, var(--cyan));
       border-radius: 4px;
       display: flex; flex-direction: column;
       overflow: hidden;
@@ -942,11 +943,12 @@
     }
     .otros-grid .program-card:hover {
       border-color: var(--border2);
+      border-top-color: var(--glow, var(--cyan));
       transform: translateY(-4px);
     }
     .otros-grid .card-image-wrap {
       position: relative; overflow: hidden;
-      aspect-ratio: 16/9;
+      aspect-ratio: 4/3;
     }
     .otros-grid .card-image-wrap img {
       width: 100%; height: 100%;
@@ -971,19 +973,21 @@
       color: var(--white); line-height: 1.05;
     }
     .otros-grid .card-info {
-      padding: 20px; display: flex; flex-direction: column; gap: 12px; flex: 1;
+      padding: 24px 20px; display: flex; flex-direction: column; gap: 18px; flex: 1;
     }
     .otros-grid .card-desc {
       font-size: 13px; color: var(--muted); line-height: 1.55;
     }
     .otros-grid .card-specs {
       display: flex; align-items: center; gap: 0;
-      border: 1px solid var(--border); border-radius: 3px; overflow: hidden;
+      border-top: 1px solid var(--border); border-bottom: 1px solid var(--border);
+      padding: 14px 0;
     }
     .otros-grid .card-spec {
-      flex: 1; padding: 10px 14px;
+      flex: 1; padding: 0 14px;
       display: flex; flex-direction: column; gap: 2px;
     }
+    .otros-grid .card-spec:first-child { padding-left: 0; }
     .otros-grid .card-spec-divider {
       width: 1px; align-self: stretch; background: var(--border);
     }
@@ -1000,22 +1004,25 @@
       margin-top: auto;
     }
     .otros-grid .price-amount {
-      font-family: var(--mono); font-size: 18px; font-weight: 700; color: var(--white);
+      font-family: var(--mono); font-size: 28px; font-weight: 700; color: var(--white);
     }
     .otros-grid .price-period {
       font-family: var(--mono); font-size: 10px; color: var(--muted2);
     }
     .otros-grid .price-note {
       font-family: var(--mono); font-size: 9px; letter-spacing: 0.15em;
-      text-transform: uppercase; color: var(--cyan); opacity: 0.7;
+      text-transform: uppercase; color: var(--purple);
     }
     .otros-grid .card-link {
-      font-family: var(--mono); font-size: 10px; font-weight: 700;
-      letter-spacing: 0.18em; text-transform: uppercase;
-      color: var(--muted2); transition: color .2s;
-      display: inline-flex; align-items: center; gap: 6px;
+      font-family: var(--font); font-size: 13px; font-weight: 600;
+      letter-spacing: 0.04em; text-transform: uppercase;
+      color: var(--white);
+      display: flex; align-items: center; justify-content: center; gap: 8px;
+      border: 1px solid var(--border2); border-radius: 4px;
+      padding: 14px; margin-top: 4px;
+      transition: border-color .25s, background .25s, color .25s;
     }
-    .otros-grid .program-card:hover .card-link { color: var(--white); }
+    .otros-grid .program-card:hover .card-link { background: var(--white); border-color: var(--white); color: var(--bg); }
     .otros-grid .card-glow {
       position: absolute; inset: 0; pointer-events: none;
       background: radial-gradient(ellipse 80% 50% at 50% 100%, color-mix(in srgb, var(--glow, #00E5FF) 12%, transparent), transparent 70%);
@@ -1025,7 +1032,7 @@
 
     /* ═══ FOOTER ═══ */
     .footer { background: rgba(8,8,8,0.90); padding: 80px 0 0; }
-    .footer-inner { max-width: 1280px; margin: 0 auto; padding: 0 60px; }
+    .footer-inner { max-width: 1280px; margin: 0 auto; padding: 0 72px; }
     .footer-top {
       display: grid; grid-template-columns: 260px repeat(4, 1fr);
       gap: 48px; padding-bottom: 60px; border-bottom: 1px solid var(--border);
@@ -1092,7 +1099,7 @@
 
     /* ═══ VIDEO SECTION ═══ */
     .video-section { background: var(--bg2); border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); padding: 80px 0; }
-    .video-layout { max-width: 1280px; margin: 0 auto; padding: 0 60px; display: grid; grid-template-columns: 1fr 520px; gap: 72px; align-items: center; }
+    .video-layout { max-width: 1280px; margin: 0 auto; padding: 0 72px; display: grid; grid-template-columns: 1fr 520px; gap: 72px; align-items: center; }
     .video-text .section-tag { color: var(--cyan); }
     
     /* Regla unificada para párrafos de sección y descripciones */
@@ -1108,11 +1115,12 @@
     
     .video-text p { max-width: 440px; margin-bottom: 32px; }
     .video-highlights { display: flex; flex-direction: column; gap: 0; margin-top: 40px; }
-    .vh-item { display: flex; align-items: center; gap: 16px; padding: 16px 0; border-bottom: 1px solid var(--border); }
+    .vh-item { display: flex; align-items: flex-start; gap: 16px; padding: 14px 0; border-bottom: 1px solid var(--border); }
     .vh-item:first-child { border-top: 1px solid var(--border); }
-    .vh-num { font-family: var(--mono); font-size: 10px; letter-spacing: 0.18em; color: var(--cyan); flex-shrink: 0; width: 28px; }
-    .vh-text { font-size: 14px; color: var(--muted); line-height: 1.5; }
-    .vh-text strong { color: var(--white); font-weight: 600; }
+    .vh-num { font-family: var(--mono); font-size: 10px; letter-spacing: 0.18em; color: var(--cyan); flex-shrink: 0; width: 28px; padding-top: 2px; }
+    .vh-body { display: flex; flex-direction: column; gap: 3px; }
+    .vh-title { font-size: 14px; font-weight: 600; color: var(--white); text-transform: uppercase; letter-spacing: 0.01em; }
+    .vh-desc { font-size: 12px; color: var(--muted2); line-height: 1.4; }
     .video-embed-wrap { position: relative; border-radius: 4px; overflow: hidden; border: 1px solid var(--border2); cursor: none; background: #000; }
     .video-embed-wrap::before { content: ''; display: block; padding-top: 56.25%; }
     .video-embed-wrap iframe, .video-embed-wrap video, .video-embed-wrap img.video-thumb { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; border: none; }
@@ -1126,8 +1134,8 @@
 
     /* ═══ TESTIMONIOS CAROUSEL ═══ */
     .testimonios-section { background: rgba(8,8,8,0.97); border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); padding: 80px 0; position: relative; z-index: 1; background-image: radial-gradient(circle, rgba(255,255,255,0.06) 1px, transparent 1px); background-size: 28px 28px; }
-    .testimonios-header { max-width: 1280px; margin: 0 auto 52px; padding: 0 60px; display: flex; align-items: flex-end; justify-content: space-between; gap: 32px; }
-    .testimonios-header h2 { font-size: clamp(28px,3.5vw,48px); font-weight: 700; line-height: .95; letter-spacing: -.03em; text-transform: uppercase; }
+    .testimonios-header { max-width: 1280px; margin: 0 auto 52px; padding: 0 72px; display: flex; align-items: flex-end; justify-content: space-between; gap: 32px; }
+    .testimonios-header h2 { font-size: clamp(36px, 5vw, 64px); font-weight: 700; line-height: 1.05; letter-spacing: -.03em; text-transform: uppercase; }
     .testimonios-header h2 em { font-style: normal; color: transparent; -webkit-text-stroke: 1px rgba(255,255,255,0.3); }
     .testimonios-header p { font-size: 14px; color: var(--muted2); max-width: 280px; line-height: 1.6; text-align: right; }
     .tcarousel-wrap { display: flex; flex-direction: column; gap: 16px; }
@@ -1175,7 +1183,7 @@
 
       /* ── Navbar ── */
       .nav-inner { padding: 0 20px; gap: 12px; justify-content: space-between; }
-      .nav-logo .disc-car-img { height: 50px; }
+      .nav-logo .disc-car-img { height: 62px; }
       .nav-links { display: none; }
       .nav-actions { gap: 10px; }
       .nav-actions .nav-link { display: none; }
@@ -1183,13 +1191,14 @@
 
       /* ── Globals ── */
       .section { padding: 60px 0; }
-      .section-inner { padding: 0 20px; }
+      .section-inner { padding: 0 28px; }
       .section-tag { font-size: 9px; margin-bottom: 10px; }
       .section-title { font-size: clamp(34px, 10vw, 52px); line-height: 1.05; margin-bottom: 20px; }
+      .testimonios-header h2 { font-size: clamp(34px, 10vw, 52px); }
 
       /* ── Hero ── */
       .course-hero { min-height: 100svh; justify-content: flex-end; }
-      .course-hero-inner { padding: 0 20px 0; padding-top: calc(var(--nav-h) + 32px); }
+      .course-hero-inner { padding: 0 28px 0; padding-top: calc(var(--nav-h) + 32px); }
       .course-hero-grid { grid-template-columns: 1fr; gap: 24px; }
       .course-hero-precio { position: static !important; top: auto !important; margin: 0; }
       .precio-card { position: static !important; width: 100%; padding: 20px; margin-bottom: 0; }
@@ -1240,7 +1249,7 @@
       .programa-cta-btns .btn-ghost { width: 100%; justify-content: center; }
 
       /* ── Video ── */
-      .video-layout { grid-template-columns: 1fr; gap: 32px; padding: 0 20px; }
+      .video-layout { grid-template-columns: 1fr; gap: 32px; padding: 0 28px; }
       .video-embed-wrap { width: 100%; max-width: 100%; }
 
       /* ── Metodología ── */
@@ -1250,7 +1259,7 @@
 
       /* ── Testimonios ── */
       .tcard { width: 272px; }
-      .testimonios-header { flex-direction: column; align-items: flex-start; gap: 12px; padding: 0 20px; margin-bottom: 36px; }
+      .testimonios-header { flex-direction: column; align-items: flex-start; gap: 12px; padding: 0 28px; margin-bottom: 36px; }
       .testimonios-header p { text-align: left; font-size: 13px; }
 
       /* ── Certificación ── */
@@ -1267,7 +1276,7 @@
 
       /* ── Footer ── */
       .footer-inner { padding: 0; }
-      .footer-top { grid-template-columns: 1fr 1fr; gap: 28px; padding: 40px 20px; }
+      .footer-top { grid-template-columns: 1fr 1fr; gap: 28px; padding: 40px 28px; }
       .footer-brand { grid-column: 1 / -1; }
       .footer-bottom { flex-direction: column; gap: 10px; text-align: center; padding: 20px; }
       .footer-legal { flex-wrap: wrap; justify-content: center; gap: 12px; }
@@ -1276,14 +1285,15 @@
     /* ── Mobile pequeño (480px) ── */
     @media (max-width: 480px) {
       .section { padding: 48px 0; }
-      .section-inner { padding: 0 16px; }
+      .section-inner { padding: 0 22px; }
       .section-title { font-size: clamp(26px, 9vw, 38px); }
+      .testimonios-header h2 { font-size: clamp(26px, 9vw, 38px); }
 
       .nav-inner { padding: 0 16px; }
       .btn-pill { padding: 7px 12px; font-size: 10px; }
 
       /* Hero */
-      .course-hero-inner { padding: 0 16px; padding-top: calc(var(--nav-h) + 24px); }
+      .course-hero-inner { padding: 0 22px; padding-top: calc(var(--nav-h) + 24px); }
       .course-title { font-size: clamp(38px, 13vw, 56px); }
       .course-hero-desc { font-size: 13px; }
 
@@ -1311,15 +1321,15 @@
       .programa-cta-bar { padding: 16px; }
 
       /* Video */
-      .video-layout { padding: 0 16px; }
+      .video-layout { padding: 0 22px; }
 
       /* Testimonios */
-      .testimonios-header { padding: 0 16px; }
+      .testimonios-header { padding: 0 22px; }
       .tcard { width: 252px; }
 
       /* Cert */
-      .cert-mock { width: 220px; padding: 22px; }
-      .cert-mock-name { font-size: 15px; }
+      .cert-mock { width: 260px; padding: 28px; }
+      .cert-mock-name { font-size: 18px; }
 
       /* FAQ */
       .faq-q { font-size: 13px; padding: 16px 0; }
@@ -1330,7 +1340,7 @@
       .metodo-step { gap: 14px; padding: 18px 0; }
 
       /* Footer */
-      .footer-top { grid-template-columns: 1fr; padding: 0 16px 36px; gap: 0; }
+      .footer-top { grid-template-columns: 1fr; padding: 0 22px 36px; gap: 0; }
       .footer-brand { grid-column: 1; margin-bottom: 32px; }
       .footer-col { border-bottom: 1px solid rgba(255,255,255,0.1); }
       .footer-col:last-child { border-bottom: none; }
@@ -1348,6 +1358,14 @@
       .footer-col .footer-socials { display: none; }
       .footer-col.open .footer-socials { display: flex; margin-top: 16px; margin-bottom: 24px; }
       .footer-col.open .footer-socials a { display: inline-flex; padding-bottom: 0; }
+
+      /* Contacto: siempre desplegada, sin acordeón */
+      .footer-col--contact h5 { cursor: default; }
+      .footer-col--contact h5::after { display: none; }
+      .footer-col--contact a { display: block; padding-bottom: 16px; margin-bottom: 0; }
+      .footer-col--contact a.btn-pill { display: inline-flex; padding: 12px 28px; font-size: 11px; margin-bottom: 24px; }
+      .footer-col--contact .footer-socials { display: flex; margin-top: 16px; margin-bottom: 24px; }
+      .footer-col--contact .footer-socials a { display: inline-flex; padding-bottom: 0; }
       .footer-bottom { padding: 16px; }
     }
 
@@ -1842,7 +1860,7 @@
           <h2 class="section-title">TODO LO QUE<br><em>APRENDÉS.</em></h2>
         </div>
         <div>
-          <p class="programa-intro">9 módulos progresivos, de cero a tu primera carrera simulada, con instructor en vivo y análisis de telemetría en cada sesión.</p>
+          <p class="programa-intro">9 módulos progresivos, de cero a tu primera carrera simulada.</p>
           <div class="programa-meta">
             <span><strong>09</strong> módulos</span>
             <span><strong>10h</strong> de pista guiada</span>
@@ -1878,7 +1896,7 @@
                 <span class="programa-num">01</span>
                 <div class="programa-card-body">
                   <div class="programa-card-title">Introducción al Simulador</div>
-                  <div class="programa-card-desc">Hardware, configuración óptima y conceptos básicos de la interfaz de telemetría.</div>
+                  <div class="programa-card-desc">Hardware, configuración óptima y la interfaz de telemetría.</div>
                 </div>
                 <div class="programa-card-dur">90 min</div>
               </div>
@@ -1886,7 +1904,7 @@
                 <span class="programa-num">02</span>
                 <div class="programa-card-body">
                   <div class="programa-card-title">Control del Auto</div>
-                  <div class="programa-card-desc">Sentí el auto: grip, límites del neumático y peso del vehículo en movimiento.</div>
+                  <div class="programa-card-desc">Grip, límites del neumático y peso del auto en movimiento.</div>
                 </div>
                 <div class="programa-card-dur">90 min</div>
               </div>
@@ -1894,7 +1912,7 @@
                 <span class="programa-num">03</span>
                 <div class="programa-card-body">
                   <div class="programa-card-title">Frenado Técnico</div>
-                  <div class="programa-card-desc">Trail braking y puntos de frenado de referencia. Ahí se ganan y pierden décimas.</div>
+                  <div class="programa-card-desc">Trail braking y puntos de frenado. Ahí se ganan y pierden décimas.</div>
                 </div>
                 <div class="programa-card-dur">90 min</div>
               </div>
@@ -1926,7 +1944,7 @@
                 <span class="programa-num">04</span>
                 <div class="programa-card-body">
                   <div class="programa-card-title">Trazada y Geometría</div>
-                  <div class="programa-card-desc">Construí trazadas eficientes curva por curva, más allá de la línea obvia.</div>
+                  <div class="programa-card-desc">Trazadas eficientes curva por curva, más allá de lo obvio.</div>
                 </div>
                 <div class="programa-card-dur">90 min</div>
               </div>
@@ -1934,7 +1952,7 @@
                 <span class="programa-num">05</span>
                 <div class="programa-card-body">
                   <div class="programa-card-title">Gestión del Neumático</div>
-                  <div class="programa-card-desc">Calentamiento, degradado y ajuste de estilo de manejo para cuidar las gomas.</div>
+                  <div class="programa-card-desc">Calentamiento, degradado y estilo de manejo para cuidar las gomas.</div>
                 </div>
                 <div class="programa-card-dur">90 min</div>
               </div>
@@ -1982,7 +2000,7 @@
                 <span class="programa-num">08</span>
                 <div class="programa-card-body">
                   <div class="programa-card-title">Nociones de Carrera</div>
-                  <div class="programa-card-desc">Largadas, safety car, posicionamiento y racecraft básico para debutantes.</div>
+                  <div class="programa-card-desc">Largadas, safety car y racecraft básico para debutantes.</div>
                 </div>
                 <div class="programa-card-dur">90 min</div>
               </div>
@@ -2011,23 +2029,35 @@
       <div class="video-text">
         <span class="section-tag">— ASÍ ES EL ENTRENAMIENTO</span>
         <h2 class="section-title">MIRÁ LO QUE<br><em>TE ESPERA.</em></h2>
-        <p>Cada sesión personalizado en hardware profesional. Es entrenamiento real con metodología de piloto.</p>
+        <p>Sesiones personalizadas en hardware profesional, con metodología real de piloto.</p>
         <div class="video-highlights">
           <div class="vh-item">
             <span class="vh-num">01</span>
-            <span class="vh-text"><strong>Briefing técnico</strong> antes de subir al simulador — objetivos claros por módulo</span>
+            <div class="vh-body">
+              <span class="vh-title">Briefing técnico</span>
+              <span class="vh-desc">Objetivos claros antes de cada módulo</span>
+            </div>
           </div>
           <div class="vh-item">
             <span class="vh-num">02</span>
-            <span class="vh-text"><strong>Coaching en tiempo real</strong> — el instructor te habla mientras manejás</span>
+            <div class="vh-body">
+              <span class="vh-title">Coaching en tiempo real</span>
+              <span class="vh-desc">El instructor te habla mientras manejás</span>
+            </div>
           </div>
           <div class="vh-item">
             <span class="vh-num">03</span>
-            <span class="vh-text"><strong>Revisión de telemetría</strong> — cada dato analizado vuelta por vuelta</span>
+            <div class="vh-body">
+              <span class="vh-title">Revisión de telemetría</span>
+              <span class="vh-desc">Cada vuelta analizada al detalle</span>
+            </div>
           </div>
           <div class="vh-item">
             <span class="vh-num">04</span>
-            <span class="vh-text"><strong>Debrief documentado</strong> — salís con un plan concreto para la próxima sesión</span>
+            <div class="vh-body">
+              <span class="vh-title">Debrief documentado</span>
+              <span class="vh-desc">Salís con un plan para la próxima sesión</span>
+            </div>
           </div>
         </div>
       </div>
@@ -2037,7 +2067,7 @@
         <img class="video-thumb" src="https://images.unsplash.com/photo-1547394765-185e1e68f34e?w=900&q=85" alt="Simulador de racing profesional Apex" style="display:none;">
         <video
           id="sectionVideo"
-          src="assets/video_curso.mp4"
+          src="assets/video_course1.mp4"
           autoplay
           muted
           loop
@@ -2147,7 +2177,7 @@
           <span class="section-tag">— CÓMO ENTRENAMOS</span>
           <h2 class="section-title">MÉTODO APEX</h2>
           <p style="margin-bottom: 32px;">
-            Aplicamos metodología de entrenamiento real: cada sesión tiene objetivos, cada dato tiene análisis y cada vuelta tiene feedback.
+            Metodología de entrenamiento real: objetivos claros, datos analizados, feedback en cada vuelta.
           </p>
 
           <div class="tele-panel">
@@ -2173,7 +2203,7 @@
               </div>
             </div>
             <div class="tele-info">
-              <strong>Punto de mejora detectado:</strong> Entrada a la curva 3 — el frenado empieza 8 metros tarde, generando subviraje y perdiendo 0.3s por vuelta.
+              <strong>Punto de mejora:</strong> frenado 8m tarde en curva 3, perdiendo 0.3s por vuelta.
             </div>
           </div>
         </div>
@@ -2185,28 +2215,28 @@
               <span class="metodo-step-num">01</span>
               <div>
                 <div class="metodo-step-title">Briefing previo</div>
-                <div class="metodo-step-desc">Antes de subir al sim, el instructor explica el objetivo del módulo, la técnica del día y los puntos de referencia a trabajar.</div>
+                <div class="metodo-step-desc">El instructor explica el objetivo del módulo y la técnica del día antes de subir al sim.</div>
               </div>
             </div>
             <div class="metodo-step">
               <span class="metodo-step-num">02</span>
               <div>
                 <div class="metodo-step-title">Sesión en pista</div>
-                <div class="metodo-step-desc">Entrás al simulador y aplicás. El instructor te da feedback en tiempo real: frená acá, abrí más allá, fijate en la velocidad de giro.</div>
+                <div class="metodo-step-desc">Entrás al simulador con feedback del instructor en tiempo real, vuelta por vuelta.</div>
               </div>
             </div>
             <div class="metodo-step">
               <span class="metodo-step-num">03</span>
               <div>
                 <div class="metodo-step-title">Revisión de telemetría</div>
-                <div class="metodo-step-desc">Después de cada sesión miramos los datos juntos. Comparamos sectores, identificamos pérdidas de tiempo y definimos el ajuste para la próxima vuelta.</div>
+                <div class="metodo-step-desc">Miramos los datos juntos: comparamos sectores y&nbsp;definimos el ajuste para la próxima vuelta.</div>
               </div>
             </div>
             <div class="metodo-step">
               <span class="metodo-step-num">04</span>
               <div>
                 <div class="metodo-step-title">Debrief y plan</div>
-                <div class="metodo-step-desc">Cerramos cada módulo con un debrief documentado: qué mejoró, qué sigue y qué trabajar entre clases en las sesiones libres de la comunidad.</div>
+                <div class="metodo-step-desc">Cerramos con un debrief documentado: qué mejoró y&nbsp;qué sigue trabajando.</div>
               </div>
             </div>
           </div>
@@ -2495,7 +2525,7 @@
           <a href="#">Team Building</a>
           <a href="#">Alquiler de Sims</a>
         </div>
-        <div class="footer-col">
+        <div class="footer-col footer-col--contact">
           <h5>CONTACTO</h5>
           <a href="tel:+541123456789">+54 11 2234 5679</a>
           <a href="mailto:hola@apexsimracing.com">hola@apexsimracing.com</a>
@@ -2924,7 +2954,7 @@
     const mq = window.matchMedia('(max-width: 480px)');
 
     function setup() {
-      const cols = $$('.footer-col');
+      const cols = $$('.footer-col:not(.footer-col--contact)');
       cols.forEach(col => {
         const heading = col.querySelector('h5');
         if (!heading) return;
