@@ -423,6 +423,7 @@ img { display: block; max-width: 100%; }
   z-index: 1;
   opacity: 0.33; 
 }
+.mobile-video { display: none; }
 
 
 
@@ -1400,26 +1401,62 @@ img { display: block; max-width: 100%; }
   }
 }
 @media (max-width: 768px) {
+  /* Hide main gallery image and progress bar — replaced by card carousel */
+  .hw-main-img { display: none; }
+
+  /* Gallery becomes a single-row scroll container */
   .hw-gallery {
-    grid-template-columns: 1fr;
-    grid-template-rows: 280px auto;
+    display: block;
     height: auto;
   }
+
+  /* Thumbs become the carousel */
   .hw-thumbs {
+    display: flex;
     flex-direction: row;
     overflow-x: auto;
-    gap: 2px;
+    -webkit-overflow-scrolling: touch;
+    scroll-snap-type: x mandatory;
+    gap: 14px;
+    padding: 4px 20px 16px;
+    margin: 0 -20px;
+    scrollbar-width: none;
   }
+  .hw-thumbs::-webkit-scrollbar { display: none; }
+
+  /* Each brand becomes a standalone card */
   .hw-thumb {
-    flex: 0 0 140px;
+    flex: 0 0 72vw;
+    scroll-snap-align: center;
     flex-direction: column;
     align-items: flex-start;
-    padding: 12px;
+    padding: 20px;
+    gap: 14px;
     border-left: none;
-    border-top: 2px solid transparent;
+    border-top: 2px solid var(--purple-deep);
+    background: var(--bg2);
+    border-radius: 2px;
+    cursor: auto;
   }
-  .hw-thumb.active { border-top-color: var(--purple-deep); }
+  .hw-thumb.active {
+    border-top-color: var(--cyan);
+    background: var(--bg3);
+  }
+  .hw-thumb img {
+    width: 100%;
+    height: 160px;
+    object-fit: contain;
+    opacity: 1;
+    margin-bottom: 0;
+  }
+  .hw-thumb-name {
+    font-size: 18px;
+  }
+  .hw-thumb-tag {
+    font-size: 11px;
+  }
 }
+
 
 
 /* ═══ COMMUNITY ═══ */
@@ -2245,15 +2282,16 @@ img { display: block; max-width: 100%; }
   .section-title { font-size: clamp(32px, 10vw, 48px); line-height: 1.05; margin-bottom: 20px; }
 
   /* ── Hero ── */
-  .hero-section { min-height: 100svh; }
-  .hero-video-bg { display: none; }
+  .hero-section { min-height: 75svh; max-height: 75svh; }
+  .desktop-video { display: none; }
+  .mobile-video { display: block; }
   .hero-content {
     padding: 0 20px;
     padding-top: calc(var(--nav-h) + 24px);
     padding-bottom: 48px;
     max-width: 100%;
   }
-  .hero-title { font-size: clamp(40px, 12vw, 56px); margin-bottom: 16px; line-height: 1.05; }
+  .hero-title { font-size: clamp(52px, 14vw, 72px); margin-bottom: 16px; line-height: 1.05; }
   .hero-desc { font-size: 14px; max-width: 100%; margin-bottom: 24px; }
   .hero-badge { font-size: 9px; margin-bottom: 16px; padding: 5px 12px; }
   .hero-cta-row { flex-direction: column; align-items: stretch; gap: 8px; margin-bottom: 20px; }
@@ -2290,7 +2328,8 @@ img { display: block; max-width: 100%; }
     scroll-snap-type: x mandatory;
     margin: 0 -20px; padding: 0 20px;
   }
-  .disc-card { scroll-snap-align: start; width: 80vw; }
+  .disc-cards-row { gap: 12px; padding-right: 20px; }
+  .disc-card { scroll-snap-align: center; width: 60vw; }
 
   /* ── Hardware ── */
   .hw-top { grid-template-columns: 1fr; gap: 20px; }
@@ -2922,8 +2961,7 @@ img { display: block; max-width: 100%; }
   /* Hardware brands 1 col */
   .hw-brands { grid-template-columns: 1fr 1fr; }
 
-  /* Disc car img mobile */
-  .disc-car-img { height: 32px; }
+
 }
 
 /* ── Pantallas muy pequeñas (max 480px) ── */
@@ -3003,7 +3041,7 @@ img { display: block; max-width: 100%; }
 
   /* Disc */
   .disc-sticky { padding: 0 16px; }
-  .disc-card { width: 88vw; }
+  .disc-card { width: 60vw; }
 
   /* Str */
   .str-inner { padding: 0 16px; }

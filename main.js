@@ -603,7 +603,7 @@ function initDragScroll() {
   /* ── Skip on touch devices — CSS handles native scroll ── */
   const isTouch = window.matchMedia('(pointer: coarse)').matches;
   if (isTouch) {
-    initTouchSwipe(el);
+    // Let CSS handle native horizontal scroll
     return;
   }
 
