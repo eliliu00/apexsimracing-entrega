@@ -593,8 +593,10 @@
         <span class="reveal-word">ENTRÁS</span>
         <span class="reveal-word">SOLO.</span>
         <br>
-        <span class="reveal-word">ENTRÁS CON</span>
-        <span class="reveal-word accent">OTROS.</span>
+        <span class="reveal-word">ENTRÁS</span>
+        <span style="white-space: nowrap; display: inline-block;">
+          <span class="reveal-word">CON</span><span class="reveal-word accent" style="margin-right: 0;">OTROS.</span>
+        </span>
       </h2>
       <div class="community-sub">
         <p>Entrená con pilotos de todo el país. Compartí telemetría, participá de lobbies diarios y sumate a las sesiones de coaching grupal.</p>
@@ -604,47 +606,45 @@
         </a>
       </div>
     </div>
-    <div class="community-grid" id="communityGrid">
-      <div class="cg-item cg-tall">
-        <img src="assets/Entrenamiento_APEX.png" alt="Piloto entrenando en simulador Apex" />
+    <div class="community-gallery-container" id="communityGallery">
+      <!-- Imagen Grande Principal -->
+      <div class="community-gallery-main">
+        <button class="community-nav-btn prev-btn" id="communityPrevBtn" aria-label="Anterior">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M15 18l-6-6 6-6"/></svg>
+        </button>
+        
+        <img src="assets/Entrenamiento_APEX.png" alt="Comunidad Apex" id="communityMainImg" />
         <div class="cg-overlay">
-          <span class="cg-label">ENTRENAMIENTO GUIADO</span>
+          <span class="cg-label" id="communityMainLabel">ENTRENAMIENTO GUIADO</span>
         </div>
+        
+        <button class="community-nav-btn next-btn" id="communityNextBtn" aria-label="Siguiente">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 18l6-6-6-6"/></svg>
+        </button>
       </div>
-      <div class="cg-item">
-        <img src="assets/gallery5.jpg" alt="Pilotos de la academia en evento" />
-        <div class="cg-overlay">
-          <span class="cg-label">EVENTOS PRESENCIALES</span>
+      
+      <!-- Miniaturas / Thumbnails -->
+      <div class="community-gallery-thumbs" id="communityThumbs">
+        <div class="community-thumb active" data-index="0" data-src="assets/Entrenamiento_APEX.png" data-label="ENTRENAMIENTO GUIADO">
+          <img src="assets/Entrenamiento_APEX.png" alt="Miniatura Entrenamiento" />
         </div>
-      </div>
-      <div class="cg-item">
-        <img src="assets/Competencia_APEX_Cup.png" alt="Comunidad Apex compitiendo en liga" />
-        <div class="cg-overlay">
-          <span class="cg-label">APEX CUP LEAGUE</span>
+        <div class="community-thumb" data-index="1" data-src="assets/gallery5.jpg" data-label="EVENTOS PRESENCIALES">
+          <img src="assets/gallery5.jpg" alt="Miniatura Eventos" />
         </div>
-      </div>
-      <div class="cg-item">
-        <img src="assets/gallery4.jpg" alt="Sesión de coaching grupal" />
-        <div class="cg-overlay">
-          <span class="cg-label">COACHING GRUPAL</span>
+        <div class="community-thumb" data-index="2" data-src="assets/Competencia_APEX_Cup.png" data-label="APEX CUP LEAGUE">
+          <img src="assets/Competencia_APEX_Cup.png" alt="Miniatura Apex Cup" />
         </div>
-      </div>
-      <div class="cg-item">
-        <img src="assets/practicaensimulador_APEX.png" alt="Practica en simulador" />
-        <div class="cg-overlay">
-          <span class="cg-label">PRÁCTICAS LIBRES</span>
+        <div class="community-thumb" data-index="3" data-src="assets/gallery4.jpg" data-label="COACHING GRUPAL">
+          <img src="assets/gallery4.jpg" alt="Miniatura Coaching" />
         </div>
-      </div>
-      <div class="cg-item cg-wide">
-        <img src="assets/Equipo_Apex.png" alt="Encuentro de la comunidad Apex Sim Racing" />
-        <div class="cg-overlay">
-          <span class="cg-label">COMUNIDAD APEX</span>
+        <div class="community-thumb" data-index="4" data-src="assets/practicaensimulador_APEX.png" data-label="PRÁCTICAS LIBRES">
+          <img src="assets/practicaensimulador_APEX.png" alt="Miniatura Prácticas" />
         </div>
-      </div>
-      <div class="cg-item">
-        <img src="assets/event.png" alt="Evento Apex Sim Racing" style="width:100%;height:100%;object-fit:cover;display:block;" />
-        <div class="cg-overlay">
-          <span class="cg-label">EVENTO FIN DE AÑO</span>
+        <div class="community-thumb" data-index="5" data-src="assets/Equipo_Apex.png" data-label="COMUNIDAD APEX">
+          <img src="assets/Equipo_Apex.png" alt="Miniatura Equipo" />
+        </div>
+        <div class="community-thumb" data-index="6" data-src="assets/event.png" data-label="ENCUENTRO FIN DE AÑO">
+          <img src="assets/event.png" alt="Miniatura Fin de Año" />
         </div>
       </div>
     </div>

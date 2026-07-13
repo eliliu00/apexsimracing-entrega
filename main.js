@@ -30,6 +30,7 @@ document.addEventListener('DOMContentLoaded', () => {
   initReducedMotion();
   initFooterAccordion();
   initContactModal();
+  initCommunityGallery();
 });
 
 /* ═══════════════════════════════════════════════════════
@@ -225,11 +226,11 @@ function initCursor() {
 
   // Hover states
   document.addEventListener('mouseover', e => {
-    const t = e.target.closest('a, button, .magnetic, .program-card, .disc-card, .hw-brand, .emp-card, .s-row, input, textarea, select, .contact-modal-close');
+    const t = e.target.closest('a, button, .magnetic, .program-card, .disc-card, .hw-brand, .emp-card, .s-row, input, textarea, select, .contact-modal-close, .community-thumb');
     if (t) ring.classList.add('hovering');
   });
   document.addEventListener('mouseout', e => {
-    const t = e.target.closest('a, button, .magnetic, .program-card, .disc-card, .hw-brand, .emp-card, .s-row, input, textarea, select, .contact-modal-close');
+    const t = e.target.closest('a, button, .magnetic, .program-card, .disc-card, .hw-brand, .emp-card, .s-row, input, textarea, select, .contact-modal-close, .community-thumb');
     if (t) ring.classList.remove('hovering');
   });
   document.addEventListener('mousedown', () => ring.classList.add('clicking'));
@@ -1138,6 +1139,87 @@ function initContactModal() {
     field.addEventListener('input', () => {
       field.style.borderColor = '';
       field.style.boxShadow = '';
+    });
+  });
+}
+
+/* ═══════════════════════════════════════════════════════
+   COMMUNITY INTERACTIVE GALLERY / SLIDER
+═══════════════════════════════════════════════════════ */
+function initCommunityGallery() {
+  const container = $('#communityGallery');
+  if (!container) return;
+
+  const mainImg = $('#communityMainImg');
+  const mainLabel = $('#communityMainLabel');
+  const prevBtn = $('#communityPrevBtn');
+  const nextBtn = $('#communityNextBtn');
+  const thumbs = $$('.community-thumb', container);
+
+  if (!mainImg || !mainLabel || !prevBtn || !nextBtn || thumbs.length === 0) return;
+
+  let currentIndex = 0;
+  const items = thumbs.map(thumb => ({
+    src: thumb.dataset.src,
+    label: thumb.dataset.label
+  }));
+
+  function updateGallery(index) {
+    if (index < 0 || index >= items.length) return;
+    
+    // Update active index
+    currentIndex = index;
+
+    // Toggle active classes on thumbs
+    thumbs.forEach((thumb, idx) => {
+      if (idx === currentIndex) {
+        thumb.classList.add('active');
+        // Scroll active thumbnail smoothly inside the horizontal container (no page vertical jump)
+        const thumbsContainer = $('#communityThumbs');
+        if (thumbsContainer) {
+          const containerWidth = thumbsContainer.clientWidth;
+          const thumbWidth = thumb.offsetWidth;
+          const thumbLeft = thumb.offsetLeft;
+          thumbsContainer.scrollTo({
+            left: thumbLeft - (containerWidth / 2) + (thumbWidth / 2),
+            behavior: 'smooth'
+          });
+        }
+      } else {
+        thumb.classList.remove('active');
+      }
+    });
+
+    // Fade transition for main image
+    mainImg.classList.add('fade-out');
+    
+    setTimeout(() => {
+      mainImg.src = items[currentIndex].src;
+      mainLabel.textContent = items[currentIndex].label;
+      mainImg.classList.remove('fade-out');
+    }, 250);
+  }
+
+  // Prev / Next button listeners
+  prevBtn.addEventListener('click', (e) => {
+    e.stopPropagation();
+    let newIndex = currentIndex - 1;
+    if (newIndex < 0) newIndex = items.length - 1;
+    updateGallery(newIndex);
+  });
+
+  nextBtn.addEventListener('click', (e) => {
+    e.stopPropagation();
+    let newIndex = currentIndex + 1;
+    if (newIndex >= items.length) newIndex = 0;
+    updateGallery(newIndex);
+  });
+
+  // Thumbnails click listeners
+  thumbs.forEach((thumb, idx) => {
+    thumb.addEventListener('click', () => {
+      if (idx === currentIndex) return;
+      updateGallery(idx);
     });
   });
 }
