@@ -226,11 +226,11 @@ function initCursor() {
 
   // Hover states
   document.addEventListener('mouseover', e => {
-    const t = e.target.closest('a, button, .magnetic, .program-card, .disc-card, .hw-brand, .emp-card, .s-row, input, textarea, select, .contact-modal-close, .community-thumb');
+    const t = e.target.closest('a, button, .magnetic, .program-card, .disc-card, .hw-brand, .hw-thumb, .emp-card, .s-row, input, textarea, select, .contact-modal-close, .community-thumb');
     if (t) ring.classList.add('hovering');
   });
   document.addEventListener('mouseout', e => {
-    const t = e.target.closest('a, button, .magnetic, .program-card, .disc-card, .hw-brand, .emp-card, .s-row, input, textarea, select, .contact-modal-close, .community-thumb');
+    const t = e.target.closest('a, button, .magnetic, .program-card, .disc-card, .hw-brand, .hw-thumb, .emp-card, .s-row, input, textarea, select, .contact-modal-close, .community-thumb');
     if (t) ring.classList.remove('hovering');
   });
   document.addEventListener('mousedown', () => ring.classList.add('clicking'));
