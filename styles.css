@@ -336,7 +336,7 @@ img { display: block; max-width: 100%; }
 }
 .mobile-nav a {
   font-family: var(--mono);
-  font-size: clamp(24px, 6vw, 40px);
+  font-size: clamp(32px, 8vw, 48px);
   font-weight: 700;
   letter-spacing: 0.06em;
   text-transform: uppercase;
@@ -2234,7 +2234,7 @@ img { display: block; max-width: 100%; }
   /* ── Navbar ── */
   .nav-links { display: none; }
   .nav-burger { display: flex; }
-  .nav-inner { padding: 0 20px; gap: 14px; }
+  .nav-inner { padding: 0 20px; gap: 14px; justify-content: space-between; }
   .nav-actions .btn-pill { font-size: 11px; padding: 8px 14px; }
   .nav-actions .nav-link { display: none; }
 
@@ -2242,7 +2242,7 @@ img { display: block; max-width: 100%; }
   .section { padding: 60px 0; }
   .section-inner { padding: 0 20px; }
   .section-tag { font-size: 9px; }
-  .section-title { font-size: clamp(26px, 8vw, 40px); line-height: 1.05; margin-bottom: 20px; }
+  .section-title { font-size: clamp(32px, 10vw, 48px); line-height: 1.05; margin-bottom: 20px; }
 
   /* ── Hero ── */
   .hero-section { min-height: 100svh; }
@@ -2253,7 +2253,7 @@ img { display: block; max-width: 100%; }
     padding-bottom: 48px;
     max-width: 100%;
   }
-  .hero-title { font-size: clamp(30px, 9vw, 48px); margin-bottom: 16px; line-height: 1.05; }
+  .hero-title { font-size: clamp(40px, 12vw, 56px); margin-bottom: 16px; line-height: 1.05; }
   .hero-desc { font-size: 14px; max-width: 100%; margin-bottom: 24px; }
   .hero-badge { font-size: 9px; margin-bottom: 16px; padding: 5px 12px; }
   .hero-cta-row { flex-direction: column; align-items: stretch; gap: 8px; margin-bottom: 20px; }
@@ -2270,7 +2270,7 @@ img { display: block; max-width: 100%; }
   .sa-main-grid { grid-template-columns: 1fr; }
   .sa-visual { min-height: 220px; }
   .sa-panel { padding: 28px 20px; border-left: none; border-top: 1px solid var(--border); }
-  .sa-title { font-size: clamp(24px, 7vw, 36px); }
+  .sa-title { font-size: clamp(32px, 10vw, 48px); }
   .sa-bottom-bar { grid-template-columns: 1fr; }
   .sa-pillar-item { padding: 20px; }
   .sa-layout { grid-template-columns: 1fr; gap: 28px; }
@@ -2283,7 +2283,7 @@ img { display: block; max-width: 100%; }
   .disc-section { padding: 60px 0; }
   .disc-sticky { flex-direction: column; padding: 0 20px; gap: 24px; }
   .disc-left { width: 100%; position: static; top: auto; }
-  .disc-title { font-size: clamp(24px, 7vw, 36px); margin-bottom: 16px; }
+  .disc-title { font-size: clamp(32px, 10vw, 48px); margin-bottom: 16px; }
   .disc-scroll-area {
     overflow-x: auto; overflow-y: hidden;
     -webkit-overflow-scrolling: touch;
