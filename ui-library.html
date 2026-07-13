@@ -166,6 +166,32 @@
       padding: 0 48px;
       z-index: 50;
     }
+    .topbar-left {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      min-width: 0;
+    }
+    .topbar-menu-btn {
+      display: none;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      gap: 4px;
+      width: 32px;
+      height: 32px;
+      flex-shrink: 0;
+    }
+    .topbar-menu-btn span {
+      display: block;
+      width: 18px;
+      height: 1.5px;
+      background: var(--white);
+      transition: transform 0.25s var(--ease), opacity 0.25s var(--ease);
+    }
+    .topbar-menu-btn.active span:nth-child(1) { transform: translateY(5.5px) rotate(45deg); }
+    .topbar-menu-btn.active span:nth-child(2) { opacity: 0; }
+    .topbar-menu-btn.active span:nth-child(3) { transform: translateY(-5.5px) rotate(-45deg); }
     .topbar-breadcrumb {
       display: flex;
       align-items: center;
@@ -173,8 +199,22 @@
       font-family: var(--mono);
       font-size: 11px;
       color: var(--muted2);
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      min-width: 0;
     }
     .topbar-breadcrumb span { color: var(--white); }
+    .sidebar-backdrop {
+      position: fixed;
+      inset: 0;
+      background: rgba(0,0,0,0.6);
+      z-index: 250;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.3s var(--ease);
+    }
+    .sidebar-backdrop.visible { opacity: 1; pointer-events: auto; }
     .topbar-version {
       font-family: var(--mono);
       font-size: 10px;
@@ -183,6 +223,7 @@
       border: 1px solid rgba(124,58,237,0.35);
       padding: 4px 10px;
       border-radius: 2px;
+      flex-shrink: 0;
     }
 
     /* ════════════════════════════════════════
@@ -197,12 +238,12 @@
 
     .lib-content {
       max-width: var(--lib-max);
-      padding: 60px 48px 120px;
+      padding: 56px 48px 90px;
     }
 
     /* Section headers */
     .lib-section {
-      margin-bottom: 100px;
+      margin-bottom: 72px;
     }
     .lib-section-header {
       margin-bottom: 40px;
@@ -239,12 +280,13 @@
       background: var(--bg3);
       border: 1px solid var(--border);
       border-radius: 4px;
-      padding: 48px 40px;
+      padding: 36px 32px;
       margin-bottom: 16px;
       display: flex;
       flex-wrap: wrap;
-      gap: 20px;
+      gap: 16px;
       align-items: center;
+      align-content: center;
       position: relative;
       overflow: hidden;
     }
@@ -300,7 +342,7 @@
     ════════════════════════════════════════ */
     .token-grid {
       display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+      grid-template-columns: repeat(auto-fit, minmax(118px, 1fr));
       gap: 12px;
       margin-bottom: 28px;
     }
@@ -334,9 +376,9 @@
 
     /* BG token swatches */
     .bg-token-row {
-      display: flex;
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
       gap: 8px;
-      flex-wrap: wrap;
       margin-bottom: 28px;
     }
     .bg-token {
@@ -516,7 +558,7 @@
       transition: background 0.3s;
       cursor: pointer;
       flex: 1;
-      min-width: 220px;
+      min-width: min(220px, 100%);
     }
     .program-card:hover { background: var(--bg3); }
 
@@ -535,6 +577,21 @@
       transition: transform 0.6s cubic-bezier(0.4,0.15,0.15,1);
     }
     .program-card:hover .card-image-wrap img { transform: scale(1.08); }
+    .card-image-ph {
+      width: 100%; height: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: linear-gradient(135deg, var(--bg2), var(--bg3));
+      font-family: var(--mono);
+      font-size: 12px;
+      font-weight: 700;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--muted2);
+      transition: transform 0.6s cubic-bezier(0.4,0.15,0.15,1);
+    }
+    .program-card:hover .card-image-ph { transform: scale(1.08); }
     .card-image-overlay {
       position: absolute;
       left: 0; right: 0; bottom: 0;
@@ -674,7 +731,8 @@
       border: 1px solid var(--border2);
       padding: 14px 18px;
       backdrop-filter: blur(16px);
-      min-width: 200px;
+      flex: 1;
+      min-width: min(190px, 100%);
     }
     .hud-label {
       font-family: var(--mono);
@@ -750,7 +808,7 @@
       gap: 6px;
       border: 1px solid var(--border);
       flex: 1;
-      min-width: 120px;
+      min-width: min(120px, 100%);
     }
     .ac-stat-num {
       font-family: var(--mono);
@@ -781,7 +839,7 @@
       position: relative;
       border: 1px solid var(--border);
       flex: 1;
-      min-width: 220px;
+      min-width: min(220px, 100%);
     }
     .testi-card::before {
       content: '"';
@@ -1061,12 +1119,12 @@
        ── 16. DISC CARD
     ════════════════════════════════════════ */
     .disc-card {
-      width: 220px;
+      flex: 1;
+      min-width: min(220px, 100%);
       background: var(--bg2);
       border-top: 2px solid var(--accent, var(--cyan));
       padding: 32px 22px 22px;
       position: relative;
-      flex-shrink: 0;
       cursor: pointer;
       transition: background 0.3s;
       border: 1px solid var(--border);
@@ -1101,45 +1159,7 @@
     .disc-card:hover .disc-line { width: 48px; }
 
     /* ════════════════════════════════════════
-       ── 17. FILMSTRIP ITEM
-    ════════════════════════════════════════ */
-    .filmstrip-item {
-      flex-shrink: 0;
-      width: 280px;
-      aspect-ratio: 4/3;
-      position: relative;
-      border-radius: 4px;
-      overflow: hidden;
-      border: 1px solid var(--border);
-      background: var(--bg2);
-    }
-    .filmstrip-cap {
-      position: absolute;
-      bottom: 12px; left: 14px;
-      font-family: var(--mono);
-      font-size: 9px; font-weight: 700;
-      letter-spacing: 0.22em;
-      text-transform: uppercase;
-      color: rgba(255,255,255,0.55);
-      background: rgba(8,8,8,0.6);
-      padding: 4px 10px;
-      border-radius: 2px;
-      backdrop-filter: blur(4px);
-    }
-    .filmstrip-placeholder {
-      width: 100%; height: 100%;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-family: var(--mono);
-      font-size: 11px;
-      color: var(--muted2);
-      letter-spacing: 0.12em;
-      background: linear-gradient(135deg, var(--bg2), var(--bg3));
-    }
-
-    /* ════════════════════════════════════════
-       ── 18. GLITCH
+       ── 17. GLITCH
     ════════════════════════════════════════ */
     .glitch-hover {
       position: relative;
@@ -1282,14 +1302,36 @@
     ════════════════════════════════════════ */
     @media (max-width: 900px) {
       :root { --sidebar-w: 0px; }
-      .lib-sidebar { display: none; }
-      .lib-topbar { left: 0; }
+      .lib-sidebar {
+        display: flex;
+        width: 280px;
+        max-width: 82vw;
+        transform: translateX(-100%);
+        transition: transform 0.3s var(--ease);
+        z-index: 300;
+        box-shadow: 30px 0 60px rgba(0,0,0,0.5);
+      }
+      .lib-sidebar.mobile-open { transform: translateX(0); }
+      .topbar-menu-btn { display: flex; }
+      .lib-topbar { left: 0; padding: 0 20px; }
       .scroll-progress { left: 0; }
-      .lib-content { padding: 40px 24px 80px; }
-      .lib-hero { padding: 60px 24px 40px; }
+      .lib-content { padding: 40px 20px 72px; }
+      .lib-hero { padding: 56px 20px 36px; }
+      .token-grid { grid-template-columns: repeat(auto-fit, minmax(100px, 1fr)); }
+      .bg-token-row { grid-template-columns: repeat(auto-fit, minmax(130px, 1fr)); }
     }
     @media (max-width: 600px) {
-      .preview-box { padding: 32px 20px; }
+      .preview-box { padding: 28px 18px; }
+      .lib-hero-meta { gap: 20px 24px; }
+    }
+    @media (max-width: 480px) {
+      .topbar-version { display: none; }
+      .topbar-breadcrumb { font-size: 10px; }
+      .token-grid { grid-template-columns: repeat(2, 1fr); }
+      .bg-token-row { grid-template-columns: 1fr; }
+      .nl-form { flex-direction: column; }
+      .nl-input { border-radius: 4px; border-right: 1px solid var(--border2); }
+      .nl-form .btn-primary { border-radius: 4px; width: 100%; justify-content: center; }
     }
   </style>
 </head>
@@ -1299,6 +1341,11 @@
   <div class="scroll-progress" aria-hidden="true">
     <div class="scroll-progress-fill" id="progressFill"></div>
   </div>
+
+  <!-- ════════════════════════════════════════
+       SIDEBAR BACKDROP (mobile)
+  ════════════════════════════════════════ -->
+  <div class="sidebar-backdrop" id="sidebarBackdrop"></div>
 
   <!-- ════════════════════════════════════════
        SIDEBAR
@@ -1360,9 +1407,6 @@
       <a href="#marquee" class="sidebar-link" id="nav-marquee">
         <span class="sidebar-link-dot"></span>Marquee
       </a>
-      <a href="#filmstrip" class="sidebar-link" id="nav-filmstrip">
-        <span class="sidebar-link-dot"></span>Filmstrip Item
-      </a>
       <a href="#forms" class="sidebar-link" id="nav-forms">
         <span class="sidebar-link-dot"></span>Formularios
       </a>
@@ -1377,8 +1421,13 @@
        TOP BAR
   ════════════════════════════════════════ -->
   <div class="lib-topbar">
-    <div class="topbar-breadcrumb">
-      Apex Sim Racing &nbsp;/&nbsp; <span>UI Library</span>
+    <div class="topbar-left">
+      <button class="topbar-menu-btn" id="menuToggle" aria-label="Abrir menú" aria-expanded="false">
+        <span></span><span></span><span></span>
+      </button>
+      <div class="topbar-breadcrumb">
+        Apex Sim Racing &nbsp;/&nbsp; <span>UI Library</span>
+      </div>
     </div>
     <div class="topbar-version">v1.0.0</div>
   </div>
@@ -1398,7 +1447,7 @@
       </p>
       <div class="lib-hero-meta">
         <div class="lib-hero-meta-item">
-          <span class="lib-hero-meta-num">19</span>
+          <span class="lib-hero-meta-num">18</span>
           <span class="lib-hero-meta-label">Componentes</span>
         </div>
         <div class="lib-hero-meta-item">
@@ -1700,7 +1749,7 @@
           <!-- Card 1 -->
           <div class="program-card" style="--glow:var(--cyan)">
             <div class="card-image-wrap">
-              <img src="assets/curso_1.png" alt="Nivel Inicial" />
+              <div class="card-image-ph">Curso 01</div>
               <div class="card-image-overlay">
                 <span class="card-tag" style="color:var(--cyan)">Iniciación</span>
                 <h3>Nivel Inicial</h3>
@@ -1732,7 +1781,7 @@
           <div class="program-card" style="--glow:var(--purple)">
 
             <div class="card-image-wrap">
-              <img src="assets/curso_2.png" alt="Nivel Avanzado" />
+              <div class="card-image-ph">Curso 02</div>
               <div class="card-image-overlay">
                 <span class="card-tag" style="color:var(--purple)">Intermedio</span>
                 <h3>Nivel Avanzado</h3>
@@ -1763,7 +1812,7 @@
           <!-- Card 3 -->
           <div class="program-card" style="--glow:var(--yellow)">
             <div class="card-image-wrap">
-              <img src="assets/curso_3.png" alt="Pro Driver" />
+              <div class="card-image-ph">Curso 03</div>
               <div class="card-image-overlay">
                 <span class="card-tag" style="color:var(--yellow)">Elite</span>
                 <h3>Pro Driver</h3>
@@ -2097,7 +2146,7 @@
         </div>
 
         <div class="preview-box" style="gap:16px;flex-wrap:wrap">
-          <div class="driver-card" style="flex:1;min-width:260px">
+          <div class="driver-card" style="flex:1;min-width:min(260px,100%)">
             <div class="driver-avatar">MV</div>
             <div>
               <div class="driver-name">Martín Villanueva</div>
@@ -2114,7 +2163,7 @@
               </ul>
             </div>
           </div>
-          <div class="driver-card" style="flex:1;min-width:260px">
+          <div class="driver-card" style="flex:1;min-width:min(260px,100%)">
             <div class="driver-avatar" style="background:linear-gradient(135deg,var(--cyan),var(--purple-deep))">LF</div>
             <div>
               <div class="driver-name">Lucas Ferreyra</div>
@@ -2155,41 +2204,11 @@
       </section>
 
       <!-- ══════════════════════════════════════
-           15. FILMSTRIP
-      ══════════════════════════════════════ -->
-      <section class="lib-section" id="filmstrip">
-        <div class="lib-section-header">
-          <span class="lib-section-tag">15 — Patrones</span>
-          <h2 class="lib-section-title">Filmstrip Item</h2>
-          <p class="lib-section-desc">Items de la galería horizontal animada por scroll. Cada item tiene ratio 4/3, bordes suaves y caption en mono.</p>
-        </div>
-
-        <div class="preview-box" style="gap:12px;overflow-x:auto;flex-wrap:nowrap;padding:32px 32px 24px">
-          <div class="filmstrip-item">
-            <div class="filmstrip-placeholder">GALLERY 01</div>
-            <div class="filmstrip-cap">Apex Cup · 2024</div>
-          </div>
-          <div class="filmstrip-item">
-            <div class="filmstrip-placeholder">GALLERY 02</div>
-            <div class="filmstrip-cap">Entrenamiento</div>
-          </div>
-          <div class="filmstrip-item">
-            <div class="filmstrip-placeholder">GALLERY 03</div>
-            <div class="filmstrip-cap">Simulador Pro</div>
-          </div>
-          <div class="filmstrip-item">
-            <div class="filmstrip-placeholder">GALLERY 04</div>
-            <div class="filmstrip-cap">Equipo Apex</div>
-          </div>
-        </div>
-      </section>
-
-      <!-- ══════════════════════════════════════
-           16. FORMS
+           15. FORMS
       ══════════════════════════════════════ -->
       <section class="lib-section" id="forms">
         <div class="lib-section-header">
-          <span class="lib-section-tag">16 — Patrones</span>
+          <span class="lib-section-tag">15 — Patrones</span>
           <h2 class="lib-section-title">Formularios</h2>
           <p class="lib-section-desc">Input de email + botón primary fusionados. Borde derecho del input eliminado para unión visual perfecta.</p>
         </div>
@@ -2215,11 +2234,11 @@
       </section>
 
       <!-- ══════════════════════════════════════
-           17. LINK ARROW
+           16. LINK ARROW
       ══════════════════════════════════════ -->
       <section class="lib-section" id="linkarrow">
         <div class="lib-section-header">
-          <span class="lib-section-tag">17 — Patrones</span>
+          <span class="lib-section-tag">16 — Patrones</span>
           <h2 class="lib-section-title">Link Arrow</h2>
           <p class="lib-section-desc">Link secundario en monospace. En hover el gap aumenta y la flecha se desplaza 4px. Cursor pointer.</p>
         </div>
@@ -2237,6 +2256,30 @@
   </main>
 
   <script>
+    // ── Mobile sidebar drawer ──
+    const menuBtn = document.getElementById('menuToggle');
+    const sidebarEl = document.querySelector('.lib-sidebar');
+    const backdrop = document.getElementById('sidebarBackdrop');
+    function openSidebar() {
+      sidebarEl.classList.add('mobile-open');
+      backdrop.classList.add('visible');
+      menuBtn.classList.add('active');
+      menuBtn.setAttribute('aria-expanded', 'true');
+    }
+    function closeSidebar() {
+      sidebarEl.classList.remove('mobile-open');
+      backdrop.classList.remove('visible');
+      menuBtn.classList.remove('active');
+      menuBtn.setAttribute('aria-expanded', 'false');
+    }
+    menuBtn.addEventListener('click', () => {
+      sidebarEl.classList.contains('mobile-open') ? closeSidebar() : openSidebar();
+    });
+    backdrop.addEventListener('click', closeSidebar);
+    window.addEventListener('resize', () => {
+      if (window.innerWidth > 900) closeSidebar();
+    });
+
     // ── Scroll progress bar ──
     const fill = document.getElementById('progressFill');
     window.addEventListener('scroll', () => {
@@ -2283,6 +2326,7 @@
             window.scrollTo({ top, behavior: 'smooth' });
           }
         }
+        if (window.innerWidth <= 900) closeSidebar();
       });
     });
   </script>
