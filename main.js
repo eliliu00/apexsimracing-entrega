@@ -28,6 +28,8 @@ document.addEventListener('DOMContentLoaded', () => {
   initNewsletterForm();
   initCompetitionsTracks();
   initReducedMotion();
+  initFooterAccordion();
+  initContactModal();
 });
 
 /* ═══════════════════════════════════════════════════════
@@ -223,11 +225,11 @@ function initCursor() {
 
   // Hover states
   document.addEventListener('mouseover', e => {
-    const t = e.target.closest('a, button, .magnetic, .program-card, .disc-card, .hw-brand, .emp-card, .s-row');
+    const t = e.target.closest('a, button, .magnetic, .program-card, .disc-card, .hw-brand, .emp-card, .s-row, input, textarea, select, .contact-modal-close');
     if (t) ring.classList.add('hovering');
   });
   document.addEventListener('mouseout', e => {
-    const t = e.target.closest('a, button, .magnetic, .program-card, .disc-card, .hw-brand, .emp-card, .s-row');
+    const t = e.target.closest('a, button, .magnetic, .program-card, .disc-card, .hw-brand, .emp-card, .s-row, input, textarea, select, .contact-modal-close');
     if (t) ring.classList.remove('hovering');
   });
   document.addEventListener('mousedown', () => ring.classList.add('clicking'));
@@ -977,4 +979,165 @@ function initCompetitionsTracks() {
   });
 
   startAutoplay();
+}
+
+/* ═══════════════════════════════════════════════════════
+   FOOTER ACCORDION — collapsible columns on mobile
+═══════════════════════════════════════════════════════ */
+function initFooterAccordion() {
+  const mq = window.matchMedia('(max-width: 480px)');
+
+  function setup() {
+    const cols = $$('.footer-col');
+    cols.forEach(col => {
+      const heading = col.querySelector('h5');
+      if (!heading) return;
+
+      // Remove previous listener if any
+      heading.removeEventListener('click', heading._toggle);
+
+      if (mq.matches) {
+        // Mobile: enable accordion
+        col.classList.remove('open');
+        heading._toggle = () => {
+          // Close all others
+          cols.forEach(c => { if (c !== col) c.classList.remove('open'); });
+          col.classList.toggle('open');
+        };
+        heading.addEventListener('click', heading._toggle);
+      } else {
+        // Desktop: ensure all are visible
+        col.classList.remove('open');
+      }
+    });
+  }
+
+  setup();
+  mq.addEventListener('change', setup);
+}
+
+/* ═══════════════════════════════════════════════════════
+   CONTACT MODAL
+═══════════════════════════════════════════════════════ */
+function initContactModal() {
+  const modal = $('#contactModal');
+  const form = $('#contactForm');
+  const triggers = $$('.btn-contact-trigger');
+  const closeBtn = $('#contactCloseBtn');
+  const submitBtn = $('#contactSubmitBtn');
+  const loadingState = $('#contactLoadingState');
+  const successState = $('#contactSuccessState');
+  const formState = $('#contactFormState');
+
+  if (!modal || !form) return;
+
+  // Open modal
+  triggers.forEach(trigger => {
+    trigger.addEventListener('click', (e) => {
+      e.preventDefault();
+      modal.classList.add('active');
+      document.body.style.overflow = 'hidden';
+      const nameField = $('#contactName');
+      if (nameField) setTimeout(() => nameField.focus(), 100);
+    });
+  });
+
+  // Close modal function
+  function closeModal() {
+    modal.classList.remove('active');
+    document.body.style.overflow = '';
+    // Reset state after transition
+    setTimeout(() => {
+      formState.style.display = 'block';
+      loadingState.style.display = 'none';
+      successState.style.display = 'none';
+      form.reset();
+      $$('.contact-field').forEach(field => {
+        field.style.borderColor = '';
+        field.style.boxShadow = '';
+      });
+    }, 500);
+  }
+
+  closeBtn.addEventListener('click', closeModal);
+  modal.addEventListener('click', (e) => {
+    if (e.target === modal) closeModal();
+  });
+
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape' && modal.classList.contains('active')) {
+      closeModal();
+    }
+  });
+
+  // Submit handler
+  submitBtn.addEventListener('click', () => {
+    const name = $('#contactName');
+    const email = $('#contactEmail');
+    const message = $('#contactMessage');
+    let isValid = true;
+
+    // Validate Name
+    if (!name.value.trim()) {
+      name.style.borderColor = '#FF3D00';
+      name.style.boxShadow = '0 0 0 2px rgba(255,61,0,0.2)';
+      shakeEl(name);
+      name.focus();
+      isValid = false;
+    } else {
+      name.style.borderColor = '';
+      name.style.boxShadow = '';
+    }
+
+    // Validate Email
+    if (!isEmail(email.value.trim())) {
+      email.style.borderColor = '#FF3D00';
+      email.style.boxShadow = '0 0 0 2px rgba(255,61,0,0.2)';
+      shakeEl(email);
+      if (isValid) email.focus();
+      isValid = false;
+    } else {
+      email.style.borderColor = '';
+      email.style.boxShadow = '';
+    }
+
+    // Validate Message
+    if (!message.value.trim()) {
+      message.style.borderColor = '#FF3D00';
+      message.style.boxShadow = '0 0 0 2px rgba(255,61,0,0.2)';
+      shakeEl(message);
+      if (isValid) message.focus();
+      isValid = false;
+    } else {
+      message.style.borderColor = '';
+      message.style.boxShadow = '';
+    }
+
+    if (!isValid) return;
+
+    // Transition to Loading
+    formState.style.display = 'none';
+    loadingState.style.display = 'flex';
+
+    // Simulate network request
+    setTimeout(() => {
+      loadingState.style.display = 'none';
+      successState.style.display = 'flex';
+
+      // Auto close after success
+      setTimeout(() => {
+        if (modal.classList.contains('active')) {
+          closeModal();
+        }
+      }, 3500);
+    }, 1800);
+  });
+
+  // Clear validation styling on input
+  $$('.contact-field').forEach(field => {
+    field.addEventListener('input', () => {
+      field.style.borderColor = '';
+      field.style.boxShadow = '';
+    });
+  });
 }

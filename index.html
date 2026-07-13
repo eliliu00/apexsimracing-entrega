@@ -7,7 +7,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=Space+Mono:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet" />
-  <link rel="stylesheet" href="styles.css" />
+  <link rel="stylesheet" href="styles.css?v=1.2" />
 </head>
 <body>
 
@@ -33,6 +33,7 @@
         <a href="#simuladores" class="nav-link" data-text="Simuladores">Simuladores</a>
         <a href="#esports"   class="nav-link" data-text="Esports">Esports</a>
         <a href="#empresas"  class="nav-link" data-text="Empresas">Empresas</a>
+        <a href="#contacto"  class="nav-link btn-contact-trigger" data-text="Contacto">Contacto</a>
       </nav>
 
       <div class="nav-actions">
@@ -53,6 +54,7 @@
       <a href="#esports">Esports</a>
       <a href="#comunidad">Comunidad</a>
       <a href="#empresas">Empresas</a>
+      <a href="#contacto" class="btn-contact-trigger">Contacto</a>
       <a href="#academia" class="btn-pill btn-academy">Unirme a la Academia</a>
     </nav>
   </div>
@@ -265,6 +267,7 @@
       </div>
     </div>
   </section>
+
 
   <!-- ═══════════════════════════════════════
        5. HARDWARE — Prueba de calidad
@@ -713,13 +716,6 @@
         <div class="footer-brand">
           <img src="assets/logotipofooter.png" alt="logoapexfinal" />
           <p class="footer-tagline">Entrenamos pilotos.<br>No jugadores.</p>
-          <div class="footer-socials">
-            <a href="#" aria-label="Instagram">IG</a>
-            <a href="#" aria-label="Twitter">TW</a>
-            <a href="#" aria-label="YouTube">YT</a>
-            <a href="#" aria-label="TikTok">TK</a>
-            <a href="#" aria-label="Discord">DS</a>
-          </div>
         </div>
 
         <div class="footer-col">
@@ -747,7 +743,13 @@
           <h5>CONTACTO</h5>
           <a href="tel:+541123456789">+54 11 2234 5679</a>
           <a href="mailto:hola@apexsimracing.com">hola@apexsimracing.com</a>
-          <a href="#" class="btn-pill" style="margin-top:12px;display:inline-block;font-size:12px">CONTACTANOS</a>
+          <a href="#contacto" class="btn-pill btn-contact-trigger">CONTACTANOS</a>
+          <div class="footer-socials">
+            <a href="#" aria-label="Instagram"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5"/><circle cx="12" cy="12" r="5"/><circle cx="17.5" cy="6.5" r="1" fill="currentColor" stroke="none"/></svg></a>
+            <a href="#" aria-label="TikTok"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M16.6 5.82A4.28 4.28 0 0 1 15.54 3h-3.09v12.4a2.59 2.59 0 0 1-2.59 2.5c-1.43 0-2.6-1.16-2.6-2.6 0-1.72 1.66-3.01 3.37-2.48V9.66c-3.45-.46-6.47 2.22-6.47 5.64 0 3.07 2.49 5.44 5.5 5.44a5.5 5.5 0 0 0 5.5-5.5V9.41a7.63 7.63 0 0 0 4.38 1.38V7.7a4.28 4.28 0 0 1-3.48-1.88Z"/></svg></a>
+            <a href="#" aria-label="YouTube"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M23.5 6.19a3.02 3.02 0 0 0-2.12-2.14C19.5 3.5 12 3.5 12 3.5s-7.5 0-9.38.55A3.02 3.02 0 0 0 .5 6.19 31.6 31.6 0 0 0 0 12a31.6 31.6 0 0 0 .5 5.81 3.02 3.02 0 0 0 2.12 2.14c1.87.55 9.38.55 9.38.55s7.5 0 9.38-.55a3.02 3.02 0 0 0 2.12-2.14A31.6 31.6 0 0 0 24 12a31.6 31.6 0 0 0-.5-5.81ZM9.55 15.57V8.43L15.82 12l-6.27 3.57Z"/></svg></a>
+            <a href="#" aria-label="Discord"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M20.32 4.37a19.8 19.8 0 0 0-4.93-1.51.07.07 0 0 0-.08.04c-.21.38-.45.87-.61 1.26a18.27 18.27 0 0 0-5.4 0 12.6 12.6 0 0 0-.62-1.26.08.08 0 0 0-.08-.04 19.74 19.74 0 0 0-4.93 1.51.07.07 0 0 0-.03.03C1.07 8.93.32 13.36.79 17.73a.08.08 0 0 0 .03.06 19.9 19.9 0 0 0 5.99 3.03.08.08 0 0 0 .08-.03c.46-.63.87-1.3 1.22-2a.08.08 0 0 0-.04-.1 13.1 13.1 0 0 1-1.87-.9.08.08 0 0 1 0-.12c.13-.09.25-.19.37-.29a.08.08 0 0 1 .08-.01c3.93 1.79 8.18 1.79 12.07 0a.08.08 0 0 1 .08.01c.12.1.25.2.37.29a.08.08 0 0 1 0 .12c-.6.35-1.22.65-1.87.9a.08.08 0 0 0-.04.1c.36.7.77 1.37 1.22 2a.08.08 0 0 0 .08.03 19.83 19.83 0 0 0 6-3.03.08.08 0 0 0 .03-.05c.56-5.07-.87-9.47-3.81-13.37a.06.06 0 0 0-.03-.03ZM8.02 15.33c-1.18 0-2.15-1.08-2.15-2.42 0-1.33.95-2.42 2.15-2.42 1.21 0 2.17 1.1 2.15 2.42 0 1.34-.95 2.42-2.15 2.42Zm7.97 0c-1.18 0-2.15-1.08-2.15-2.42 0-1.33.95-2.42 2.15-2.42 1.21 0 2.17 1.1 2.15 2.42 0 1.34-.94 2.42-2.15 2.42Z"/></svg></a>
+          </div>
         </div>
       </div>
 
@@ -760,6 +762,84 @@
       </div>
     </div>
   </footer>
+
+  <!-- ═══ MODAL DE CONTACTO ═══ -->
+  <div class="contact-modal-overlay" id="contactModal">
+    <div class="contact-modal-container">
+      <button class="contact-modal-close" id="contactCloseBtn" aria-label="Cerrar modal">&times;</button>
+      
+      <!-- Estado Formulario -->
+      <div id="contactFormState">
+        <h3 class="contact-modal-title">Iniciar Transmisión</h3>
+        <div class="contact-modal-subtitle">Canal de comunicación directo</div>
+        
+        <form class="contact-form" id="contactForm" novalidate>
+          <div class="contact-row">
+            <div class="contact-group">
+              <label for="contactName" class="contact-label">Nombre Piloto *</label>
+              <input type="text" id="contactName" class="contact-field" placeholder="Tu nombre" required>
+            </div>
+            
+            <div class="contact-group">
+              <label for="contactEmail" class="contact-label">E-Mail de Enlace *</label>
+              <input type="email" id="contactEmail" class="contact-field" placeholder="piloto@correo.com" required>
+            </div>
+          </div>
+          
+          <div class="contact-row">
+            <div class="contact-group">
+              <label for="contactPhone" class="contact-label">Teléfono / WhatsApp</label>
+              <input type="tel" id="contactPhone" class="contact-field" placeholder="+54 11 ...">
+            </div>
+            
+            <div class="contact-group">
+              <label for="contactSubject" class="contact-label">Motivo de Enlace</label>
+              <select id="contactSubject" class="contact-field">
+                <option value="Academia y Cursos">Academia &amp; Cursos</option>
+                <option value="Coaching Personalizado">Coaching Experto</option>
+                <option value="Soluciones B2B / Empresas">Soluciones B2B / Empresas</option>
+                <option value="Eventos y Simuladores">Eventos &amp; Simuladores</option>
+                <option value="Soporte y Otros">Soporte &amp; Otro</option>
+              </select>
+            </div>
+          </div>
+          
+          <div class="contact-group">
+            <label for="contactMessage" class="contact-label">Mensaje / Plan de Vuelo *</label>
+            <textarea id="contactMessage" class="contact-field" placeholder="¿En qué podemos ayudarte? Cuéntanos tu experiencia o proyecto..." required></textarea>
+          </div>
+          
+          <button type="button" id="contactSubmitBtn" class="contact-submit-btn magnetic">
+            <span>ENVIAR TRANSMISIÓN</span>
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="22" y1="2" x2="11" y2="13"></line><polygon points="22 2 15 22 11 13 2 9 22 2"></polygon></svg>
+          </button>
+        </form>
+      </div>
+
+      <!-- Estado Cargando -->
+      <div class="contact-loading-state" id="contactLoadingState">
+        <div class="cyber-loader">
+          <div class="cyber-loader-bar"></div>
+        </div>
+        <div class="cyber-loading-text">Encriptando paquete de datos...</div>
+      </div>
+
+      <!-- Estado Éxito -->
+      <div class="contact-success-state" id="contactSuccessState">
+        <div class="success-icon-wrapper">
+          <div class="success-circle-outline"></div>
+          <div class="success-svg">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <polyline points="20 6 9 17 4 12"></polyline>
+            </svg>
+          </div>
+        </div>
+        <h4 class="success-title">Transmisión Completa</h4>
+        <p class="success-desc">Los datos han sido enviados con éxito a telemetría de Apex. Nos pondremos en contacto a la brevedad.</p>
+      </div>
+
+    </div>
+  </div>
 
   <script src="main.js"></script>
 </body>

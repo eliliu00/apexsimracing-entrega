@@ -69,7 +69,7 @@
     .cursor {
       position: fixed; width: 36px; height: 36px;
       border: 1px solid rgba(255,255,255,0.5); border-radius: 50%;
-      pointer-events: none; z-index: 10000;
+      pointer-events: none; z-index: 1000000;
       transform: translate(-50%,-50%);
       transition: width .3s var(--ease), height .3s var(--ease), border-color .3s var(--ease), background .3s var(--ease);
       mix-blend-mode: difference;
@@ -79,7 +79,7 @@
     .cursor-dot {
       position: fixed; width: 4px; height: 4px;
       background: var(--white); border-radius: 50%;
-      pointer-events: none; z-index: 10001;
+      pointer-events: none; z-index: 1000001;
       transform: translate(-50%,-50%);
     }
 
@@ -163,7 +163,7 @@
     }
     .section-title {
       font-size: clamp(36px, 5vw, 64px); font-weight: 700;
-      line-height: 0.95; letter-spacing: -0.03em;
+      line-height: 1.05; letter-spacing: -0.03em;
       text-transform: uppercase; color: var(--white); margin-bottom: 32px;
     }
     .section-title em {
@@ -263,8 +263,8 @@
     }
 
     .course-title {
-      font-size: clamp(36px, 6vw, 80px);
-      font-weight: 700; line-height: 0.9;
+      font-size: clamp(48px, 7vw, 90px);
+      font-weight: 700; line-height: 1.05;
       letter-spacing: -0.04em; text-transform: uppercase;
       color: var(--white); margin-bottom: 16px;
     }
@@ -643,11 +643,11 @@
       margin-top: 32px; padding: 28px 32px;
       background: var(--bg3); border: 1px solid var(--border2); border-radius: 4px;
     }
-    .programa-cta-text {
-      font-size: 14px; color: var(--muted);
+    .programa-cta-price {
+      font-size: clamp(24px, 3.5vw, 30px); font-weight: 700; color: var(--white); margin-bottom: 6px;
     }
-    .programa-cta-text strong {
-      font-family: var(--mono); font-size: 18px; color: var(--white); margin-right: 4px;
+    .programa-cta-desc {
+      font-size: 13px; color: var(--muted); line-height: 1.4;
     }
     .programa-cta-btns { display: flex; gap: 12px; flex-wrap: wrap; }
 
@@ -908,7 +908,7 @@
     .cta-final-inner { position: relative; z-index: 3; }
     .cta-final h2 {
       font-size: clamp(40px, 7vw, 96px); font-weight: 700;
-      line-height: 0.92; letter-spacing: -0.04em; text-transform: uppercase;
+      line-height: 1.05; letter-spacing: -0.04em; text-transform: uppercase;
       color: var(--white); margin-bottom: 24px;
     }
     .cta-final h2 em {
@@ -1034,12 +1034,34 @@
     .footer-brand { display: flex; flex-direction: column; gap: 6px; }
     .footer-brand img { width: 200px; max-width: 100%; height: auto; margin-bottom: 4px; }
     .footer-tagline { font-size: 13px; line-height: 1.6; color: var(--muted); margin-top: 8px; }
-    .footer-socials { display: flex; gap: 16px; margin-top: 20px; }
-    .footer-socials a {
-      font-family: var(--mono); font-size: 10px; font-weight: 700;
-      letter-spacing: 0.1em; color: var(--muted2); transition: color .25s; cursor: none;
+    .footer-socials {
+      display: flex;
+      gap: 18px;
+      margin-top: 20px;
+      align-items: center;
     }
-    .footer-socials a:hover { color: var(--white); }
+    .footer-socials a {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 20px;
+      height: 20px;
+      color: var(--muted2);
+      transition: color 0.25s, transform 0.2s;
+      cursor: none;
+    }
+    .footer-socials a:hover {
+      color: var(--white);
+      transform: translateY(-2px);
+    }
+    .footer-socials svg {
+      width: 18px;
+      height: 18px;
+      fill: currentColor;
+    }
+    .footer-socials svg[stroke] {
+      fill: none;
+    }
     .footer-col h5 {
       font-family: var(--mono); font-size: 10px; font-weight: 700;
       letter-spacing: 0.2em; text-transform: uppercase;
@@ -1050,6 +1072,13 @@
       padding: 5px 0; transition: color .2s; cursor: none;
     }
     .footer-col a:hover { color: var(--white); }
+    .footer-col a.btn-pill {
+      display: inline-flex;
+      width: auto;
+      padding: 14px 32px;
+      font-size: 11px;
+      margin-top: 8px;
+    }
     .footer-bottom {
       display: flex; justify-content: space-between; align-items: center; padding: 24px 0;
     }
@@ -1146,9 +1175,9 @@
 
       /* ── Navbar ── */
       .nav-inner { padding: 0 20px; gap: 12px; }
-      .nav-logo .disc-car-img { height: 28px; }
+      .nav-logo .disc-car-img { height: 50px; }
       .nav-links { display: none; }
-      .nav-actions { gap: 8px; }
+      .nav-actions { gap: 10px; }
       .nav-actions .nav-link { display: none; }
       .btn-pill { padding: 8px 16px; font-size: 11px; }
 
@@ -1156,7 +1185,7 @@
       .section { padding: 60px 0; }
       .section-inner { padding: 0 20px; }
       .section-tag { font-size: 9px; margin-bottom: 10px; }
-      .section-title { font-size: clamp(28px, 8vw, 44px); line-height: 0.95; margin-bottom: 20px; }
+      .section-title { font-size: clamp(28px, 8vw, 44px); line-height: 1.05; margin-bottom: 20px; }
 
       /* ── Hero ── */
       .course-hero { min-height: 100svh; justify-content: flex-end; }
@@ -1166,7 +1195,7 @@
       .precio-card { position: static !important; width: 100%; padding: 20px; margin-bottom: 0; }
       .course-breadcrumb { font-size: 9px; margin-bottom: 14px; }
       .course-tag-row { margin-bottom: 10px; }
-      .course-title { font-size: clamp(36px, 10vw, 56px); margin-bottom: 12px; }
+      .course-title { font-size: clamp(44px, 12vw, 68px); margin-bottom: 14px; }
       .course-hero-desc { font-size: 13px; margin-bottom: 16px; }
 
       /* Stats: scroll horizontal */
@@ -1205,7 +1234,7 @@
       .programa-card-dur { display: none; }
       .prog-group-header { padding: 18px 20px; }
       .prog-group-title { font-size: 15px; }
-      .programa-cta-bar { flex-direction: column; align-items: stretch; gap: 14px; padding: 20px; }
+      .programa-cta-bar { flex-direction: column; align-items: stretch; gap: 14px; padding: 20px; text-align: center; }
       .programa-cta-btns { display: flex; flex-direction: column; gap: 8px; }
       .programa-cta-btns .btn-primary,
       .programa-cta-btns .btn-ghost { width: 100%; justify-content: center; }
@@ -1226,7 +1255,8 @@
 
       /* ── Certificación ── */
       .cert-inner { grid-template-columns: 1fr; gap: 36px; }
-      .cert-visual { aspect-ratio: 16/9; }
+      .cert-text { order: 1; }
+      .cert-visual { order: 2; aspect-ratio: auto; padding: 40px 16px; }
 
       /* ── Otros cursos ── */
       .otros-grid { grid-template-columns: 1fr; }
@@ -1254,7 +1284,7 @@
 
       /* Hero */
       .course-hero-inner { padding: 0 16px; padding-top: calc(var(--nav-h) + 24px); }
-      .course-title { font-size: clamp(32px, 11vw, 48px); }
+      .course-title { font-size: clamp(38px, 13vw, 56px); }
       .course-hero-desc { font-size: 13px; }
 
       /* Stats: grid 2x2 */
@@ -1300,13 +1330,390 @@
       .metodo-step { gap: 14px; padding: 18px 0; }
 
       /* Footer */
-      .footer-top { grid-template-columns: 1fr; padding: 32px 16px; gap: 24px; }
-      .footer-brand { grid-column: 1; }
+      .footer-top { grid-template-columns: 1fr; padding: 0 16px 36px; gap: 0; }
+      .footer-brand { grid-column: 1; margin-bottom: 32px; }
+      .footer-col { border-bottom: 1px solid rgba(255,255,255,0.1); }
+      .footer-col:last-child { border-bottom: none; }
+      .footer-col h5 { 
+        margin-bottom: 0; padding: 20px 0; 
+        cursor: pointer; position: relative;
+        display: flex; justify-content: space-between; align-items: center;
+      }
+      .footer-col h5::after { content: '+'; font-size: 16px; font-weight: 300; transition: transform 0.3s; color: var(--muted); }
+      .footer-col.open h5::after { transform: rotate(45deg); color: var(--white); }
+      .footer-col a { display: none; padding-bottom: 16px; margin-bottom: 0; }
+      .footer-col.open a { display: block; }
+      .footer-col a.btn-pill { display: none; }
+      .footer-col.open a.btn-pill { display: inline-flex; padding: 12px 28px; font-size: 11px; margin-bottom: 24px; }
+      .footer-col .footer-socials { display: none; }
+      .footer-col.open .footer-socials { display: flex; margin-top: 16px; margin-bottom: 24px; }
+      .footer-col.open .footer-socials a { display: inline-flex; padding-bottom: 0; }
       .footer-bottom { padding: 16px; }
     }
 
     @media (prefers-reduced-motion: reduce) {
       *, *::before, *::after { animation-duration: .01ms !important; transition-duration: .01ms !important; }
+    }
+
+    /* ═══════════════════════════════════════════════════════
+       FORMULARIO DE CONTACTO (MODAL / POPUP)
+    ═══════════════════════════════════════════════════════ */
+    .contact-modal-overlay {
+      position: fixed;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(4, 4, 4, 0.9);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      z-index: 99999;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    .contact-modal-overlay.active {
+      opacity: 1;
+      pointer-events: all;
+    }
+
+    .contact-modal-container {
+      position: relative;
+      background: #0b0b0b;
+      border: 1px solid rgba(0, 229, 255, 0.15);
+      box-shadow: 0 0 50px rgba(0, 229, 255, 0.08), inset 0 0 20px rgba(0, 229, 255, 0.02);
+      width: 100%;
+      max-width: 600px;
+      padding: 48px;
+      border-radius: 8px;
+      transform: scale(0.96) translateY(10px);
+      transition: transform 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+      overflow: hidden;
+      box-sizing: border-box;
+    }
+
+    .contact-modal-overlay.active .contact-modal-container {
+      transform: scale(1) translateY(0);
+    }
+
+    /* Cybernetic decorative corners */
+    .contact-modal-container::before,
+    .contact-modal-container::after {
+      content: '';
+      position: absolute;
+      width: 12px;
+      height: 12px;
+      border: 2px solid var(--cyan);
+      pointer-events: none;
+    }
+    .contact-modal-container::before {
+      top: 16px;
+      left: 16px;
+      border-right: none;
+      border-bottom: none;
+    }
+    .contact-modal-container::after {
+      bottom: 16px;
+      right: 16px;
+      border-left: none;
+      border-top: none;
+    }
+
+    .contact-modal-close {
+      position: absolute;
+      top: 24px;
+      right: 24px;
+      background: transparent;
+      border: none;
+      color: var(--muted2);
+      font-size: 20px;
+      width: 36px;
+      height: 36px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 50%;
+      border: 1px solid rgba(255, 255, 255, 0.05);
+      transition: all 0.3s var(--ease);
+    }
+
+    .contact-modal-close:hover {
+      color: var(--cyan);
+      border-color: rgba(0, 229, 255, 0.3);
+      transform: rotate(90deg);
+      box-shadow: 0 0 10px rgba(0, 229, 255, 0.15);
+    }
+
+    .contact-modal-title {
+      font-family: var(--font);
+      font-size: 28px;
+      font-weight: 700;
+      letter-spacing: -0.02em;
+      text-transform: uppercase;
+      color: var(--white);
+      margin-bottom: 6px;
+    }
+
+    .contact-modal-subtitle {
+      font-family: var(--mono);
+      font-size: 11px;
+      color: var(--cyan);
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      margin-bottom: 32px;
+      opacity: 0.85;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .contact-modal-subtitle::before {
+      content: '';
+      display: inline-block;
+      width: 6px;
+      height: 6px;
+      background: var(--cyan);
+      border-radius: 50%;
+      box-shadow: 0 0 8px var(--cyan);
+      animation: pulse-glow 1.5s infinite;
+    }
+
+    @keyframes pulse-glow {
+      0% { transform: scale(1); opacity: 1; }
+      50% { transform: scale(1.4); opacity: 0.4; }
+      100% { transform: scale(1); opacity: 1; }
+    }
+
+    .contact-form {
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+      transition: opacity 0.3s ease;
+    }
+
+    .contact-row {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 20px;
+    }
+
+    @media (max-width: 576px) {
+      .contact-row {
+        grid-template-columns: 1fr;
+        gap: 20px;
+      }
+      .contact-modal-container {
+        padding: 32px 24px;
+        width: 95%;
+      }
+    }
+
+    .contact-group {
+      display: flex;
+      flex-direction: column;
+    }
+
+    .contact-label {
+      font-family: var(--mono);
+      font-size: 10px;
+      color: var(--muted);
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      margin-bottom: 8px;
+      opacity: 0.7;
+    }
+
+    .contact-field {
+      background: #121212;
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      border-radius: 4px;
+      color: var(--white);
+      padding: 12px 16px;
+      font-family: var(--font);
+      font-size: 14px;
+      outline: none;
+      transition: all 0.3s var(--ease);
+      width: 100%;
+      box-sizing: border-box;
+    }
+
+    .contact-field::placeholder {
+      color: rgba(255, 255, 255, 0.2);
+    }
+
+    .contact-field:focus {
+      border-color: var(--cyan);
+      box-shadow: 0 0 12px rgba(0, 229, 255, 0.15);
+      background: #141414;
+    }
+
+    /* Custom styling for standard select arrow */
+    select.contact-field {
+      appearance: none;
+      -webkit-appearance: none;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 24 24' stroke='rgba%28255,255,255,0.4%29' stroke-width='2'%3E%3Cpath stroke-linecap='round' stroke-linejoin='round' d='M19 9l-7 7-7-7'/%3E%3C/svg%3E");
+      background-repeat: no-repeat;
+      background-position: right 16px center;
+      background-size: 16px;
+      padding-right: 40px;
+    }
+
+    select.contact-field option {
+      background: #0f0f0f;
+      color: var(--white);
+    }
+
+    textarea.contact-field {
+      resize: none;
+      height: 110px;
+    }
+
+    .contact-submit-btn {
+      font-family: var(--mono);
+      font-size: 12px;
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      color: var(--cyan);
+      background: transparent;
+      border: 1px solid var(--cyan);
+      padding: 16px;
+      border-radius: 4px;
+      margin-top: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      transition: all 0.3s var(--ease);
+    }
+
+    .contact-submit-btn:hover {
+      background: var(--cyan);
+      color: #080808;
+      box-shadow: 0 0 20px rgba(0, 229, 255, 0.3);
+    }
+
+    .contact-submit-btn svg {
+      width: 16px;
+      height: 16px;
+      transition: transform 0.3s;
+    }
+
+    .contact-submit-btn:hover svg {
+      transform: translateX(4px);
+    }
+
+    /* Loading & Success States */
+    .contact-loading-state,
+    .contact-success-state {
+      display: none;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 40px 0;
+      text-align: center;
+      min-height: 320px;
+      box-sizing: border-box;
+    }
+
+    /* Telemetry progress loader */
+    .cyber-loader {
+      position: relative;
+      width: 180px;
+      height: 4px;
+      background: rgba(255, 255, 255, 0.05);
+      border-radius: 2px;
+      overflow: hidden;
+      margin-bottom: 24px;
+    }
+
+    .cyber-loader-bar {
+      width: 40%;
+      height: 100%;
+      background: var(--cyan);
+      position: absolute;
+      left: 0;
+      animation: cyber-scan-anim 1.5s infinite ease-in-out;
+      box-shadow: 0 0 8px var(--cyan);
+    }
+
+    @keyframes cyber-scan-anim {
+      0% { left: -40%; }
+      50% { left: 100%; }
+      100% { left: 100%; }
+    }
+
+    .cyber-loading-text {
+      font-family: var(--mono);
+      font-size: 11px;
+      letter-spacing: 0.15em;
+      color: var(--cyan);
+      text-transform: uppercase;
+      animation: blink-text 1s infinite steps(2, start);
+    }
+
+    @keyframes blink-text {
+      to { opacity: 0.4; }
+    }
+
+    /* Success State Checkmark */
+    .success-icon-wrapper {
+      position: relative;
+      width: 72px;
+      height: 72px;
+      margin-bottom: 28px;
+    }
+
+    .success-circle-outline {
+      position: absolute;
+      inset: 0;
+      border: 2px solid var(--cyan);
+      border-radius: 50%;
+      box-shadow: 0 0 15px rgba(0, 229, 255, 0.2);
+      animation: circle-pulse 2s infinite ease-in-out;
+    }
+
+    @keyframes circle-pulse {
+      0% { transform: scale(1); opacity: 0.8; }
+      50% { transform: scale(1.1); opacity: 0.3; }
+      100% { transform: scale(1); opacity: 0.8; }
+    }
+
+    .success-svg {
+      width: 100%;
+      height: 100%;
+      color: var(--cyan);
+    }
+
+    .success-svg path {
+      stroke-dasharray: 100;
+      stroke-dashoffset: 100;
+      animation: draw-check 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards 0.2s;
+    }
+
+    @keyframes draw-check {
+      to { stroke-dashoffset: 0; }
+    }
+
+    .success-title {
+      font-family: var(--font);
+      font-size: 24px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: -0.02em;
+      color: var(--white);
+      margin-bottom: 12px;
+    }
+
+    .success-desc {
+      font-family: var(--mono);
+      font-size: 11px;
+      line-height: 1.6;
+      letter-spacing: 0.05em;
+      color: var(--muted);
+      max-width: 320px;
     }
 
   </style>
@@ -1330,11 +1737,12 @@
       </a>
       <nav class="nav-links">
         <a href="index.html" class="nav-link" data-text="Inicio">Inicio</a>
-        <a href="index.html#cursos" class="nav-link" data-text="Cursos">Cursos</a>
+        <a href="index.html#academia" class="nav-link" data-text="Cursos">Cursos</a>
         <a href="index.html#simuladores" class="nav-link" data-text="Simuladores">Simuladores</a>
         <a href="index.html#esports" class="nav-link" data-text="Esports">Esports</a>
         <a href="index.html#comunidad" class="nav-link" data-text="Comunidad">Comunidad</a>
         <a href="index.html#empresas" class="nav-link" data-text="Empresas">Empresas</a>
+        <a href="#contacto" class="nav-link btn-contact-trigger" data-text="Contacto">Contacto</a>
       </nav>
       <div class="nav-actions">
         <a href="ui-library.html" class="nav-link" style="font-size:10px;opacity:0.4;letter-spacing:0.15em;">BIBLIOTECA UI</a>
@@ -1811,7 +2219,8 @@
     <div class="section-inner">
       <div class="programa-cta-bar">
         <div class="programa-cta-text">
-          <strong>$89.000</strong> · hasta 3 cuotas sin interés — cupos limitados por camada.
+          <div class="programa-cta-price">$89.000</div>
+          <div class="programa-cta-desc">hasta 3 cuotas sin interés — cupos limitados por camada.</div>
         </div>
         <div class="programa-cta-btns">
           <a href="#" class="btn-primary magnetic">
@@ -2064,13 +2473,6 @@
         <div class="footer-brand">
           <img src="assets/logotipofooter.png" alt="logoapexfinal" />
           <p class="footer-tagline">Entrenamos pilotos.<br>No jugadores.</p>
-          <div class="footer-socials">
-            <a href="#" aria-label="Instagram">IG</a>
-            <a href="#" aria-label="Twitter">TW</a>
-            <a href="#" aria-label="YouTube">YT</a>
-            <a href="#" aria-label="TikTok">TK</a>
-            <a href="#" aria-label="Discord">DS</a>
-          </div>
         </div>
         <div class="footer-col">
           <h5>ACADEMIA</h5>
@@ -2097,7 +2499,13 @@
           <h5>CONTACTO</h5>
           <a href="tel:+541123456789">+54 11 2234 5679</a>
           <a href="mailto:hola@apexsimracing.com">hola@apexsimracing.com</a>
-          <a href="#" class="btn-pill" style="margin-top:12px;display:inline-block;font-size:12px">CONTACTANOS</a>
+          <a href="#contacto" class="btn-pill btn-contact-trigger">CONTACTANOS</a>
+          <div class="footer-socials">
+            <a href="#" aria-label="Instagram"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5"/><circle cx="12" cy="12" r="5"/><circle cx="17.5" cy="6.5" r="1" fill="currentColor" stroke="none"/></svg></a>
+            <a href="#" aria-label="TikTok"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M16.6 5.82A4.28 4.28 0 0 1 15.54 3h-3.09v12.4a2.59 2.59 0 0 1-2.59 2.5c-1.43 0-2.6-1.16-2.6-2.6 0-1.72 1.66-3.01 3.37-2.48V9.66c-3.45-.46-6.47 2.22-6.47 5.64 0 3.07 2.49 5.44 5.5 5.44a5.5 5.5 0 0 0 5.5-5.5V9.41a7.63 7.63 0 0 0 4.38 1.38V7.7a4.28 4.28 0 0 1-3.48-1.88Z"/></svg></a>
+            <a href="#" aria-label="YouTube"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M23.5 6.19a3.02 3.02 0 0 0-2.12-2.14C19.5 3.5 12 3.5 12 3.5s-7.5 0-9.38.55A3.02 3.02 0 0 0 .5 6.19 31.6 31.6 0 0 0 0 12a31.6 31.6 0 0 0 .5 5.81 3.02 3.02 0 0 0 2.12 2.14c1.87.55 9.38.55 9.38.55s7.5 0 9.38-.55a3.02 3.02 0 0 0 2.12-2.14A31.6 31.6 0 0 0 24 12a31.6 31.6 0 0 0-.5-5.81ZM9.55 15.57V8.43L15.82 12l-6.27 3.57Z"/></svg></a>
+            <a href="#" aria-label="Discord"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M20.32 4.37a19.8 19.8 0 0 0-4.93-1.51.07.07 0 0 0-.08.04c-.21.38-.45.87-.61 1.26a18.27 18.27 0 0 0-5.4 0 12.6 12.6 0 0 0-.62-1.26.08.08 0 0 0-.08-.04 19.74 19.74 0 0 0-4.93 1.51.07.07 0 0 0-.03.03C1.07 8.93.32 13.36.79 17.73a.08.08 0 0 0 .03.06 19.9 19.9 0 0 0 5.99 3.03.08.08 0 0 0 .08-.03c.46-.63.87-1.3 1.22-2a.08.08 0 0 0-.04-.1 13.1 13.1 0 0 1-1.87-.9.08.08 0 0 1 0-.12c.13-.09.25-.19.37-.29a.08.08 0 0 1 .08-.01c3.93 1.79 8.18 1.79 12.07 0a.08.08 0 0 1 .08.01c.12.1.25.2.37.29a.08.08 0 0 1 0 .12c-.6.35-1.22.65-1.87.9a.08.08 0 0 0-.04.1c.36.7.77 1.37 1.22 2a.08.08 0 0 0 .08.03 19.83 19.83 0 0 0 6-3.03.08.08 0 0 0 .03-.05c.56-5.07-.87-9.47-3.81-13.37a.06.06 0 0 0-.03-.03ZM8.02 15.33c-1.18 0-2.15-1.08-2.15-2.42 0-1.33.95-2.42 2.15-2.42 1.21 0 2.17 1.1 2.15 2.42 0 1.34-.95 2.42-2.15 2.42Zm7.97 0c-1.18 0-2.15-1.08-2.15-2.42 0-1.33.95-2.42 2.15-2.42 1.21 0 2.17 1.1 2.15 2.42 0 1.34-.94 2.42-2.15 2.42Z"/></svg></a>
+          </div>
         </div>
       </div>
       <div class="footer-bottom">
@@ -2128,6 +2536,8 @@
     initScrollReveal();
     initVideoEmbed();
     initCarousel();
+    initFooterAccordion();
+    initContactModal();
   });
 
   /* GLOBAL PARTICLE GRID */
@@ -2509,6 +2919,264 @@
     }
   })();
 
+  /* ═══ FOOTER ACCORDION — collapsible columns on mobile ═══ */
+  function initFooterAccordion() {
+    const mq = window.matchMedia('(max-width: 480px)');
+
+    function setup() {
+      const cols = $$('.footer-col');
+      cols.forEach(col => {
+        const heading = col.querySelector('h5');
+        if (!heading) return;
+
+        // Remove previous listener if any
+        heading.removeEventListener('click', heading._toggle);
+
+        if (mq.matches) {
+          // Mobile: enable accordion
+          col.classList.remove('open');
+          heading._toggle = () => {
+            // Close all others
+            cols.forEach(c => { if (c !== col) c.classList.remove('open'); });
+            col.classList.toggle('open');
+          };
+          heading.addEventListener('click', heading._toggle);
+        } else {
+          // Desktop: ensure all are visible
+          col.classList.remove('open');
+        }
+      });
+    }
+
+    setup();
+    mq.addEventListener('change', setup);
+  }
+
+  /* ═══ CONTACT MODAL ═══ */
+  function initContactModal() {
+    const modal = $('#contactModal');
+    const form = $('#contactForm');
+    const triggers = $$('.btn-contact-trigger');
+    const closeBtn = $('#contactCloseBtn');
+    const submitBtn = $('#contactSubmitBtn');
+    const loadingState = $('#contactLoadingState');
+    const successState = $('#contactSuccessState');
+    const formState = $('#contactFormState');
+
+    if (!modal || !form) return;
+
+    // Helper validation
+    function isEmail(v) { return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v); }
+    function shakeEl(el) {
+      el.animate([
+        { transform: 'translateX(0)' },
+        { transform: 'translateX(-6px)' },
+        { transform: 'translateX(6px)' },
+        { transform: 'translateX(-4px)' },
+        { transform: 'translateX(4px)' },
+        { transform: 'translateX(0)' },
+      ], { duration: 320, easing: 'ease-in-out' });
+    }
+
+    // Custom cursor integration if available
+    const ring = $('#cursor');
+    if (ring) {
+      const formInteractives = $$('.contact-field, .contact-submit-btn, .contact-modal-close');
+      formInteractives.forEach(el => {
+        el.addEventListener('mouseenter', () => ring.classList.add('hovering'));
+        el.addEventListener('mouseleave', () => ring.classList.remove('hovering'));
+      });
+    }
+
+    // Open modal
+    triggers.forEach(trigger => {
+      trigger.addEventListener('click', (e) => {
+        e.preventDefault();
+        modal.classList.add('active');
+        document.body.style.overflow = 'hidden';
+        const nameField = $('#contactName');
+        if (nameField) setTimeout(() => nameField.focus(), 100);
+      });
+    });
+
+    // Close modal function
+    function closeModal() {
+      modal.classList.remove('active');
+      document.body.style.overflow = '';
+      // Reset state after transition
+      setTimeout(() => {
+        formState.style.display = 'block';
+        loadingState.style.display = 'none';
+        successState.style.display = 'none';
+        form.reset();
+        $$('.contact-field').forEach(field => {
+          field.style.borderColor = '';
+          field.style.boxShadow = '';
+        });
+      }, 500);
+    }
+
+    closeBtn.addEventListener('click', closeModal);
+    modal.addEventListener('click', (e) => {
+      if (e.target === modal) closeModal();
+    });
+
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape' && modal.classList.contains('active')) {
+        closeModal();
+      }
+    });
+
+    // Submit handler
+    submitBtn.addEventListener('click', () => {
+      const name = $('#contactName');
+      const email = $('#contactEmail');
+      const message = $('#contactMessage');
+      let isValid = true;
+
+      // Validate Name
+      if (!name.value.trim()) {
+        name.style.borderColor = '#FF3D00';
+        name.style.boxShadow = '0 0 0 2px rgba(255,61,0,0.2)';
+        shakeEl(name);
+        name.focus();
+        isValid = false;
+      } else {
+        name.style.borderColor = '';
+        name.style.boxShadow = '';
+      }
+
+      // Validate Email
+      if (!isEmail(email.value.trim())) {
+        email.style.borderColor = '#FF3D00';
+        email.style.boxShadow = '0 0 0 2px rgba(255,61,0,0.2)';
+        shakeEl(email);
+        if (isValid) email.focus();
+        isValid = false;
+      } else {
+        email.style.borderColor = '';
+        email.style.boxShadow = '';
+      }
+
+      // Validate Message
+      if (!message.value.trim()) {
+        message.style.borderColor = '#FF3D00';
+        message.style.boxShadow = '0 0 0 2px rgba(255,61,0,0.2)';
+        shakeEl(message);
+        if (isValid) message.focus();
+        isValid = false;
+      } else {
+        message.style.borderColor = '';
+        message.style.boxShadow = '';
+      }
+
+      if (!isValid) return;
+
+      // Transition to Loading
+      formState.style.display = 'none';
+      loadingState.style.display = 'flex';
+
+      // Simulate network request
+      setTimeout(() => {
+        loadingState.style.display = 'none';
+        successState.style.display = 'flex';
+
+        // Auto close after success
+        setTimeout(() => {
+          if (modal.classList.contains('active')) {
+            closeModal();
+          }
+        }, 3500);
+      }, 1800);
+    });
+
+    // Clear validation styling on input
+    $$('.contact-field').forEach(field => {
+      field.addEventListener('input', () => {
+        field.style.borderColor = '';
+        field.style.boxShadow = '';
+      });
+    });
+  }
+
   </script>
+
+  <!-- ═══ MODAL DE CONTACTO ═══ -->
+  <div class="contact-modal-overlay" id="contactModal">
+    <div class="contact-modal-container">
+      <button class="contact-modal-close" id="contactCloseBtn" aria-label="Cerrar modal">&times;</button>
+      
+      <!-- Estado Formulario -->
+      <div id="contactFormState">
+        <h3 class="contact-modal-title">Iniciar Transmisión</h3>
+        <div class="contact-modal-subtitle">Canal de comunicación directo</div>
+        
+        <form class="contact-form" id="contactForm" novalidate>
+          <div class="contact-row">
+            <div class="contact-group">
+              <label for="contactName" class="contact-label">Nombre Piloto *</label>
+              <input type="text" id="contactName" class="contact-field" placeholder="Tu nombre" required>
+            </div>
+            
+            <div class="contact-group">
+              <label for="contactEmail" class="contact-label">E-Mail de Enlace *</label>
+              <input type="email" id="contactEmail" class="contact-field" placeholder="piloto@correo.com" required>
+            </div>
+          </div>
+          
+          <div class="contact-row">
+            <div class="contact-group">
+              <label for="contactPhone" class="contact-label">Teléfono / WhatsApp</label>
+              <input type="tel" id="contactPhone" class="contact-field" placeholder="+54 11 ...">
+            </div>
+            
+            <div class="contact-group">
+              <label for="contactSubject" class="contact-label">Motivo de Enlace</label>
+              <select id="contactSubject" class="contact-field">
+                <option value="Academia y Cursos">Academia &amp; Cursos</option>
+                <option value="Coaching Personalizado">Coaching Experto</option>
+                <option value="Soluciones B2B / Empresas">Soluciones B2B / Empresas</option>
+                <option value="Eventos y Simuladores">Eventos &amp; Simuladores</option>
+                <option value="Soporte y Otros">Soporte &amp; Otro</option>
+              </select>
+            </div>
+          </div>
+          
+          <div class="contact-group">
+            <label for="contactMessage" class="contact-label">Mensaje / Plan de Vuelo *</label>
+            <textarea id="contactMessage" class="contact-field" placeholder="¿En qué podemos ayudarte? Cuéntanos tu experiencia o proyecto..." required></textarea>
+          </div>
+          
+          <button type="button" id="contactSubmitBtn" class="contact-submit-btn magnetic">
+            <span>ENVIAR TRANSMISIÓN</span>
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="22" y1="2" x2="11" y2="13"></line><polygon points="22 2 15 22 11 13 2 9 22 2"></polygon></svg>
+          </button>
+        </form>
+      </div>
+
+      <!-- Estado Cargando -->
+      <div class="contact-loading-state" id="contactLoadingState">
+        <div class="cyber-loader">
+          <div class="cyber-loader-bar"></div>
+        </div>
+        <div class="cyber-loading-text">Encriptando paquete de datos...</div>
+      </div>
+
+      <!-- Estado Éxito -->
+      <div class="contact-success-state" id="contactSuccessState">
+        <div class="success-icon-wrapper">
+          <div class="success-circle-outline"></div>
+          <div class="success-svg">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <polyline points="20 6 9 17 4 12"></polyline>
+            </svg>
+          </div>
+        </div>
+        <h4 class="success-title">Transmisión Completa</h4>
+        <p class="success-desc">Los datos han sido enviados con éxito a telemetría de Apex. Nos pondremos en contacto a la brevedad.</p>
+      </div>
+
+    </div>
+  </div>
 </body>
 </html>
