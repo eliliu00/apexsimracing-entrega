@@ -27,6 +27,18 @@
       --nav-h:    70px;
       --ease:     cubic-bezier(0.16, 1, 0.3, 1);
       --accent:   #00E5FF; /* acento del curso Nivel Inicial */
+
+      /* ── ESCALA TIPOGRÁFICA (idéntica al sitio principal): copetes / títulos / bajadas ── */
+      --fs-bajada:        15px;
+      --fs-copete:        16px;                     /* = bajada + 2px, -1pt */
+      --fs-bajada-mobile: 14px;
+      --fs-copete-mobile: 15px;                     /* = bajada-mobile + 2px, -1pt */
+
+      --fs-title-hero:    clamp(40px, 6vw, 76px);   /* H1 de portada (hero, curso) */
+      --fs-title-section: clamp(36px, 5vw, 64px);   /* H2 estándar de sección */
+
+      --fs-bajada-sm:      12px;                    /* bajada a escala de tarjeta */
+      --fs-copete-sm:      13px;                    /* copete a escala de tarjeta = bajada-sm + 2px, -1pt */
     }
 
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
@@ -100,7 +112,7 @@
       height: 100%; padding: 0 40px; gap: 40px;
     }
     .nav-logo { display: flex; align-items: center; gap: 10px; flex-shrink: 0; }
-    .nav-logo .disc-car-img { display: flex; align-items: center; height: 112px; }
+    .nav-logo .disc-car-img { display: flex; align-items: center; width: auto; height: 90px; overflow: visible; }
     .nav-logo .disc-car-img img { height: 100%; width: auto; max-width: none; display: block; }
     .nav-logo-text {
       font-family: var(--mono); font-size: 14px; font-weight: 700;
@@ -157,12 +169,12 @@
     .section { position: relative; padding: 72px 0; overflow: hidden; }
     .section-inner { max-width: 1280px; margin: 0 auto; padding: 0 72px; }
     .section-tag {
-      font-family: var(--mono); font-size: 11px; font-weight: 400;
+      font-family: var(--mono); font-size: var(--fs-copete); font-weight: 400;
       letter-spacing: 0.2em; color: var(--muted); text-transform: uppercase;
       display: block; margin-bottom: 20px;
     }
     .section-title {
-      font-size: clamp(36px, 5vw, 64px); font-weight: 700;
+      font-size: var(--fs-title-section); font-weight: 700;
       line-height: 1.05; letter-spacing: -0.03em;
       text-transform: uppercase; color: var(--white); margin-bottom: 32px;
     }
@@ -263,7 +275,7 @@
     }
 
     .course-title {
-      font-size: clamp(48px, 7vw, 90px);
+      font-size: var(--fs-title-hero);
       font-weight: 700; line-height: 1.05;
       letter-spacing: -0.04em; text-transform: uppercase;
       color: var(--white); margin-bottom: 16px;
@@ -273,7 +285,7 @@
     }
 
     .course-hero-desc {
-      font-size: clamp(13px, 1.3vw, 15px);
+      font-size: var(--fs-bajada);
       line-height: 1.55; color: var(--muted);
       max-width: 540px; margin-bottom: 20px;
     }
@@ -963,12 +975,12 @@
       padding: 16px;
     }
     .otros-grid .card-tag {
-      font-family: var(--mono); font-size: 9px; font-weight: 700;
+      font-family: var(--mono); font-size: var(--fs-copete-sm); font-weight: 700;
       letter-spacing: 0.2em; text-transform: uppercase;
       color: var(--white); opacity: 0.6; margin-bottom: 4px;
     }
     .otros-grid .card-image-overlay h3 {
-      font-size: clamp(16px, 2vw, 22px); font-weight: 700;
+      font-size: clamp(20px, 2.2vw, 26px); font-weight: 700;
       text-transform: uppercase; letter-spacing: -0.02em;
       color: var(--white); line-height: 1.05;
     }
@@ -976,7 +988,7 @@
       padding: 24px 20px; display: flex; flex-direction: column; gap: 18px; flex: 1;
     }
     .otros-grid .card-desc {
-      font-size: 13px; color: var(--muted); line-height: 1.55;
+      font-size: var(--fs-bajada-sm); color: var(--muted); line-height: 1.55;
     }
     .otros-grid .card-specs {
       display: flex; align-items: center; gap: 0;
@@ -1108,7 +1120,7 @@
     .metodo-visual p,
     .faq-layout p,
     .course-hero-desc {
-      font-size: clamp(14px, 1.4vw, 15px);
+      font-size: var(--fs-bajada);
       line-height: 1.65;
       color: var(--muted);
     }
@@ -1183,7 +1195,7 @@
 
       /* ── Navbar ── */
       .nav-inner { padding: 0 20px; gap: 12px; justify-content: space-between; }
-      .nav-logo .disc-car-img { height: 62px; }
+      .nav-logo .disc-car-img { height: 56px; }
       .nav-links { display: none; }
       .nav-actions { gap: 10px; }
       .nav-actions .nav-link { display: none; }
@@ -1192,7 +1204,7 @@
       /* ── Globals ── */
       .section { padding: 60px 0; }
       .section-inner { padding: 0 28px; }
-      .section-tag { font-size: 9px; margin-bottom: 10px; }
+      .section-tag { font-size: var(--fs-copete-mobile); margin-bottom: 10px; }
       .section-title { font-size: clamp(34px, 10vw, 52px); line-height: 1.05; margin-bottom: 20px; }
       .testimonios-header h2 { font-size: clamp(34px, 10vw, 52px); }
 
@@ -1204,8 +1216,8 @@
       .precio-card { position: static !important; width: 100%; padding: 20px; margin-bottom: 0; }
       .course-breadcrumb { font-size: 9px; margin-bottom: 14px; }
       .course-tag-row { margin-bottom: 10px; }
-      .course-title { font-size: clamp(48px, 14vw, 76px); margin-bottom: 14px; }
-      .course-hero-desc { font-size: 13px; margin-bottom: 16px; }
+      .course-title { font-size: clamp(52px, 14vw, 72px); margin-bottom: 14px; }
+      .course-hero-desc { font-size: var(--fs-bajada-mobile); margin-bottom: 16px; }
 
       /* Stats: scroll horizontal */
       .course-stats-row {
@@ -1294,8 +1306,8 @@
 
       /* Hero */
       .course-hero-inner { padding: 0 22px; padding-top: calc(var(--nav-h) + 24px); }
-      .course-title { font-size: clamp(38px, 13vw, 56px); }
-      .course-hero-desc { font-size: 13px; }
+      .course-title { font-size: clamp(28px, 11vw, 44px); }
+      .course-hero-desc { font-size: var(--fs-bajada-mobile); }
 
       /* Stats: grid 2x2 */
       .course-stats-row { display: grid; grid-template-columns: 1fr 1fr; overflow-x: unset; }

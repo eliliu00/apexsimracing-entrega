@@ -26,6 +26,19 @@
 
   --nav-h:    68px;
   --ease:     cubic-bezier(0.16, 1, 0.3, 1);
+
+  /* ── ESCALA TIPOGRÁFICA: copetes / títulos / bajadas ── */
+  --fs-bajada:        15px;                     /* texto que sigue al título (desc) */
+  --fs-copete:        16px;                     /* etiqueta antes del título = bajada + 2px, -1pt */
+  --fs-bajada-mobile: 14px;
+  --fs-copete-mobile: 15px;                     /* = bajada-mobile + 2px, -1pt */
+
+  --fs-title-hero:    clamp(40px, 6vw, 76px);   /* H1 de portada (hero, curso) */
+  --fs-title-section: clamp(36px, 5vw, 64px);   /* H2 estándar de sección */
+  --fs-title-compact: clamp(28px, 3.5vw, 48px); /* H2 en espacios angostos (ej. carrusel de disciplinas) */
+
+  --fs-bajada-sm:      12px;                    /* bajada a escala de tarjeta */
+  --fs-copete-sm:      13px;                    /* copete a escala de tarjeta = bajada-sm + 2px, -1pt */
 }
 
 /* ── RESET ── */
@@ -154,6 +167,17 @@ img { display: block; max-width: 100%; }
   gap: 10px;
   flex-shrink: 0;
   text-decoration: none;
+}
+.nav-logo .disc-car-img {
+  width: auto;
+  height: 90px;
+  overflow: visible;
+}
+.nav-logo .disc-car-img img {
+  height: 100%;
+  width: auto;
+  max-width: none;
+  display: block;
 }
 .logo-mark {
   width: 20px;
@@ -362,7 +386,7 @@ img { display: block; max-width: 100%; }
 
 .section-tag {
   font-family: var(--mono);
-  font-size: 11px;
+  font-size: var(--fs-copete);
   font-weight: 400;
   letter-spacing: 0.2em;
   color: var(--muted);
@@ -373,7 +397,7 @@ img { display: block; max-width: 100%; }
 
 .section-title {
   font-family: var(--font);
-  font-size: clamp(36px, 5vw, 64px);
+  font-size: var(--fs-title-section);
   font-weight: 700;
   line-height: 1.05;
   letter-spacing: -0.03em;
@@ -484,7 +508,7 @@ img { display: block; max-width: 100%; }
 
 .hero-title {
   font-family: var(--font);
-  font-size: clamp(40px, 6vw, 76px);
+  font-size: var(--fs-title-hero);
   font-weight: 700;
   line-height: 1.05;
   letter-spacing: -0.03em;
@@ -511,7 +535,7 @@ img { display: block; max-width: 100%; }
 }
 
 .hero-desc {
-  font-size: 15px;
+  font-size: var(--fs-bajada);
   line-height: 1.7;
   color: var(--muted);
   margin-bottom: 36px;
@@ -863,7 +887,7 @@ img { display: block; max-width: 100%; }
 
 .card-tag {
   font-family: var(--mono);
-  font-size: 10px;
+  font-size: var(--fs-copete-sm);
   font-weight: 700;
   letter-spacing: 0.2em;
   text-transform: uppercase;
@@ -873,7 +897,7 @@ img { display: block; max-width: 100%; }
 
 .program-card h3 {
   font-family: var(--font);
-  font-size: 18px;
+  font-size: clamp(20px, 2vw, 26px);
   font-weight: 700;
   letter-spacing: -0.02em;
   text-transform: uppercase;
@@ -917,7 +941,7 @@ img { display: block; max-width: 100%; }
 }
 
 .card-desc {
-  font-size: 11.5px;
+  font-size: var(--fs-bajada-sm);
   line-height: 1.45;
   color: var(--muted);
   margin-bottom: 4px;
@@ -1090,7 +1114,7 @@ img { display: block; max-width: 100%; }
 /* Dedicated title class at smaller font so it fits the 220px column cleanly */
 .disc-title {
   font-family: var(--font);
-  font-size: clamp(28px, 3.2vw, 44px);   /* was going up to 80px via section-title */
+  font-size: var(--fs-title-compact);   /* escala compacta: espacio angosto del carrusel */
   font-weight: 700;
   line-height: 0.95;
   letter-spacing: -0.03em;
@@ -1237,7 +1261,7 @@ img { display: block; max-width: 100%; }
 
 .hw-title {
   /* Overrides the global section-title clamp inside the narrow hw-top-left */
-  font-size: clamp(36px, 5vw, 64px) !important;
+  font-size: var(--fs-title-section) !important;
 }
 
 .hw-top-right {
@@ -1248,7 +1272,7 @@ img { display: block; max-width: 100%; }
 }
 
 .hw-desc {
-  font-size: 15px;
+  font-size: var(--fs-bajada);
   color: var(--muted);
   line-height: 1.65;
   max-width: 420px;
@@ -1507,7 +1531,7 @@ img { display: block; max-width: 100%; }
 
 .community-title {
   font-family: var(--font);
-  font-size: clamp(30px, 4.8vw, 58px);
+  font-size: var(--fs-title-section);
   font-weight: 700;
   line-height: 1.05;
   letter-spacing: -0.035em;
@@ -1526,7 +1550,7 @@ img { display: block; max-width: 100%; }
 }
 
 .community-sub p {
-  font-size: 15px;
+  font-size: var(--fs-bajada);
   line-height: 1.75;
   color: var(--muted);
   max-width: 360px;
@@ -2319,7 +2343,8 @@ img { display: block; max-width: 100%; }
   /* ── Globals ── */
   .section { padding: 60px 0; }
   .section-inner { padding: 0 20px; }
-  .section-tag { font-size: 9px; }
+  .section-tag { font-size: var(--fs-copete-mobile); }
+  .nav-logo .disc-car-img { height: 56px; }
   .section-title { font-size: clamp(32px, 10vw, 48px); line-height: 1.05; margin-bottom: 20px; }
 
   /* ── Hero ── */
@@ -2333,7 +2358,7 @@ img { display: block; max-width: 100%; }
     max-width: 100%;
   }
   .hero-title { font-size: clamp(52px, 14vw, 72px); margin-bottom: 16px; line-height: 1.05; }
-  .hero-desc { font-size: 14px; max-width: 100%; margin-bottom: 24px; }
+  .hero-desc { font-size: var(--fs-bajada-mobile); max-width: 100%; margin-bottom: 24px; }
   .hero-badge { font-size: 9px; margin-bottom: 16px; padding: 5px 12px; }
   .hero-cta-row { flex-direction: column; align-items: center; gap: 10px; margin-bottom: 20px; }
   .hero-cta-row .btn-primary,
@@ -2405,7 +2430,7 @@ img { display: block; max-width: 100%; }
   .community-title { font-size: clamp(26px, 10vw, 36px); line-height: 1.08; letter-spacing: -0.04em; }
   .community-title .line-block { display: block; }
   .community-sub { width: 100%; max-width: 100%; }
-  .community-sub p { max-width: 100%; font-size: 15px; line-height: 1.85; margin-bottom: 14px; overflow-wrap: break-word; word-break: break-word; }
+  .community-sub p { max-width: 100%; font-size: var(--fs-bajada); line-height: 1.85; margin-bottom: 14px; overflow-wrap: break-word; word-break: break-word; }
   .discord-btn { width: 100%; max-width: 100%; box-sizing: border-box; justify-content: center; padding: 14px 16px; white-space: normal; text-align: center; }
   .community-gallery-container { width: 100%; max-width: 100%; box-sizing: border-box; border-left: none; border-top: 1px solid var(--border); padding: 26px 0 0 0; }
   .community-gallery-main { height: auto; aspect-ratio: 16/9; min-height: 240px; max-height: 280px; }
@@ -2880,7 +2905,7 @@ img { display: block; max-width: 100%; }
 
 .sa-title {
   font-family: var(--font);
-  font-size: clamp(36px, 5vw, 64px);
+  font-size: var(--fs-title-section);
   font-weight: 700;
   line-height: 1.05;
   letter-spacing: -0.03em;
@@ -2895,7 +2920,7 @@ img { display: block; max-width: 100%; }
 }
 
 .sa-desc {
-  font-size: 14px;
+  font-size: var(--fs-bajada);
   line-height: 1.72;
   color: var(--muted);
   margin-bottom: 36px;
@@ -3045,7 +3070,7 @@ img { display: block; max-width: 100%; }
   }
   .hero-title { font-size: clamp(28px, 11vw, 44px); }
   .hero-badge { font-size: 9px; padding: 5px 10px; margin-bottom: 16px; }
-  .hero-desc { font-size: 13px; }
+  .hero-desc { font-size: var(--fs-bajada-mobile); }
   .hero-stats { gap: 12px 16px; }
   .stat-num { font-size: 20px; }
 
@@ -3090,7 +3115,7 @@ img { display: block; max-width: 100%; }
   .community-section { padding: 50px 16px 58px 16px; margin: 32px 0 40px; }
   .community-inner { gap: 34px; }
   .community-title { font-size: clamp(22px, 14vw, 34px); }
-  .community-sub p { font-size: 14px; line-height: 2; }
+  .community-sub p { font-size: var(--fs-bajada-mobile); line-height: 2; }
   .discord-btn { width: 100%; justify-content: center; padding: 14px 16px; }
   .community-gallery-container { padding-top: 30px; border-top: 1px solid var(--border); }
   .community-gallery-main { height: 220px; }
