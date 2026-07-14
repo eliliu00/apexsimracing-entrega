@@ -60,7 +60,7 @@
     }
     .navbar, .course-hero, .section,
     .modulos-section, .incluye-section, .paraquien-section,
-    .metodologia-section, .cert-section, .faq-section,
+    .cert-section, .faq-section,
     .cta-final, .otros-section, .footer {
       position: relative; z-index: 1;
     }
@@ -192,7 +192,7 @@
     /* ═══ HERO DEL CURSO ═══ */
     .course-hero {
       min-height: 100svh;
-      display: flex; flex-direction: column; justify-content: center;
+      display: flex; flex-direction: column; justify-content: flex-end;
       padding-bottom: 40px;
       position: relative;
       overflow: hidden;
@@ -202,7 +202,7 @@
       position: absolute; inset: 0;
       width: 100%; height: 100%;
       object-fit: cover; object-position: center;
-      opacity: 0.35;
+      opacity: 0.8;
       z-index: 0;
     }
     .course-hero::before {
@@ -733,70 +733,6 @@
    .pq-back-desc{font-size:13px;color:var(--muted);line-height:1.65}
    .pq-back-tag{font-family:var(--mono);font-size:9px;letter-spacing:0.2em;color:var(--cyan);text-transform:uppercase;margin-top:auto}
 
-    /* ═══ METODOLOGÍA ═══ */
-    .metodologia-section { background: rgba(15,15,15,0.82); }
-    .metodo-header { max-width: 640px; margin-bottom: 48px; }
-    .metodo-layout {
-      display: grid; grid-template-columns: 380px 1fr;
-      gap: 80px; align-items: start;
-    }
-    .metodo-steps { display: flex; flex-direction: column; gap: 0; }
-    .metodo-step {
-      display: flex; gap: 24px;
-      padding: 16px 0; border-bottom: 1px solid var(--border);
-      position: relative;
-    }
-    .metodo-step:first-child { border-top: 1px solid var(--border); }
-    .metodo-step-num {
-      font-family: var(--mono); font-size: 11px; font-weight: 700;
-      color: var(--cyan); letter-spacing: 0.15em; flex-shrink: 0; padding-top: 3px;
-    }
-    .metodo-step-title {
-      font-size: 16px; font-weight: 700; text-transform: uppercase;
-      color: var(--white); margin-bottom: 6px; letter-spacing: -0.01em;
-    }
-    .metodo-step-desc { font-size: 13px; line-height: 1.55; color: var(--muted); }
-
-    /* Telemetría decorativa */
-    .metodo-visual {
-      position: sticky; top: calc(var(--nav-h) + 32px);
-    }
-    .tele-panel {
-      background: var(--bg3); border: 1px solid var(--border2);
-      border-radius: 4px; overflow: hidden;
-    }
-    .tele-header {
-      display: flex; justify-content: space-between; align-items: center;
-      padding: 16px 20px; border-bottom: 1px solid var(--border);
-    }
-    .tele-title {
-      font-family: var(--mono); font-size: 9px; font-weight: 700;
-      letter-spacing: 0.25em; color: var(--muted2); text-transform: uppercase;
-    }
-    .tele-dot { width: 6px; height: 6px; border-radius: 50%; background: var(--cyan); }
-    .tele-canvas-wrap { padding: 20px; }
-    .tele-metrics {
-      display: grid; grid-template-columns: 1fr 1fr 1fr;
-      border-top: 1px solid var(--border);
-    }
-    .tele-metric {
-      padding: 16px 20px; border-right: 1px solid var(--border);
-    }
-    .tele-metric:last-child { border-right: none; }
-    .tele-metric-label {
-      font-family: var(--mono); font-size: 8px; letter-spacing: 0.2em;
-      color: var(--muted2); text-transform: uppercase; display: block; margin-bottom: 6px;
-    }
-    .tele-metric-val {
-      font-family: var(--mono); font-size: 18px; font-weight: 700;
-      color: var(--cyan); display: block;
-    }
-    .tele-info {
-      padding: 20px; border-top: 1px solid var(--border);
-      font-size: 12px; line-height: 1.6; color: var(--muted);
-    }
-    .tele-info strong { color: var(--white); font-weight: 600; }
-
     /* ═══ CERTIFICACIÓN ═══ */
     .cert-section { background: rgba(8,8,8,0.80); border-bottom: 1px solid var(--border); }
     .cert-inner {
@@ -1126,7 +1062,6 @@
     /* Regla unificada para párrafos de sección y descripciones */
     .video-text p,
     .cert-text p,
-    .metodo-visual p,
     .faq-layout p,
     .course-hero-desc {
       font-size: var(--fs-bajada);
@@ -1188,8 +1123,6 @@
       .course-hero-precio { position: static; margin-top: 16px; }
       .programa-header { grid-template-columns: 1fr; gap: 20px; }
       .precio-card { position: static; }
-      .metodo-layout { grid-template-columns: 1fr; }
-      .metodo-visual { position: static; }
       .faq-layout { grid-template-columns: 1fr; }
       .otros-grid { grid-template-columns: 1fr 1fr; }
       .footer-top { grid-template-columns: repeat(3, 1fr); }
@@ -1270,13 +1203,14 @@
       .programa-cta-btns .btn-ghost { width: 100%; justify-content: center; }
 
       /* ── Video ── */
-      .video-layout { grid-template-columns: 1fr; gap: 32px; padding: 0 28px; }
-      .video-embed-wrap { width: 100%; max-width: 100%; }
-
-      /* ── Metodología ── */
-      .metodo-layout { grid-template-columns: 1fr; gap: 36px; }
-      .metodo-visual { position: static; }
-      .metodo-step { padding: 20px 0; }
+      .video-layout { grid-template-columns: 1fr; gap: 24px; padding: 0 28px; }
+      .video-embed-wrap { width: 100%; max-width: 100%; order: 2; }
+      /* Título arriba, video debajo del título, y el resto del texto al final */
+      .video-text { display: contents; }
+      .video-text .section-tag,
+      .video-text .section-title { order: 1; }
+      .video-text p { order: 3; margin-top: 8px; }
+      .video-text .video-highlights { order: 3; }
 
       /* ── Testimonios ── */
       .tcard { width: 272px; }
@@ -1358,7 +1292,6 @@
 
       /* Módulo */
       .modulo-card { padding: 22px 18px; }
-      .metodo-step { gap: 14px; padding: 18px 0; }
 
       /* Footer */
       .footer-top { grid-template-columns: 1fr; padding: 0 22px 36px; gap: 0; }
@@ -2189,85 +2122,6 @@
   </div>
 </section>
 
-  <!-- ═══ METODOLOGÍA ═══ -->
-  <section class="section metodologia-section">
-    <div class="section-inner">
-      <div class="metodo-header">
-        <span class="section-tag">— CÓMO ENTRENAMOS</span>
-        <h2 class="section-title">MÉTODO APEX</h2>
-        <p style="margin-bottom: 0;">
-          Metodología de entrenamiento real: objetivos claros, datos analizados, feedback en cada vuelta.
-        </p>
-      </div>
-
-      <div class="metodo-layout">
-        <!-- VISUAL: panel de telemetría -->
-        <div class="metodo-visual">
-          <div class="tele-panel">
-            <div class="tele-header">
-              <span class="tele-title">TELEMETRÍA EN VIVO · SESIÓN 04</span>
-              <div class="tele-dot"></div>
-            </div>
-            <div class="tele-canvas-wrap">
-              <canvas id="metodeTele" width="480" height="120" style="width:100%;border-radius:2px;"></canvas>
-            </div>
-            <div class="tele-metrics">
-              <div class="tele-metric">
-                <span class="tele-metric-label">V. MÁX</span>
-                <span class="tele-metric-val">187</span>
-              </div>
-              <div class="tele-metric">
-                <span class="tele-metric-label">MEJOR SECTOR</span>
-                <span class="tele-metric-val">34.1</span>
-              </div>
-              <div class="tele-metric">
-                <span class="tele-metric-label">VUELTAS</span>
-                <span class="tele-metric-val">12</span>
-              </div>
-            </div>
-            <div class="tele-info">
-              <strong>Punto de mejora:</strong> frenado 8m tarde en curva 3, perdiendo 0.3s por vuelta.
-            </div>
-          </div>
-        </div>
-
-        <!-- PASOS -->
-        <div>
-          <div class="metodo-steps">
-            <div class="metodo-step">
-              <span class="metodo-step-num">01</span>
-              <div>
-                <div class="metodo-step-title">Briefing previo</div>
-                <div class="metodo-step-desc">El instructor explica el objetivo del módulo y la técnica del día antes de subir al sim.</div>
-              </div>
-            </div>
-            <div class="metodo-step">
-              <span class="metodo-step-num">02</span>
-              <div>
-                <div class="metodo-step-title">Sesión en pista</div>
-                <div class="metodo-step-desc">Entrás al simulador con feedback del instructor en tiempo real, vuelta por vuelta.</div>
-              </div>
-            </div>
-            <div class="metodo-step">
-              <span class="metodo-step-num">03</span>
-              <div>
-                <div class="metodo-step-title">Revisión de telemetría</div>
-                <div class="metodo-step-desc">Miramos los datos juntos: comparamos sectores y&nbsp;definimos el ajuste para la próxima vuelta.</div>
-              </div>
-            </div>
-            <div class="metodo-step">
-              <span class="metodo-step-num">04</span>
-              <div>
-                <div class="metodo-step-title">Debrief y plan</div>
-                <div class="metodo-step-desc">Cerramos con un debrief documentado: qué mejoró y&nbsp;qué sigue trabajando.</div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </section>
-
   <div style="background:var(--bg2); padding-bottom:40px;">
     <div class="section-inner">
       <div class="programa-cta-bar">
@@ -2592,7 +2446,6 @@
     initMagnetic();
     initFAQ();
     initParaQuien();
-    initTeleCanvas();
     initScrollReveal();
     initVideoEmbed();
     initCarousel();
@@ -2820,89 +2673,10 @@
     });
   }
 
-  /* TELEMETRÍA DECORATIVA */
-  function initTeleCanvas() {
-    const canvas = $('#metodeTele');
-    if (!canvas) return;
-    const ctx = canvas.getContext('2d');
-    const W = canvas.width, H = canvas.height;
-    let t = 0;
-
-    function throttle(f, velocity) {
-      // Genera curva de aceleración/frenada simulada
-      const base = 0.6 + 0.3 * Math.sin(f * 0.08) + 0.1 * Math.sin(f * 0.3);
-      return Math.max(0, Math.min(1, base));
-    }
-
-    const colors = { speed: '#00E5FF', throttle: '#69F0AE', brake: '#FF3D00' };
-    const speedData = [], throttleData = [], brakeData = [];
-
-    // Pre-generar datos
-    for (let i = 0; i < W; i++) {
-      const speed = 0.3 + 0.6 * (0.5 + 0.5 * Math.sin(i * 0.05)) * (0.85 + 0.15 * Math.sin(i * 0.2));
-      speedData.push(speed);
-      const thr = Math.max(0, Math.min(1, 0.7 + 0.4 * Math.sin(i * 0.06 + 1) - 0.3 * Math.abs(Math.sin(i * 0.12))));
-      throttleData.push(thr);
-      const brk = Math.max(0, -0.5 * Math.sin(i * 0.06 + 1) * (1 - Math.abs(Math.sin(i * 0.04))));
-      brakeData.push(brk);
-    }
-
-    function drawLine(data, color, alpha = 1) {
-      ctx.beginPath();
-      ctx.strokeStyle = color;
-      ctx.globalAlpha = alpha;
-      ctx.lineWidth = 1.5;
-      ctx.shadowBlur = 6;
-      ctx.shadowColor = color;
-      for (let i = 0; i < data.length; i++) {
-        const x = i;
-        const y = H - data[i] * (H - 8) - 4;
-        if (i === 0) ctx.moveTo(x, y); else ctx.lineTo(x, y);
-      }
-      ctx.stroke();
-      ctx.shadowBlur = 0;
-      ctx.globalAlpha = 1;
-    }
-
-    function animate() {
-      ctx.clearRect(0, 0, W, H);
-      ctx.fillStyle = 'rgba(22,22,22,1)';
-      ctx.fillRect(0, 0, W, H);
-
-      // Grid lines
-      ctx.strokeStyle = 'rgba(255,255,255,0.04)';
-      ctx.lineWidth = 1;
-      for (let y = 0; y < H; y += H/4) {
-        ctx.beginPath(); ctx.moveTo(0,y); ctx.lineTo(W,y); ctx.stroke();
-      }
-
-      // Scroll offset
-      const offset = (t % W);
-      const sd = [...speedData.slice(offset), ...speedData.slice(0, offset)];
-      const td = [...throttleData.slice(offset), ...throttleData.slice(0, offset)];
-      const bd = [...brakeData.slice(offset), ...brakeData.slice(0, offset)];
-
-      drawLine(bd, colors.brake, 0.7);
-      drawLine(td, colors.throttle, 0.7);
-      drawLine(sd, colors.speed, 1);
-
-      // Cursor vertical (posición actual)
-      const cx = W * 0.65;
-      ctx.strokeStyle = 'rgba(255,255,255,0.15)';
-      ctx.setLineDash([3,3]);
-      ctx.lineWidth = 1;
-      ctx.beginPath(); ctx.moveTo(cx,0); ctx.lineTo(cx,H); ctx.stroke();
-      ctx.setLineDash([]);
-
-      t += 0.4;
-      requestAnimationFrame(animate);
-    }
-    animate();
-  }
-
+  
   /* SCROLL REVEAL */
   function initScrollReveal() {
-    const items = $$('.modulo-card, .pq-card, .metodo-step, .cert-feat, .otro-card, .programa-card');
+    const items = $$('.modulo-card, .pq-card, .cert-feat, .otro-card, .programa-card');
     const obs = new IntersectionObserver((entries) => {
       entries.forEach(e => {
         if (e.isIntersecting) {
