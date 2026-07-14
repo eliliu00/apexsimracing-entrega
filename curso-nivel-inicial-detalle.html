@@ -736,6 +736,7 @@
 
     /* ═══ METODOLOGÍA ═══ */
     .metodologia-section { background: rgba(15,15,15,0.82); }
+    .metodo-header { max-width: 640px; margin-bottom: 48px; }
     .metodo-layout {
       display: grid; grid-template-columns: 380px 1fr;
       gap: 80px; align-items: start;
@@ -934,11 +935,11 @@
     .cta-final-btns { display: flex; gap: 16px; justify-content: center; flex-wrap: wrap; }
 
     /* ═══ OTROS CURSOS ═══ */
-    .otros-section { background: rgba(15,15,15,0.82); border-top: 1px solid var(--border); padding: 80px 0; }
+    .otros-section { background: rgba(15,15,15,0.82); border-top: 1px solid var(--border); padding: 48px 0; }
     .otros-grid {
       display: grid; grid-template-columns: repeat(3, 1fr);
       gap: 20px;
-      margin-top: 48px;
+      margin-top: 28px;
     }
     /* program-card (igual que home) reutilizada en otros-grid */
     .otros-grid .program-card {
@@ -960,7 +961,7 @@
     }
     .otros-grid .card-image-wrap {
       position: relative; overflow: hidden;
-      aspect-ratio: 4/3;
+      aspect-ratio: 16/9;
     }
     .otros-grid .card-image-wrap img {
       width: 100%; height: 100%;
@@ -985,7 +986,7 @@
       color: var(--white); line-height: 1.05;
     }
     .otros-grid .card-info {
-      padding: 24px 20px; display: flex; flex-direction: column; gap: 18px; flex: 1;
+      padding: 14px 18px 16px; display: flex; flex-direction: column; gap: 8px; flex: 1;
     }
     .otros-grid .card-desc {
       font-size: var(--fs-bajada-sm); color: var(--muted); line-height: 1.55;
@@ -993,7 +994,7 @@
     .otros-grid .card-specs {
       display: flex; align-items: center; gap: 0;
       border-top: 1px solid var(--border); border-bottom: 1px solid var(--border);
-      padding: 14px 0;
+      padding: 8px 0;
     }
     .otros-grid .card-spec {
       flex: 1; padding: 0 14px;
@@ -1012,11 +1013,18 @@
       color: var(--muted2); text-transform: uppercase;
     }
     .otros-grid .card-price {
-      display: flex; align-items: baseline; gap: 8px;
+      display: flex; flex-direction: column; gap: 4px;
       margin-top: auto;
     }
+    .otros-grid .price-row {
+      display: flex; align-items: baseline; gap: 8px; flex-wrap: wrap;
+    }
+    .otros-grid .price-prefix {
+      font-family: var(--font); font-size: 13px; font-weight: 600;
+      color: var(--muted); text-transform: uppercase; letter-spacing: 0.02em;
+    }
     .otros-grid .price-amount {
-      font-family: var(--mono); font-size: 28px; font-weight: 700; color: var(--white);
+      font-family: var(--mono); font-size: 26px; font-weight: 700; color: var(--white);
     }
     .otros-grid .price-period {
       font-family: var(--mono); font-size: 10px; color: var(--muted2);
@@ -1031,7 +1039,7 @@
       color: var(--white);
       display: flex; align-items: center; justify-content: center; gap: 8px;
       border: 1px solid var(--border2); border-radius: 4px;
-      padding: 14px; margin-top: 4px;
+      padding: 10px; margin-top: 0;
       transition: border-color .25s, background .25s, color .25s;
     }
     .otros-grid .program-card:hover .card-link { background: var(--white); border-color: var(--white); color: var(--bg); }
@@ -1110,8 +1118,10 @@
     .magnetic { will-change: transform; }
 
     /* ═══ VIDEO SECTION ═══ */
-    .video-section { background: var(--bg2); border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); padding: 80px 0; }
-    .video-layout { max-width: 1280px; margin: 0 auto; padding: 0 72px; display: grid; grid-template-columns: 1fr 520px; gap: 72px; align-items: center; }
+    .video-section { background: var(--bg2); border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); padding: 56px 0; }
+    .video-layout { max-width: 1280px; margin: 0 auto; padding: 0 72px; display: grid; grid-template-columns: 480px minmax(0, 560px); justify-content: center; gap: 64px; align-items: center; }
+    .video-layout .video-text { order: 2; }
+    .video-layout .video-embed-wrap { order: 1; }
     .video-text .section-tag { color: var(--cyan); }
     
     /* Regla unificada para párrafos de sección y descripciones */
@@ -1133,8 +1143,8 @@
     .vh-body { display: flex; flex-direction: column; gap: 3px; }
     .vh-title { font-size: 14px; font-weight: 600; color: var(--white); text-transform: uppercase; letter-spacing: 0.01em; }
     .vh-desc { font-size: 12px; color: var(--muted2); line-height: 1.4; }
-    .video-embed-wrap { position: relative; border-radius: 4px; overflow: hidden; border: 1px solid var(--border2); cursor: none; background: #000; }
-    .video-embed-wrap::before { content: ''; display: block; padding-top: 56.25%; }
+    .video-embed-wrap { position: relative; width: 100%; border-radius: 4px; overflow: hidden; border: 1px solid var(--border2); cursor: none; background: #000; max-width: 480px; margin: 0 auto; }
+    .video-embed-wrap::before { content: ''; display: block; padding-top: 118%; }
     .video-embed-wrap iframe, .video-embed-wrap video, .video-embed-wrap img.video-thumb { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; border: none; }
     .video-play-btn { position: absolute; inset: 0; display: flex; align-items: center; justify-content: center; z-index: 2; transition: opacity .3s; }
     .video-play-btn:hover .play-circle { transform: scale(1.12); background: var(--cyan); border-color: var(--cyan); }
@@ -2183,15 +2193,17 @@
   <!-- ═══ METODOLOGÍA ═══ -->
   <section class="section metodologia-section">
     <div class="section-inner">
-      <div class="metodo-layout">
-        <!-- VISUAL: título + texto + panel de telemetría -->
-        <div class="metodo-visual">
-          <span class="section-tag">— CÓMO ENTRENAMOS</span>
-          <h2 class="section-title">MÉTODO APEX</h2>
-          <p style="margin-bottom: 32px;">
-            Metodología de entrenamiento real: objetivos claros, datos analizados, feedback en cada vuelta.
-          </p>
+      <div class="metodo-header">
+        <span class="section-tag">— CÓMO ENTRENAMOS</span>
+        <h2 class="section-title">MÉTODO APEX</h2>
+        <p style="margin-bottom: 0;">
+          Metodología de entrenamiento real: objetivos claros, datos analizados, feedback en cada vuelta.
+        </p>
+      </div>
 
+      <div class="metodo-layout">
+        <!-- VISUAL: panel de telemetría -->
+        <div class="metodo-visual">
           <div class="tele-panel">
             <div class="tele-header">
               <span class="tele-title">TELEMETRÍA EN VIVO · SESIÓN 04</span>
@@ -2392,8 +2404,10 @@
               </div>
             </div>
             <div class="card-price">
-              <span class="price-amount">$149.000</span>
-              <span class="price-period">ARS · pago único</span>
+              <div class="price-row">
+                <span class="price-amount">$149.000</span>
+                <span class="price-period">ARS · pago único</span>
+              </div>
             </div>
             <span class="price-note">HASTA 6 CUOTAS SIN INTERÉS</span>
             <span class="card-link">VER CURSO <span>↗</span></span>
@@ -2423,8 +2437,10 @@
               </div>
             </div>
             <div class="card-price">
-              <span class="price-amount">$129.000</span>
-              <span class="price-period">ARS · pago único</span>
+              <div class="price-row">
+                <span class="price-amount">$129.000</span>
+                <span class="price-period">ARS · pago único</span>
+              </div>
             </div>
             <span class="price-note">HASTA 6 CUOTAS SIN INTERÉS</span>
             <span class="card-link">VER CURSO <span>↗</span></span>
@@ -2454,8 +2470,11 @@
               </div>
             </div>
             <div class="card-price">
-              <span class="price-amount">Desde $320.000</span>
-              <span class="price-period">ARS · por temporada</span>
+              <span class="price-prefix">Desde</span>
+              <div class="price-row">
+                <span class="price-amount">$320.000</span>
+                <span class="price-period">ARS · por temporada</span>
+              </div>
             </div>
             <span class="price-note">CUPOS LIMITADOS POR CAMADA</span>
             <span class="card-link">VER CURSO <span>↗</span></span>
